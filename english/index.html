@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Pronunciation Helper</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <img src="logo.svg" alt="Logo" class="logo">
+      <h1>English Stress Words</h1>
+    </header>
+    <main>
+      <div class="paper">
+        <div class="input-area">
+          <textarea id="textInput" rows="4" placeholder="Enter text here to process..." oninput="processInputText()"></textarea>        </div>
+      </div>
+      <div class="paper blue">
+        <div class="content" id="processedWords"></div>
+      </div>
+
+      <div class="paper info">
+        <div class="content">
+          <h2>How to use this page</h2>
+          <ul>
+            <li><strong>Bolded syllables</strong> indicate time stress on them.</li>
+            <li>A <strong>dash-between-syllables</strong> signifies a short pause.</li>
+            <li>Gray text denotes silent syllables.</li>
+        </ul>
+        <p>Please note that not all words are included in our database. A list of available words is provided below for reference.</p>
+        </div>
+      </div>
+
+      <div id="wordsList" class="words-list"></div>
+    </main>
+    <footer>&copy;2024 Krzysztof Krystian Jankowski</footer>
+
+    <script src="code.js"></script>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SCENE P1X</title>
+  <link rel="stylesheet" href="base.css" type="text/css" media="screen" charset="utf-8" />
+  </head>
+<body>
+  <header><h1>smolOS</h1>
+  <p><img border="0" src="smolos-header.gif" alt="Specialized Microcontroller-Oriented Lightweight Operating System" width="656" height="126"></p>
+    <p><b>smolOS</b> is a tiny (&lt;20KB, &lt;500LOC) and simple 🧪 research ⚙️ operating system ⌨️ written in 🐍 MicroPython for microcontrollers giving user a POSIX-like 📁 environment to play. It came with a set of 🧰 tools and 🪄 demos.</p>
+  <ul>
+    <li>Latest sources: <a href="smolOS-main.zip">smolOS-main.zip</a></li>
+    <li><a href="#install">Quick installation guide</a></li>
+    <li><a href="#usage">Usage of the OS</a></li>
+  </ul>
+    <h2>Background</h2>
+    <h3> What is an OS?</h3>
+  <p>According to the Wikipedia: <i> "An operating system (OS) is system software that manages computer hardware and software resources, and provides common services for computer
+    programs.&quot;</i>. In my own mind it's just an interface that helps user interacts with a computer. In that case
+    <i> smolOS</i> is an operating system. In more precise definition it is a shell and a collection of scripts that works on top of MicroPython systems. Imagine
+    <i> command.com</i> to the MS-DOS, <i> bash</i> to Linux. For the end user it
+    really doesn't matter as long as it transforms a blank microcontroller into a working computer.<br>
+    <br>
+    My first computer was 486 and a black and white CRT. I was using MS-DOS most of the time and get used to the
+    command line interface. Now, some 25 years later I'm using Linux on all my computers and still prefer shell for basic stuff like editing, moving files or installing software. I wanted to keep that spirit in the smolOS.</p>
+    <h3>Simplicity, Universality</h3>
+    <p align="left">Shell. It's not MS-DOS (<i>command.com</i>) nor <i> bash</i>
+    equivalent, it's something in between. I wanted to keep all the commands user friendly. For
+    example instead of UNIX <i>ls</i> and DOS <i>dir</i> I opted for <i>list</i>. From those three only the last says exactly what it does - lists files.<br>
+    <br>
+    Files. Flat hierarchy. Microcontrollers have few MB of data at best. It's not a place to store documents it's a place to store few scripts to run our project. Having directories makes
+    things more complicated, users get confused where they are and the whole ".." to go back was always strange. That's why there is no
+    <i>mkdir</i> or <i>cd</i>.</p>
+    <h2>System Overview</h2>
+    <p>
+    System should run on any MicroPython supported board but it's tested and developed on
+    <b> Seeed XIAO RP2040</b>.</p>
+    <p><img border="0" src="smolos.png"></p>
+  <p>The whole system is in one file <i>smolos.py</i>. There are additional tools and demos that are optional.</p>
+  <ul>
+    <li>main system file</li>
+    <li>text editor (included)</li>
+    <li>additional tools and demos (optional)</li>
+  </ul>
+  <h3>Hardware Support</h3>
+  <ul>
+    <li>any MicroPython board</li>
+    <li>XIAO RP2040</li>
+    <li>NeoPixel 5x5 grid (display)</li>
+    <li>photo resistor (input)</li>
+    <li>NeoPixel LED (output)</li>
+    <li>buzzer (sound)</li>
+  </ul>
+    <h3>Real Life Use cases</h3>
+  <ul>
+    <li>listing and removing unwanted files on board</li>
+    <li>checking free space</li>
+    <li>easy way to write simple programs and run them from the OS</li>
+    <li>quickly iterating parameters for a program</li>
+    <li>editing small bugs in programs</li>
+    <li>having fun with microcontrollers</li>
+  </ul>
+  <h3>smolOS Features</h3>
+  <ul>
+    <li>Changes microcontroller into a small working PC</li>
+    <li>Homemade for fun and learning</li>
+    <li>Super small and fast</li>
+    <li>Easy to use, similar to MS-DOS, POSIX-like environments</li>
+    <li>List and manipulates files</li>
+    <li>Text editor included (very basic but capable)</li>
+    <li>Basic tools and demos included (for NeoPixels, Buzzers, LEDs)</li>
+    <li>Build on MicroPython with clear code</li>
+    <li>Stability and simplicity are the main principle behind the code</li>
+    <li>Free and open-source :)</li>
+  </ul>
+	
+
+
+  <h3>Additional Programs</h3>
+  <ul>
+    <li>ansi - Displays ANSI escape codes</li>
+    <li>life - Game of Life implementation for smolOS (text)</li>
+    <li>buzz - Simple synth for 1-bit music (requires a buzzer)</li>
+    <li>bytebeat - Implementation of ByteBeat for a buzzer</li>
+  </ul>
+  <p>All of those are for NeoPixel Grid 5x5 BFF:</p>
+  <ul>
+    <li>duck - Yellow Rubber Duck for programmers</li>
+    <li>neolife - Game of Life implementation</li>
+    <li>pixel - Tools for playing with one LED</li>
+    <li>plasma - Demoscene plasma effect</li>
+    <li>font - Font bitmaps (for scroller)</li>
+    <li>scroller - Scrolls text</li>
+  </ul>
+
+  <h2 id=install>Installation and Booting</h2>
+  <h3>Super Quick Guide</h3>
+  <ol>
+    <li>Download latest sources from GitHub or <a href="smolOS-main.zip">smolOS-main.zip</a>
+      local mirror</li>
+    <li>Put main system file <i>smolos.py</i> onto the board flash (that has latest MicroPython firmware)</li>
+    <li>For auto-boot also copy <i>main.py </i>(optional but recommended)</li>
+    <li>Restart device</li>
+  </ol>
+  <h3>Detailed Guides</h3>
+  <p>Python firmware installation</p>
+  <ul>
+    <li><a href="guide-xiao.html">XIAO RP2040 Installation Guide</a></li>
+    <li><a href="guide-esp.html">ESP8266 Installation Guide</a></li>
+  </ul>
+  <p>System installation&nbsp;</p>
+  <ul>
+    <li>General <a href="guide-smolos.html">smolOS Installation Guide</a></li>
+  </ul>
+  <h3>Connecting</h3>
+  <pre>$ picocom /dev/ttyACM0</pre>
+  <p>Press <i>ctrl+a+x</i> to exit.</p>
+  <h3>Running</h3>
+  <p>First start. Or after flashing new main.py file. Restart the
+  microcontroller:</p>
+  <pre>&gt;&gt;&gt; machine.soft_reset()</pre>
+  <h4>Automatic Boot (recommended)</h4>
+  <p>If you copied the <i>main.py</i> after restart the device system should "boot" you into the smolOS. Like so:</p>
+  <p><img border="0" src="smolos.png" width="300" height="169"></p>
+  <h4>Manual boot</h4>
+  <p>If you put only <i>smolos.py</i> then you need to boot the system by hand.</p>
+  <p>In MicroPython REPL write:</p>
+  <pre>&gt;&gt;&gt; from smolos import smolOS
+&gt;&gt;&gt; os = smolOS()
+&gt;&gt;&gt; os.boot()</pre>
+
+  <h2 id=usage>Using The OS</h2>
+  <h3>Help</h3>
+  <p>Write <i>help</i> for quick reference.</p>
+  <p><img border="0" src="help.png"></p>
+  <h3>List files</h3>
+  <p><img border="0" src="list.png"></p>
+  <h3>Edit a file</h3>
+  <p>Simple text editor is build-in to the system.&nbsp;&nbsp;</p>
+  <p><img border="0" src="edit.png"></p>
+  <h2>Forks</h2>
+  <ul>
+    <li><a href="https://github.com/rbenrax/upyOS/">upyOS by rbenrax</a> - very nice, goes as close to the POSIX as you can get!</li>
+    <li><a href="https://github.com/047pegasus/pegasusOS">pegasusOS by
+      047pegasus</a> - adds easy networking</li>
+  </ul>
+  <h2>Articles</h2>
+  <ul>
+    <li><a href="https://www.hackster.io/news/krzysztof-jankowski-s-micropython-based-smolos-puts-a-tiny-posix-like-environment-on-your-esp8266-0c776559152b">hackster.io</a></li>
+    <li><a href="https://www.cnx-software.com/2023/07/12/smolos-brings-a-linux-like-command-line-interface-to-esp8266-microcontroller/">cnx-software.com</a></li>
+    <li><a href="https://lobste.rs/s/ipztxc/smolos_small_os_for_micropython_on">lobste.rs</a></li>
+  </ul>
+	
+
+
+  <h2>Tags</h2>
+  <p>esp8266, micropython, os, operating-system, research-project, neopixels, xiao, micropython-esp8266, rp2040, seeeduino-xiao,
+  seeed, esp&nbsp;<br>
+  </p>
+	
+
+
+  </main>
+  <footer><hr><small>&copy;2024 by Krzysztof Krystian Jankowski &amp; Cyfrowy Nomada<br>Powered by 👁️🐝Ⓜ️</small></footer>
+</body>

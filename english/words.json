@@ -1,0 +1,68 @@
+[
+    {
+      "word": "example",
+      "syllables": [
+        {"text": "ex", "stress": "low", "silent": false},
+        {"text": "am", "stress": "high", "silent": false},
+        {"text": "ple", "stress": "low", "silent": true}
+      ]
+    },
+    {
+        "word": "uncomfortable",
+        "syllables": [
+            {"text": "un", "stress": "low", "silent": false},
+            {"text": "com", "stress": "high", "silent": false},
+            {"text": "fort", "stress": "low", "silent": false},
+            {"text": "able", "stress": "low", "silent": false}
+        ]
+    },
+    {
+      "word": "chair",
+      "syllables": [
+          {"text": "cha", "stress": "high", "silent": false},
+          {"text": "i", "stress": "low", "silent": true},
+          {"text": "r", "stress": "low", "silent": false}
+      ]
+    },
+    {
+      "word": "reference",
+      "syllables": [
+          {"text": "re", "stress": "high", "silent": false},
+          {"text": "ference", "stress": "low", "silent": false}
+      ]
+    },
+    {
+      "word": "images",
+      "syllables": [
+          {"text": "i", "stress": "high", "silent": false},
+          {"text": "mages", "stress": "low", "silent": false}
+      ]
+    },
+    {
+      "word": "screenshots",
+      "syllables": [
+          {"text": "scr", "stress": "low", "silent": false},
+          {"text": "een", "stress": "high", "silent": false},
+          {"text": "shots", "stress": "low", "silent": false}
+      ]
+    },
+    {
+      "word": "zoology",
+      "syllables": [
+          {"text": "zo", "stress": "low", "silent": false},
+          {"text": "ol", "stress": "high", "silent": false},
+          {"text": "o", "stress": "low", "silent": false},
+          {"text": "gy", "stress": "low", "silent": false}
+      ]
+    },
+    {
+      "word": "confidential",
+      "syllables": [
+          {"text": "con", "stress": "low", "silent": false},
+          {"text": "fi", "stress": "low", "silent": false},
+          {"text": "den", "stress": "high", "silent": false},
+          {"text": "tial", "stress": "low", "silent": false}
+      ]
+    }
+  ]
+ 

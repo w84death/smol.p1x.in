@@ -1,0 +1,160 @@
+body {
+  background: #f3f3f3;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+
+.logo {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+
+.paper {
+  width: 800px;
+  margin: 0 auto 2em;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+
+
+.lines {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 60px;
+  right: 0;
+  background-image: linear-gradient(to bottom, transparent 98%, #000 98%);
+  background-size: 100% 24px;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  padding: 20px 40px;
+  z-index: 1;
+}
+
+.word+.word {
+  margin-left: 0.5em;
+}
+
+.syllable {
+  margin: 0 2px;
+}
+
+.syllable:not(:last-child)::after {
+  content: "-";
+  color: inherit;
+}
+
+.high-stress {
+  color: #fefefe;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+}
+
+.low-stress {
+  color: #eee;
+}
+
+.silent {
+  color: #737a99;
+}
+
+.no-stress {
+  color: #ddd;
+}
+
+.paper.blue {
+  background: #324282;
+}
+
+.paper.info {
+  font-size: 12px;
+  background: #f8f8f8;
+  color: #222;
+}
+
+.input-area {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#textInput {
+  width: 100%;
+  /* Fill the width of its parent */
+  height: 150px;
+  /* Adjust height as needed */
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+  /* Include padding in the total width and height */
+  outline: none;
+  /* Optional: removes the default focus outline */
+  resize: none;
+  /* Optional: prevents resizing */
+}
+
+.words-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allows items to wrap to the next line */
+  gap: 10px;
+  /* Adds space between the items */
+  padding: 10px;
+  list-style: none;
+  /* Removes default list styling */
+  max-height: 200px;
+  /* Adjust as necessary */
+  overflow-y: auto;
+  /* Allows scrolling if the list is long */
+  margin: 20px auto;
+  width: 80%;
+  /* Adjust as necessary */
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.words-list li {
+  background-color: #f2f2f2;
+  /* Light grey background */
+  padding: 5px 10px;
+  border-radius: 5px;
+  /* Gives rounded corners for a tag-like appearance */
+  cursor: pointer;
+  font-size: 14px;
+  /* Adjust as necessary */
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.words-list li:hover {
+  background-color: #dcdcdc;
+  /* Slightly darker shade on hover */
+  color: #000;
+}
+
+
+footer {
+  text-align: center;
+  color: gray;
+  font-size: 14px;
+}

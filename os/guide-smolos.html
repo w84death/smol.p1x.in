@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SCENE P1X</title>
+  <link rel="stylesheet" href="base.css" type="text/css" media="screen" charset="utf-8" />
+  </head>
+<body>
+  <header><h1>smolOS - Installation Guide</h1>
+  <h2>Install MicroPython</h2>
+	
+
+
+  <p>Your microcontroller needs to have latest Python firmware installed.</p>
+  <ul>
+    <li><a href="guide-xiao.html">Guide for XIAO RP2040</a></li>
+    <li><a href="guide-esp.html">Guide for ESP8266</a></li>
+  </ul>
+  <p>After that you can copy smolOS files.</p>
+  <h2>Install smolOS</h2>
+  <p>As main script:</p>
+  <ul>
+    <li>put main system file <i>smolos.py</i> onto the board flash</li>
+    <li> copy <i>main.py </i>(auto-boot)</li>
+  </ul>
+  <p>As separate script that will work with your existing files on the device:</p>
+	
+
+
+  <ul>
+    <li>do not copy main.py</li>
+    <li>you will need to boot OS by hand each time</li>
+  </ul>
+  <h3><br>
+  Prepare Environment</h3>
+	
+
+
+  <p>Do this once (initialization, ampy installation):</p>
+	
+
+
+  <pre>$ python3 -m venv venv
+$ source venv/bin/activate
+$ pip install ampy</pre>
+	
+
+
+  <h3>Pushing Files</h3>
+  <p>After that each time do this:</p>
+  <pre>$ source venv/bin/activate
+$ ampy --port /dev/ttyUSB0 put smolos.py
+$ ampy --port /dev/ttyUSB0 put main.py
+$ ampy --port /dev/ttyUSB0 put hello.txt</pre>
+	
+
+
+  <p>Description:</p>
+	
+
+
+  <ul>
+    <li>smolos.py is the full smolOS system</li>
+    <li>main.py is a default script that will run at boot and initiate the
+      smolOS</li>
+    <li><i>hello.txt</i> is just a test file so you have something to play with
+      (optional)</li>
+    <li>put your own files the same way</li>
+    <li><b>do not</b> overwrite the system <i> boot.py</i> file!</li>
+  </ul>
+  <h3>Manual Booting</h3>
+  <p>In MicroPython REPL write:</p>
+  <pre>&gt;&gt;&gt; from smolos import smolOS
+&gt;&gt;&gt; os = smolOS()
+&gt;&gt;&gt; os.boot()</pre>
+	
+
+
+  </main>
+  <footer><hr><small>&copy;2024 by Krzysztof Krystian Jankowski &amp; Cyfrowy Nomada<br>Powered by 👁️🐝Ⓜ️</small></footer>
+</body>

@@ -1,0 +1,163 @@
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #BBB;
+    color: #222;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    background-color: #000;  /* Dark background simulating the screen off state */
+    padding: 20px;
+    margin: 20px auto;  /* Provide some space around the header to simulate a monitor frame */
+    border-radius: 32px;  /* Slightly rounded corners like old CRT monitors */
+    border: 8px solid #24200e;
+    box-shadow: inset 0 10px 40px #797153, 0 0 20px #000, 0 0 10px 10px #b9b9b92b;
+    position: relative;
+    width:800px;
+    color:rgb(4, 156, 4);
+}
+
+footer {
+    clear:left;
+}
+
+header h1 {
+    position: relative;
+    color: #0f0;  /* Green font color typical of old monochrome CRT displays */
+    text-shadow: 0 0 5px #0f0;  /* Glowing effect */
+    z-index: 2; 
+    font-size: 4em;
+    margin: 0;
+    top:112px;
+}
+
+
+.gallery {
+    
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+
+.image {
+    border: 32px solid #888;
+  width: calc(33.333% - 100px);
+    overflow: hidden; /* Hide parts of the image that exceed the container */
+    position: relative;
+    height: 100%; /* Set a fixed height or vary depending on your design */
+
+    margin: 12px;
+    box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),  /* Smaller shadow */
+    0 4px 8px rgba(0, 0, 0, 0.15),  /* Medium shadow */
+    0 8px 16px rgba(0, 0, 0, 0.2);  /* Larger shadow for more depth */
+    transition: box-shadow 0.3s ease-in-out; 
+}
+
+.image:hover {
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.2),
+        0 8px 16px rgba(0, 0, 0, 0.25),
+        0 16px 32px rgba(0, 0, 0, 0.3);  /* Enhanced shadow on hover for a dynamic effect */
+}
+
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the container while maintaining aspect ratio */
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+    .image {
+        width: calc(50% - 20px); /* Two images per row on smaller screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .image {
+        width: 100%; /* Full width on very small screens */
+    }
+}
+
+
+.scene {
+    width: 200px;
+    height: 200px;
+    perspective: 600px; /* Controls how 3D elements are viewed */
+    margin:0 auto;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d; /* Allows children to maintain 3D position */
+    animation: rotate 10s infinite linear; /* Infinite rotation animation */
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(228, 255, 42, 0.07);
+    border: 1px solid #afff00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #86ffd7;
+}
+
+.front  { transform: translateZ(100px); }
+.back   { transform: rotateY(180deg) translateZ(100px); }
+.right  { transform: rotateY(90deg) translateZ(100px); }
+.left   { transform: rotateY(-90deg) translateZ(100px); }
+.top    { transform: rotateX(90deg) translateZ(100px); }
+.bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+@keyframes rotate {
+    from { transform: rotateY(0deg) rotateX(360deg); }
+    to { transform: rotateY(360deg) rotateX(0deg); }
+}
+
+.snake-text {
+    font-weight: bold;
+}
+
+.snake-text span {
+    display: inline-block;
+    animation: snake-move 6s infinite;
+}
+
+@keyframes snake-move {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(32px);
+    }
+}
+
+/* Individual animation delays for each letter to create the snake effect */
+.snake-text span:nth-child(1) { animation-delay: 0s; }
+.snake-text span:nth-child(2) { animation-delay: 0.1s; }
+.snake-text span:nth-child(3) { animation-delay: 0.2s; }
+.snake-text span:nth-child(4) { animation-delay: 0.3s; }
+.snake-text span:nth-child(5) { animation-delay: 0.4s; }
+.snake-text span:nth-child(6) { animation-delay: 0.5s; }
+.snake-text span:nth-child(7) { animation-delay: 0.6s; }
+.snake-text span:nth-child(8) { animation-delay: 0.7s; }
+.snake-text span:nth-child(9) { animation-delay: 0.8s; }
+.snake-text span:nth-child(10) { animation-delay: 0.9s; }
+.snake-text span:nth-child(11) { animation-delay: 1s; }
+.snake-text span:nth-child(12) { animation-delay: 1.1s; }
+.snake-text span:nth-child(13) { animation-delay: 1.2s; }
+.snake-text span:nth-child(14) { animation-delay: 1.3s; }
