@@ -3,104 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootsector Assembly Games</title>
+    <title>My Assembly Games</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>x86 Assembly Programs</h1>
-            <h2>Bootsector (512b) / No Operating System Games</h2>
-            <div class="menu-bar">
-                <span class="status-item">ON-LINE REMOTE</span>
-                <span class="status-item">22-OCT-2019 11:14:39</span>
-                <span class="github-link"><a href="https://github.com/w84death/x86-assembly">GitHub</a></span>
+    <header>
+        <h1>Bootsector x86 Assembly Games</h1>
+<pre>
+       _________________
+      /_/  for x86   /_/;
+     / ' boot disk  ' //    No operating system needed! 
+    / '------------' //    Each game fits first sector of a floppy = 512 bytes.
+   /   .--------.   //    Just boot it!
+  /   /         /  //
+ .___/_________/__//   1440KiB
+ '===\_________\=='   3.5"
+</pre>
+    </header>
+    <main>
+        <div class="shelf">
+            <div class="game-cover">
+                <a href="#game1">
+                    <img src="game1/cover.gif" alt="Game 1">
+                    <p>Land Me</p>
+                </a>
             </div>
-        </header>
-        <main>
-            <div class="sidebar">
-                <ul>
-                    <li>
-                        <input type="radio" name="sidebar" id="about" checked>
-                        <label for="about">About Bootsector Games</label>
-                        <div class="sidebar-content">
-                            <p>Bootsector games are small programs that run directly from the boot sector of a floppy disk. These games are written in assembly language and are a fun way to learn low-level programming.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <input type="radio" name="sidebar" id="how-to-run">
-                        <label for="how-to-run">How to Run</label>
-                        <div class="sidebar-content">
-                            <p>To run a bootsector game, you need to write the floppy image to a disk or use a virtual machine. Tools like QEMU or VirtualBox can help you run these images without physical hardware.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <input type="radio" name="sidebar" id="x86-tips">
-                        <label for="x86-tips">x86 Assembler Tips</label>
-                        <div class="sidebar-content">
-                            <p>Learning x86 assembly can be challenging. Start with understanding the basic instructions and how the CPU registers work. Practice by writing small programs and gradually increase the complexity.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <input type="radio" name="sidebar" id="resources">
-                        <label for="resources">Resources</label>
-                        <div class="sidebar-content">
-                            <p>Here are some useful resources for learning x86 assembly and bootsector programming:</p>
-                            <ul>
-                                <li><a href="https://www.example.com">Resource 1</a></li>
-                                <li><a href="https://www.example.com">Resource 2</a></li>
-                                <li><a href="https://www.example.com">Resource 3</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
+            <div class="game-cover">
+                <a href="#game2">
+                    <img src="game2/cover.gif" alt="Game 2">
+                    <p>Ganja Farmer 512b</p>
+                </a>
             </div>
-            <div class="content">
-                <div class="main-content">
-                    <div class="game-list">
-                        <h2>Bootsector Assembly Games</h2>
-                        <ul>
-                            <li class="game-item">
-                                <input type="radio" name="game" id="game1">
-                                <label for="game1">Game 1</label>
-                                <div class="game-details">
-                                    <h2>Game 1</h2>
-                                    <p>Description of Game 1.</p>
-                                    <p><a href="http://example.com/source/game1">Source Code</a></p>
-                                    <p><a href="http://example.com/doc/game1">Documentation</a></p>
-                                    <p><a href="http://example.com/downloads/game1.floppy.img">Download Floppy Image</a></p>
-                                    <p><a href="http://example.com/downloads/game1.com">Download COM File</a></p>
-                                </div>
-                            </li>
-                            <li class="game-item">
-                                <input type="radio" name="game" id="game2">
-                                <label for="game2">Game 2</label>
-                                <div class="game-details">
-                                    <h2>Game 2</h2>
-                                    <p>Description of Game 2.</p>
-                                    <p><a href="http://example.com/source/game2">Source Code</a></p>
-                                    <p><a href="http://example.com/doc/game2">Documentation</a></p>
-                                    <p><a href="http://example.com/downloads/game2.floppy.img">Download Floppy Image</a></p>
-                                    <p><a href="http://example.com/downloads/game2.com">Download COM File</a></p>
-                                </div>
-                            </li>
-                            <li class="game-item">
-                                <input type="radio" name="game" id="game3">
-                                <label for="game3">Game 3</label>
-                                <div class="game-details">
-                                    <h2>Game 3</h2>
-                                    <p>Description of Game 3.</p>
-                                    <p><a href="http://example.com/source/game3">Source Code</a></p>
-                                    <p><a href="http://example.com/doc/game3">Documentation</a></p>
-                                    <p><a href="http://example.com/downloads/game3.floppy.img">Download Floppy Image</a></p>
-                                    <p><a href="http://example.com/downloads/game3.com">Download COM File</a></p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="game-cover">
+                <a href="#game3">
+                    <img src="game3/cover.gif" alt="Game 3">
+                    <p>Fly Escape!</p>
+                </a>
             </div>
-        </main>
-    </div>
+        </div>
+
+        <div id="game1" class="game-details">
+            <h2>Land Me</h2>
+            <img src="game1/cover.gif" alt="Game 1">
+            <p>This is a simple yet challenging game where you have to land a spaceship safely on a platform.</p>
+            <p><img src="game1/screen1.png" alt="Game 1 screenshot">
+            <img src="game1/screen2.png" alt="Game 1 screenshot"></p>
+            <p>
+                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game1">GitGub</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/game1.asm">Get Source Code</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/floppy.img">Get floppy image to boot</a>
+            </p>
+            <a href="#">Close</a>
+        </div>
+        <div id="game2" class="game-details">
+            <h2>Ganja Farmer 512b</h2>
+            <img src="game2/cover.gif" alt="Game 2">
+
+            <p>In this game, you are a farmer cultivating your crops while avoiding obstacles and challenges.</p>
+            <p><img src="game2/screen1.png" alt="Game 2 screenshot">
+            <img src="game2/screen2.png" alt="Game 2 screenshot"></p> 
+            <a href="#">Close</a>
+        </div>
+        <div id="game3" class="game-details">
+            <h2>Fly Escape!</h2>
+            <img src="game3/cover.gif" alt="Game 3">
+            <p>Help the fly escape from various traps and enemies in this fast-paced adventure game.</p>
+            <a href="#">Close</a>
+        </div>
+
+    </main>
+    <footer>
+        <p>&copy; 2024 Krzysztof Krystian Jankowski</p>
+    </footer>
 </body>
 </html>
