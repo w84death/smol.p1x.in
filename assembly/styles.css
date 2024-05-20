@@ -71,7 +71,7 @@ pre {
     padding: 20px;
     border: 2px solid #0f0;
     margin: 20px auto;
-    width: 80%;
+    max-width: 640px;
 }
 
 .game-details:target {
