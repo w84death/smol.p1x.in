@@ -49,9 +49,9 @@
             <p><img src="game1/screen1.png" alt="Game 1 screenshot">
             <img src="game1/screen2.png" alt="Game 1 screenshot"></p>
             <p>
-                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game1">GitGub</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/game1.asm">Get Source Code</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/floppy.img">Get floppy image to boot</a>
+                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game1">GitGub page</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/game1.asm">Commented Source Code</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/floppy.img">Bootable Floppy Image (512kb)</a>
             </p>
             <a href="#">Close</a>
         </div>
@@ -63,20 +63,49 @@
             <p><img src="game2/screen1.png" alt="Game 2 screenshot">
             <img src="game2/screen2.png" alt="Game 2 screenshot"></p>
             <p>
-                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game2">GitGub</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game2/game2.asm">Get Source Code</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game2/floppy.img">Get floppy image to boot</a>
+                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game2">GitGub page</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game2/game2.asm">Commented Source Code</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game2/floppy.img">Bootable Floppy Image (512kb)</a>
             </p>
             <a href="#">Close</a>
         </div>
         <div id="game3" class="game-details">
             <h2>Fly Escape!</h2>
-            <img src="game3/cover.gif" alt="Game 3">
-            <p>Fly Escape is a boot sector game developed by Krzysztof Krystian Jankowski ^ P1X, released version 1.0 on May 18, 2024. The game runs on Intel 386 processors in 16-bit real mode and features a simple yet engaging gameplay experience in a VGA 320x200x256 graphics mode. The objective of the game is to control a fly, avoid spiders, and collect flowers to advance through levels.</p>
             <p>
-                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game3">GitGub</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/game3.asm">Get Source Code</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy.img">Get floppy image to boot</a>
+                <img src="game3/cover.gif" alt="Game 3">
+            </p>
+            <p>Fly Escape is a boot sector game developed by Krzysztof Krystian Jankowski ^ P1X, released version 2.1 on May 26, 2024. The game runs on Intel 286 processors in 16-bit real mode and features a simple yet engaging gameplay experience in a VGA 320x200x256 graphics mode. The objective of the game is to control a fly, avoid spiders, and collect flowers to advance through levels.</p>
+            
+            <h3>Features</h3>
+            <ul>
+                <li>VGA Graphics: Runs in 320x200 resolution with 256 colors.
+                <li>Double Buffering: Smooth rendering with minimal flickering.
+                <li>Player Control: Control a fly, avoiding spiders and collecting flowers.
+                <li>Randomized Levels: Entity positions and rotations are pseudo-randomly generated.
+                <li>Collision Detection: Accurate pixel-based collision detection.
+                <li>Multiple Levels: Progress through increasing levels of difficulty.
+                <li>Life System: Start with 4 lives; lose a life when colliding with spiders.
+                <li>Entity Types: Different entities with unique behaviors:
+                    <ul>
+                    <li>Spiders: Dangerous enemies to avoid.
+                    <li>Flowers: Collect these to advance to the next level.
+                    </ul>
+                <li>Animated sprites: Three sprites each 8x7 pixels in 2 frames
+                <li>Level and live indicator: Dots in top-left of the screen and a line under fly.
+                <li>Keyboard Controls: Rotate the fly to navigate through the game environment.
+                <li>Compact Size: Entire game fits within a 512-byte boot sector.
+            </ul>
+            <p>
+                <img src="game3/screen1.gif" alt="Game 3 screenshot">
+                <img src="game3/screen2.gif" alt="Game 3 screenshot">
+                <img src="game3/screen3.gif" alt="Game 3 screenshot">
+            </p>
+            <h3>Download</h3>
+            <p>
+                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game3">GitGub page</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/game3.asm">Commented Source Code</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy.img">Bootable Floppy Image (512kb) - 386+</a>
+                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy_286.img">286</a>
             </p>
             <a href="#">Close</a>
         </div>
