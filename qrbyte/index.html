@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Binary Encoder/Decoder</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        #qr-code {
+            margin-top: 20px;
+            width: 256px; /* Control QR code size */
+            height: 256px; /* Control QR code size */
+            border: 1px solid #333;
+        }
+        #output, #download-link {
+            margin-top: 20px;
+        }
+        input, button {
+            margin-top: 10px;
+            padding: 8px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Binary Encoder/Decoder</h1>
+        
+        <input type="file" id="file-input" accept=".bin" />
+        <button id="encode-button">Encode to QR Code</button>
+        
+        <h2>QR Code</h2>
+        <canvas id="qr-code"></canvas>
+        
+        <h2>Decode QR Code</h2>
+        <input type="file" id="qr-input" accept="image/*" />
+        <button id="decode-button">Decode from QR Code</button>
+        <pre id="output"></pre>
+        <a id="download-link" style="display: none;">Download Decoded File</a>
+    </div>
+
+    <script>
+        // Helper function to convert array buffer to base64 string
+        function arrayBufferToBase64(buffer) {
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return window.btoa(binary);
+        }
+
+        // Helper function to convert base64 string to array buffer
+        function base64ToArrayBuffer(base64) {
+            var binary_string = window.atob(base64);
+            var len = binary_string.length;
+            var bytes = new Uint8Array(len);
+            for (var i = 0; i < len; i++) {
+                bytes[i] = binary_string.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        // Function to encode binary data to QR Code
+        document.getElementById('encode-button').addEventListener('click', function() {
+            const fileInput = document.getElementById('file-input');
+            const canvas = document.getElementById('qr-code');
+            
+            if (fileInput.files.length === 0) {
+                alert('Please select a file first.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64Data = arrayBufferToBase64(event.target.result);
+                const qr = qrcode(0, 'M');
+                qr.addData(base64Data);
+                qr.make();
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+                canvas.width = qr.getModuleCount() * 10;
+                canvas.height = qr.getModuleCount() * 10;
+                qr.renderTo2dContext(canvas.getContext('2d'), 10);
+            };
+            reader.readAsArrayBuffer(fileInput.files[0]);
+        });
+
+        // Function to decode binary data from QR Code
+        document.getElementById('decode-button').addEventListener('click', function() {
+            const qrInput = document.getElementById('qr-input');
+            const output = document.getElementById('output');
+            const downloadLink = document.getElementById('download-link');
+
+            if (qrInput.files.length === 0) {
+                alert('Please select an image first.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const context = canvas.getContext('2d');
+                    context.drawImage(img, 0, 0);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+                    const code = jsQR(imageData.data, canvas.width, canvas.height);
+                    if (code) {
+                        output.textContent = "QR Code decoded successfully.";
+                        const arrayBuffer = base64ToArrayBuffer(code.data);
+                        const blob = new Blob([arrayBuffer], {type: 'application/octet-stream'});
+                        downloadLink.href = URL.createObjectURL(blob);
+                        downloadLink.style.display = 'inline';
+                        downloadLink.download = 'decoded-file.bin';
+                        downloadLink.textContent = 'Download Decoded File';
+                    } else {
+                        output.textContent = 'No QR code found.';
+                        downloadLink.style.display = 'none';
+                    }
+                };
+            };
+            reader.readAsDataURL(qrInput.files[0]);
+        });
+    </script>
+</body>
+</html>
