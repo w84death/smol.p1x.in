@@ -9,6 +9,10 @@ window.onload = function() {
     const outputPanel = document.getElementById('outputPanel');
     let isDrawing = false, startX, startY, currentColor = '#000000';
 
+    // Minimum and maximum rectangle dimensions
+    const minSize = 4;
+    const maxSize = 255;
+
     // Populate color palette with VGA default colors
     const colors = ['#000000', '#0000AA', '#00AA00', '#00AAAA', '#AA0000', '#AA00AA', '#AA5500', '#AAAAAA', '#555555', '#5555FF', '#55FF55', '#55FFFF', '#FF5555', '#FF55FF', '#FFFF55', '#FFFFFF'];
     colors.forEach(color => {
@@ -33,6 +37,11 @@ window.onload = function() {
             previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
             let width = e.offsetX - startX;
             let height = e.offsetY - startY;
+            if (width >= minSize && height >= minSize && width <= maxSize && height <= maxSize) {
+                previewCtx.fillStyle = currentColor;
+            }else{
+                previewCtx.fillStyle = '#ff000030';
+            }
             previewCtx.fillRect(startX, startY, width, height);
         }
     };
@@ -41,11 +50,19 @@ window.onload = function() {
         isDrawing = false;
         let width = e.offsetX - startX;
         let height = e.offsetY - startY;
-        ctx.fillStyle = currentColor;
-        ctx.fillRect(startX, startY, width, height);
+
+        if (width >= minSize && height >= minSize && width <= maxSize && height <= maxSize) {
+            ctx.fillStyle = currentColor;
+            ctx.fillRect(startX, startY, width, height);
+            appendOutput(currentColor, startX, startY, width, height);
+        }
         previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-        appendOutput(currentColor, startX, startY, startX + width, startY + height);
     };
+
+    // Append rectangle definition to output panel
+    function appendOutput(colorIndex, x, y, w, h) {
+        outputPanel.value += `${colorIndex}, ${x}/${y}, ${w}x${h}\n`;
+    }
 
     // Clear canvas button functionality
     clearBtn.onclick = function() {
@@ -61,9 +78,4 @@ window.onload = function() {
         link.href = imageData;
         link.click();
     };
-
-    // Append rectangle definition to output panel
-    function appendOutput(color, x1, y1, x2, y2) {
-        outputPanel.value += `Color: ${color}, Start: (${x1}, ${y1}), End: (${x2}, ${y2})\n`;
-    }
 };
