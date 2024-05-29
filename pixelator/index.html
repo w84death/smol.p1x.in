@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art Painting Program</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Pixel Art Painting Program</h1>
+        <p>VGA Preview (320x200 scaled). Click to stamp the sprite.</p>
+        <canvas id="previewCanvas" width="640" height="400"></canvas>
+        <p>Sprite working area (8x8px):</p>
+        <canvas id="mainCanvas" width="64" height="64"></canvas>
+        <p>Left click draws primary color. Right click draws secondary color.</p>
+        <div id="palette">
+            <div class="color-picker primary-color" title="Primary Color"></div>
+            <div class="color-picker secondary-color" title="Secondary Color"></div>
+        </div>
+        <div id="controls">
+            <button id="clearButton">Clear (Secondary Color)</button>
+            <label for="canvasSize">Sprite Preview: </label>
+            <select id="canvasSize">
+                <option value="8">8x</option>
+                <option value="16">16x</option>
+                <option value="32">32x</option>
+            </select>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
