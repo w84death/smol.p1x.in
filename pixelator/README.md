@@ -1,8 +1,10 @@
-# Pixel Art Painting Program Manual
+# Pixelator - Pixel Art Painting Program Manual
 
 ## Introduction
 
-Welcome to the Pixel Art Painting Program! This program allows you to create 8x8 pixel art sprites with ease. You can draw on a canvas, preview your sprite, and save the final image. This manual will guide you through the features and how to use the program.
+![Pixelator](pixelator.png)
+
+Welcome to the Pixelator - Pixel Art Painting Program! This program allows you to create 8x8 pixel art sprites with ease. You can draw on a canvas, preview your sprite, and save the final image. This manual will guide you through the features and how to use the program.
 Features
 
 - Drawing Canvas: An 8x8 pixel grid where you can draw your sprite.

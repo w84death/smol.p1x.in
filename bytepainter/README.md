@@ -2,6 +2,8 @@
 
 ## Overview
 
+![bytePainter](bytepainter.png)
+
 bytePainter is a simple yet powerful drawing tool designed to create and manage rectangle-based artworks with a few clicks. Users can choose colors from the VGA default palette, draw rectangles on a canvas, and export their creations in PNG format. The program also features a live output panel that provides the definition of each drawn rectangle, including color index and dimensions.
 Features
 
