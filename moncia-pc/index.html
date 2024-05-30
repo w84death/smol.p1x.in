@@ -1,35 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Moncia PC</title>
-  <link rel="stylesheet" href="base.css" type="text/css" media="screen" charset="utf-8" />
-  </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moncia - Homebrew Personal Computer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-  <header><h1>Moncia a Homebrew Personal Computer</h1>
-    <p><img src="pc-1.jpg" alt="Moncia PC"/></p>
-    <blockquote>This is my computer. There are many like it, but this one is mine.<br/>
-      My computer is my best friend. It is my life. I must master it as I must master my life. </blockquote>
-  </header>
-
-  <main>
-    <h2>Description</h2>
-    <p>Based on 8-bit microcontroller (Arduino Uno) and home made operating system.</p>
-    <p>It has input from a regular PS/2 keyboard and can output black &amp;white image to the TV. User interface is graphical.</p>
-  
-    <h3>Repository</h3>
-    <p><a href="https://github.com/w84death/Moncia-PC">https://github.com/w84death/Moncia-PC</a></p>
-  </main>
-
-  <article>
-    <h2>Introduction</h2>
-    <p>I've always wanted to create my own operating system, but undertaking such a project on modern hardware is incredibly challenging due to its complexity and the extensive requirement for drivers to facilitate hardware communication. To realize this ambition, I decided to construct a simpler solution: an eight-bit computer capable of keyboard input and output to an old-school TV. This system is based on the Arduino Uno, which is not only affordable and accessible but also relatively easy to assemble from off-the-shelf components. The simplicity of connecting or soldering these components together, combined with the plethora of available libraries, greatly aids the development process. Currently, I'm utilizing two critical libraries for input and output functionalities.</p>
-    <p>One significant challenge I've encountered in this project is memory management. The Arduino Uno comes with a mere two kilobytes of RAM, over half of which is consumed by the screen buffer alone. Additionally, memory is required for the function call stack, strings passed to other functions, variables, tables, etc.</p>
-    <p>Despite these challenges, the project has been an immensely fun and educational journey, offering me an invaluable opportunity to deepen my understanding of the C language and embedded development. Striving not just for functionality but also for aesthetic appeal, I aim to design a fully graphical interface, complete with icons and buttons familiar to users, despite the constraints of low resolution and one-bit color depth (black on white). Luckily, my proficiency in pixel art complements my coding skills, making this aspect of the project enjoyable.</p>
-    <p>In my past experiences with creating one-bit images, I've acquired several techniques to enhance their appearance or simulate gradients, which have been instrumental in this project.</p>
-    <p>Furthermore, I've integrated an audio channel into the device, akin to the simplistic but iconic PC Speaker. By adding a piezo electronic speaker, I've enabled basic sound effects for keyboard inputs—positive feedback sounds, error alerts, and even a boot-up sound reminiscent of old Macintosh computers.</p>
-    <p>The project's foundation includes a basic code structure, a high-level concept of the operating system, and a wish list of features. Given hardware limitations, I'll have to prioritize these features, which include keyboard and possibly mouse input, one-bit output, and a handful of applications. The first application I developed serves diagnostic purposes, providing insights into the system's free RAM and other metrics. Another early creation is a text editor, designed for simplicity due to the Arduino's limited EEPROM capacity (approximately 1000 characters). This editor allows for editing texts up to 240 characters in length—equivalent to one screen page—across four separate files.</p>
-    <p>Editing capabilities are intentionally basic, restricted to backspace for deleting the last character and straightforward text replacement. Deleting a file involves backspacing to the beginning or utilizing a secondary tool that zeroes out the selected memory bank. This minimalist approach to writing and editing is inspired by the FeliCa Vita device and has proven to be effective and user-friendly.</p>
-  </article>
-  <footer><hr><small>&copy;2024 by Krzysztof Krystian Jankowski &amp; Cyfrowy Nomada<br>Powered by 👁️🐝Ⓜ️</small></footer>
+    <header>
+        <h1>Moncia</h1>
+        <p>A Homebrew Personal Computer</p>
+        <backquote>This is my computer. There are many like it, but this one is mine. My computer is my best friend. It is my life. I must master it as I must master my life.</backquote>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#repository">Code Repository</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="description">
+            <h2>Description</h2>
+            <p>Moncia is based on an 8-bit microcontroller (Arduino Uno) and features a home-made operating system. It accepts input from a regular PS/2 keyboard and outputs black & white images to a TV. The user interface is graphical.</p>
+            <p>I've always wanted to create my own operating system, but undertaking such a project on modern hardware is incredibly challenging due to its complexity and the extensive requirement for drivers to facilitate hardware communication. To realize this ambition, I decided to construct a simpler solution: an eight-bit computer capable of keyboard input and output to an old-school TV. This system is based on the Arduino Uno, which is not only affordable and accessible but also relatively easy to assemble from off-the-shelf components. The simplicity of connecting or soldering these components together, combined with the plethora of available libraries, greatly aids the development process. Currently, I'm utilizing two critical libraries for input (PS2Keyboard) and output (TVout) functionalities.</p>
+        </section>
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <h3>Hardware</h3>
+            <div class="gallery-container">
+                <img src="pc-1.jpg" alt="Moncia PC">
+                <img src="cpu.gif" alt="Moncia PC - microcontroller">
+                <img src="ardu.gif" alt="Moncia PC - Arduino UNO">
+            </div>
+            <h3>OS/Software</h3>
+            <div class="gallery-container">
+              <img src="os-2.jpeg" alt="Moncia PC OS Bootsplash">
+              <img src="os-3.jpeg" alt="Moncia PC OS Desktop">
+              <img src="os-4.jpeg" alt="Moncia PC OS Settings">
+              <img src="os-5.jpeg" alt="Moncia PC OS About">
+          </div>
+        </section>
+        <section id="repository">
+            <h2>Code Repository</h2>
+            <p>Check out the code on GitHub:</p>
+            <a href="https://github.com/w84death/Moncia-PC" target="_blank">GitHub Repository</a>
+        </section>
+    </main>
+    <footer>
+      <small>&copy;2023 by Krzysztof Krystian Jankowski &amp; Cyfrowy Nomada<br/>Powered by 👁️🐝Ⓜ️</small>
+    </footer>
 </body>
+</html>
