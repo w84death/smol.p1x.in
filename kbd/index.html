@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            display: block;
+        }
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        #gameOver, #titleScreen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: #fffc;
+            border-radius: 5px;
+        }
+        #gameOver {
+            font-size: 48px;
+            display: none;
+        }
+        #titleScreen ol {
+            text-align: left;
+            margin-left: 20px;
+        }
+        #titleScreen small {
+            color: #a6a6a6;
+        }
+        #titleScreen {
+            animation: fadeOut 6s ease-out forwards;
+        }
+        
+        #words, #inputDisplay, #score {
+            position: absolute;
+            font-size: 20px;
+            background: #0000000a;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #a6a6a6;
+        }
+        #words {
+            top: 10px;
+            left: 10px;
+        }
+        #inputDisplay {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background-color: #000000a6;
+        }
+        #score {
+            top: 10px;
+            right: 10px;
+        }
+        button {
+            background-color: #3a3a3a;
+            color: #c5c5c5;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        button:hover, select:hover {
+            background-color: #575757;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            30% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="titleScreen">
+        <h1>KBD - Typing Exercise</h1>
+        <ol>
+            <li>Type the words as they appear on the screen.
+            <li>Hit enter to submit the word.
+            <li>Matched word will give you 3 points or 2 if backspace was used. 
+        </ol>
+        <p><small>Designed &amp; developed by Krzysztof Krystian Jankowski</small></p>
+    </div>
+    <div id="gameOver">
+        <h2>Game Over</h2>
+        <p>Score: <span id="finalScore">0</span></p>
+        <button onclick="restartGame()">Play Again</button>
+    </div>
+    <div id="words"></div>
+    <div id="inputDisplay"></div>
+    <div id="score"></div>
+    <script src="game.js"></script>
+</body>
+</html>

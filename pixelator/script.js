@@ -3,6 +3,7 @@ const previewCanvas = document.getElementById('previewCanvas');
 const mainCtx = mainCanvas.getContext('2d');
 const previewCtx = previewCanvas.getContext('2d');
 const clearButton = document.getElementById('clearButton');
+const tileButton = document.getElementById('tileButton');
 const canvasSizeDropdown = document.getElementById('canvasSize');
 const palette = document.getElementById('palette');
 
@@ -86,7 +87,6 @@ function clearCanvas() {
     updatePreview();
 }
 
-
 function updateMainCanvas() {
     mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
     sprite.forEach((row, x) => {
@@ -106,6 +106,14 @@ function stampSprite(x, y) {
             previewCtx.fillRect((offsetX + spriteX) * 2, (offsetY + spriteY) * 2, 2, 2);
         });
     });
+}
+
+function tileSprite() {
+    for (let i = 0; i <= previewCanvas.width; i += 16) {
+        for (let j = 0; j <= previewCanvas.height; j += 16) {
+            stampSprite(i, j);
+        }
+    }
 }
 
 function resizeCanvas(newPixelSize) {
@@ -141,6 +149,7 @@ palette.addEventListener('contextmenu', (event) => {
 });
 
 clearButton.addEventListener('click', clearCanvas);
+tileButton.addEventListener('click', tileSprite);
 
 canvasSizeDropdown.addEventListener('change', (event) => {
     resizeCanvas(parseInt(event.target.value, 10));
