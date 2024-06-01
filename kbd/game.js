@@ -5,6 +5,7 @@ const inputDisplay = document.getElementById('inputDisplay');
 const scoreDisplay = document.getElementById('score');
 const gameOverScreen = document.getElementById('gameOver');
 const finalScore = document.getElementById('finalScore');
+const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -38,12 +39,13 @@ let usedBackspace = false;
 class Word {
     constructor(text) {
         this.text = text;
-        this.x = Math.random() * (canvas.width - 100);
+        const textWidth = ctx.measureText(this.text).width;
+        this.x = Math.random() * (canvas.width - textWidth);
         this.y = 0;
     }
     draw() {
         ctx.font = '20px Arial';
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = document.body.classList.contains('dark') ? 'white' : 'black';
         ctx.fillText(this.text, this.x, this.y);
     }
     update() {
@@ -82,15 +84,16 @@ function updateGame() {
         }
     }
     
+    wordsDisplay.textContent = `${wordsCleared} of ${wordsSpawned}`;
     inputDisplay.textContent = input;
-    wordsDisplay.textContent = `Words: ${wordsCleared} / ${wordsSpawned}`;
-    scoreDisplay.textContent = `Score: ${score}`;
+    scoreDisplay.textContent = `${score} 🌟`;
 }
 
 function checkInput() {
     for (let i = 0; i < fallingWords.length; i++) {
         if (fallingWords[i].text === input) {
-            score += usedBackspace ? 2 : 3;
+            let wordScore = fallingWords[i].text.length;
+            score += usedBackspace ? Math.floor(wordScore / 2) : wordScore;
             fallingWords.splice(i, 1);
             wordsCleared++;
             input = '';
@@ -113,14 +116,37 @@ function restartGame() {
 }
 
 window.addEventListener('keydown', (e) => {
+    if (gameOver) {
+        if (e.key.toLowerCase() === 'r') {
+            restartGame();
+        }
+        return;
+    }
     if (e.key === 'Backspace') {
         input = input.slice(0, -1);
         usedBackspace = true;
     } else if (e.key === 'Enter') {
         checkInput();
+        e.preventDefault();
     } else if (e.key.length === 1) {
         input += e.key;
     }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark');
+    }
+});
+
+toggleDarkModeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    if (document.body.classList.contains('dark')) {
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        localStorage.setItem('darkMode', 'disabled');
+    }
+    toggleDarkModeBtn.blur();
 });
 
 let spawnInterval = setInterval(spawnWord, spawnRate);
