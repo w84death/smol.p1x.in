@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VGA Color Palette</title>
+    <style>
+        body {
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: monospace;
+            background-color: black;
+        }
+        table {
+            border-collapse: collapse;
+            background-image: url('palette.png');
+            background-size: cover;
+        }
+        td {
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            vertical-align: middle;
+            background-color: transparent;
+            color: white;
+            border: 1px solid black;
+            font-size: 8px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tbody>
+            <script>
+                for (let i = 0; i < 16; i++) {
+                    document.write('<tr>');
+                    for (let j = 0; j < 16; j++) {
+                        let hexValue = (i * 16 + j).toString(16).toUpperCase().padStart(2, '0');
+                        document.write('<td>0x' + hexValue + '</td>');
+                    }
+                    document.write('</tr>');
+                }
+            </script>
+        </tbody>
+    </table>
+</body>
+</html>
