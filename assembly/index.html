@@ -3,126 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Assembly Games</title>
+    <title>Boot Sector x86 Assembly</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bootsector x86 Assembly Games</h1>
-<pre>
-       _________________
-      /_/  for x86   /_/;
-     / ' boot disk  ' //    No operating system needed! 
-    / '------------' //    Each game fits first sector of a floppy = 512 bytes.
-   /   .--------.   //    Just boot it!
-  /   /         /  //
- .___/_________/__//   1440KiB
- '===\_________\=='   3.5"
-</pre>
-    </header>
-    <main>
-        <div class="shelf">
-            <div class="game-cover">
-                <a href="#game1">
-                    <img src="game1/cover.gif" alt="Game 1">
-                    <p>Land Me</p>
-                </a>
+    <div class="container">
+        <aside class="menu">
+            <div class="menu-header">
+                <h1>Boot Sector x86 Assembly</h1>
+                <pre>
+      _________________
+     /_/ Intel x86  /_/;
+    / ' boot disk  ' //
+   / '------------' //
+  /   .--------.   //
+ /   /         /  //
+.___/_________/__//
+'===\_________\=='
+             </pre>
+                <p>No operating system needed. Each game fits first sector of a floppy. Only 512 bytes. Just boot it!</p>
             </div>
-            <div class="game-cover">
-                <a href="#game2">
-                    <img src="game2/cover.gif" alt="Game 2">
-                    <p>Ganja Farmer 512b</p>
-                </a>
-            </div>
-            <div class="game-cover">
-                <a href="#game3">
-                    <img src="game3/cover.gif" alt="Game 3">
-                    <p>Fly Escape!</p>
-                </a>
-            </div>
-        </div>
+            <nav>
+                <ul>
+                    <li>0x00 <a href="#introduction">INTRODUCTION</a></li>
+                    <li>0x01 <a href="#game-land-me">LAND ME</a></li>
+                    <li>0x02 <a href="#game-fly-escape">FLY ESCAPE</a></li>
+                    <li>0x03 <a href="#game-bit-of-treasure">BIT OF A TREASURE</a></li>
+                    <li>0x04 <a href="#vga-game-framework">VGA GAME FRAMEWORK</a></li>
+                    <li>0x05 <a href="#resources">ONLINE RESOURCES</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <section id="introduction">
+                <h2>INTRODUCTION</h2>
+                <p>Assembly is a wild beast. You can tame it and become a real programmer or run away screaming and get lost in a mist of abstractions.</p>                    
+                <p>Current compilers can summon incredible machine code. They fear no man except this one place called boot sector. 512 bytes of space. No more no less. Only the best of the best would be able to fit in such narrow passage.</p>
+                <p>A hero is in need. Where we are going there will be no Operating Systems. No debuggers. One small mistake and the world freezes. A fatal system crash is unavoidable.</p>
+                <p>I took my tools, floppy disks and run for the incredible journey!</p>                    
+            </section>
+           
+            <section id="game-land-me">
+                <h2>GAME: LAND ME</h2>
+                <p>My first game for boot sector. I learned basics needed to have a minimum viable game engine. Double-buffering. Keyboard input. A lot and a lot of try and error.</p>
+                <p>I survived. As a result I'm present this simple game.</p>
+                <h3>Features</h3>
 
-        <div id="game1" class="game-details">
-            <h2>Land Me</h2>
-            <img src="game1/cover.gif" alt="Game 1">
-            <p>This is a simple yet challenging game where you have to land a spaceship safely on a platform.</p>
-            <p><img src="game1/screen1.png" alt="Game 1 screenshot">
-            <img src="game1/screen2.png" alt="Game 1 screenshot"></p>
-            <p>
-                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game1">GitGub page</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/game1.asm">Commented Source Code</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/floppy.img">Bootable Floppy Image (512kb)</a>
-            </p>
-            <a href="#">Close</a>
-        </div>
-        <div id="game2" class="game-details">
-            <h2>Ganja Farmer 512b</h2>
-            <img src="game2/cover.gif" alt="Game 2">
+                <h3>Game-play</h3>
+                <p>Player steers movement of a rocket: left or right. Trying to avoid blocks and land on a sailing platform instead of an ocean.</p>
+                
+                <ul class="gallery">
+                    <li><img src="game1/screen1.png" alt="Screenshot of Land Me game."/>
+                </ul>
 
-            <p>In this game, you are a farmer cultivating your crops while avoiding obstacles and challenges.</p>
-            <p><img src="game2/screen1.png" alt="Game 2 screenshot">
-            <img src="game2/screen2.png" alt="Game 2 screenshot"></p>
-            <p>
-                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game2">GitGub page</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game2/game2.asm">Commented Source Code</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game2/floppy.img">Bootable Floppy Image (512kb)</a>
-            </p>
-            <a href="#">Close</a>
-        </div>
-        <div id="game3" class="game-details">
-            <h2>Fly Escape!</h2>
-            <p>
-                <img src="game3/game3-banner.gif" alt="Game 3 box art">
-            </p>
-            <p>Fly Escape is a boot sector game developed by Krzysztof Krystian Jankowski ^ P1X, released version 2.1 on May 26, 2024. The game runs on Intel 286 processors in 16-bit real mode and features a simple yet engaging gameplay experience in a VGA 320x200x256 graphics mode. The objective of the game is to control a fly, avoid spiders, and collect flowers to advance through levels.</p>
-            
-            <h3>Features</h3>
-            <ul>
-                <li>VGA Graphics: Runs in 320x200 resolution with 256 colors.
-                <li>Double Buffering: Smooth rendering with minimal flickering.
-                <li>Player Control: Control a fly, avoiding spiders and collecting flowers.
-                <li>Randomized Levels: Entity positions and rotations are pseudo-randomly generated.
-                <li>Collision Detection: Accurate pixel-based collision detection.
-                <li>Multiple Levels: Progress through increasing levels of difficulty.
-                <li>Life System: Start with 4 lives; lose a life when colliding with spiders.
-                <li>Entity Types: Different entities with unique behaviors:
+                <h3>Download</h3>
+                <ul class="infobox">
+                    <li>Codename: GAME1</li>
+                    <li>Download: <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game1/floppy.img">Boot Floppy 386+</a></li>
+                    <li>Source Code: <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game1">GitHub</a></li>
+                </ul>
+            </section>
+
+            <section id="game-fly-escape">
+                <h2>GAME: FLY ESCAPE</h2>
+                <p>Fly Escape is a boot sector game developed by Krzysztof Krystian Jankowski ^ P1X, released version 2.1 on May 26, 2024. The game runs on Intel 286 processors in 16-bit real mode and features a simple yet engaging game-play experience in a VGA 320x200x256 graphics mode. The objective of the game is to control a fly, avoid spiders, and collect flowers to advance through levels.</p>
+                <h3>Features</h3>
+                <ul>
+                    <li>VGA Graphics: Runs in 320x200 resolution with 256 colors.</li>
+                    <li>Double Buffering: Smooth rendering with minimal flickering.</li>
+                    <li>Player Control: Control a fly, avoiding spiders and collecting flowers.</li>
+                    <li>Randomized Levels: Entity positions and rotations are pseudo-randomly generated.</li>
+                    <li>Collision Detection: Accurate pixel-based collision detection.</li>
+                    <li>Multiple Levels: Progress through increasing levels of difficulty.</li>
+                    <li>Life System: Start with 4 lives; lose a life when colliding with spiders.</li>
+                    <li>Entity Types: Different entities with unique behaviors:
                     <ul>
-                    <li>Spiders: Dangerous enemies to avoid.
-                    <li>Flowers: Collect these to advance to the next level.
+                        <li>Spiders: Dangerous enemies to avoid.</li>
+                        <li>Flowers: Collect these to advance to the next level.</li>
                     </ul>
-                <li>Animated sprites: Three sprites each 8x7 pixels in 2 frames
-                <li>Level and live indicator: Dots in top-left of the screen and a line under fly.
-                <li>Keyboard Controls: Rotate the fly to navigate through the game environment.
-                <li>Compact Size: Entire game fits within a 512-byte boot sector.
-            </ul>
-            <p>
-                <img src="game3/screen1.gif" alt="Game 3 screenshot">
-                <img src="game3/screen2.gif" alt="Game 3 screenshot">
-                <img src="game3/screen3.gif" alt="Game 3 screenshot">
-            </p>
-            <h3>The Code</h3>
-            <p>
-                <img src="game3/game3-hex.gif" alt="Game 3 binary">
-            </p>
-            <p>
-                The game is written in x86 assembly language and compiled with NASM. The source code is well-commented and structured for readability. The game logic is implemented in a single file, game3.asm, which is assembled into a bootable floppy image, floppy.img. The game is designed to run on Intel 286 processors in 16-bit real mode, with VGA graphics in 320x200 resolution and 256 colors.
-            </p>    
-            <h3>Download</h3>
-            <p>
-                <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game3">GitGub page</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/game3.asm">Commented Source Code</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy.img">Bootable Floppy Image (512kb) - 386+</a>
-                <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy_286.img">286</a>
-            </p>
-            <p>
-            <iframe frameborder="0" src="https://itch.io/embed/2730618?bg_color=7b00a8&amp;fg_color=ffffff" width="552" height="167"><a href="https://w84death.itch.io/fly-escape">Fly Escape by P1X</a></iframe>
-            </p>
-            <a href="#">Close</a>
-        </div>
+                    </li>
+                    <li>Animated sprites: Three sprites each 8x7 pixels in 2 frames</li>
+                    <li>Level and live indicator: Dots in top-left of the screen and a line under fly.</li>
+                    <li>Keyboard Controls: Rotate the fly to navigate through the game environment.</li>
+                    <li>Compact Size: Entire game fits within a 512-byte boot sector.</li>
+                </ul>
+                
+                <ul class="gallery">
+                    <li><img src="game3/screen1.gif" alt="Screenshot of Fly Escape! game."/>
+                </ul>
 
-    </main>
-    <footer>
-        <p>&copy; 2024 Krzysztof Krystian Jankowski</p>
-    </footer>
+                <h3>Download</h3>
+                <ul class="infobox">
+                    <li>Codename: GAME3</li>
+                    <li>Download: <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy_286.img">Boot Floppy 286</a> <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game3/floppy.img">Boot Floppy 386+</a></li>
+                    <li>Source Code: <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game3">GitHub</a></li>
+                    <li>Scene: <a href="#">Pouet</a></li>
+                    <li>Support: <a href="#">Itch.io</a></li>
+                </ul>
+            </section>
+            <section id="game-bit-of-treasure">
+                <h2>GAME: BIT OF A TREASURE</h2>
+                <h3> Overview</h3>
+                <p>The game involves navigating a player character through a level to collect a treasure while avoiding collisions with non-movable tiles. The game features simple but effective isometric graphics to create a pseudo-3D effect.</p>
+                
+                <h3>Game-play</h3>
+                <p>Collect the <b>treasure</b> and avoid the walls. Swap level designs to find the best path.</p>
+                
+                <h3>Controls</h3>
+                <ul>
+                    <li><b>Arrow keys</b> -  move the player</li>
+                    <li><b>Enter</b> - toggle  level designs (4 in total)</li>
+                    <li><b>ESC</b> -  restart game after failed move<br>
+                    </li>
+                </ul>
+                
+                <h3>Features</h4>
+                <ul>
+                    <li><b>Pixel Art Sprites</b>: 8x8 with 2 colors</li>
+                    <li><b>Isometric Graphics</b>: The game employs isometric projection to create a 3D-like visual experience using 2D sprites.</li>
+                    <li><b>Map</b>: One, procedurally generated, map with four level designs.</li>
+                    <li><b>VGA Mode</b>: Utilizes 320x200 pixels VGA mode with 256 colors.</li>
+                    <li><b>Keyboard Controls</b>: Intuitive input is used to control the player character. Auto alignment moves to the grid.</li>
+                    <li><b>Double Buffering</b>: Implements double buffering to reduce flickering and provide smoother animations.<br>
+                    </li>
+                </ul>
+
+                <ul class="gallery">
+                    <li><img src="game6/screen1.gif" alt="Screenshot of Bit of a Treasure game."/>
+                </ul>
+
+                <h3>Download</h3>
+                <ul class="infobox">
+                    <li>Codename: GAME6</li>
+                    <li>Download: <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/game6/floppy.img">Boot Floppy 386+</a> <a href="#">Dos COM File</a></li>
+                    <li>Source Code: <a href="https://github.com/w84death/x86-assembly/tree/main/bootsector/game6">GitHub</a></li>
+                    <li>Scene: <a href="#">Pouet</a></li>
+                    <li>Support: <a href="#">Itch.io</a></li>
+                </ul>
+            </section>
+
+            <section id="vga-game-framework">
+                <h2>TOOL: VGA GAME FRAMEWORK</h2>
+                <p>Details about VGA Game Framework...</p>
+                <h3>Download</h3>
+                <ul class="infobox">
+                    <li>Codename: VGA</li>
+                    <li>Download: <a href="https://raw.githubusercontent.com/w84death/x86-assembly/main/bootsector/vga/floppy.img">Boot Floppy 386+</a> <a href="#">Dos COM File</a></li>
+                    <li>Source Code: <a href="https://github.com/w84death/x86-assembly/blob/main/bootsector/vga/vga.asm">vga.asm</a></li>
+                </ul>
+                
+            </section>
+
+            <section id="resources">
+                <h2>ON-LINE RESOURCES</h2>
+                <p>All the useful things I found for the x86 Assembly and boot sector programming.</p>
+                <h3>Software</h3>
+                <ul>
+                    <li><a href="https://fresh.flatassembler.net">Fresh</a> - a visual assembly language IDE with built-in FASM assembler. </li>
+                    
+                </ul>
+
+                <h3>Books</h3>
+                <ul>
+                    
+                </ul>
+            </section>
+        </main>
+    </div>
 </body>
 </html>

@@ -1,103 +1,105 @@
-/* styles.css */
-
 body {
-    background-color: #000;
-    color: #0f0;
     font-family: monospace;
-    text-align: center;
+    color: #f8f8f8; /* Green text color to match the original theme */
+    background-color: #222; /* Black background to match the original theme */
     margin: 0;
     padding: 0;
 }
 
-header, footer {
-    background-color: #222;
-    padding: 10px;
-}
-
-h1, h2, h3 {
-    margin: 0;
-    border-bottom: 1px solid green;
-}
-
-pre {
-    text-align: left;
-    margin: 0 auto;
-    width: 640px;
-    padding: 10px;
-    background-color: #000;
-    border: 1px solid #0f0;
-    overflow: auto;
-}
-
-.shelf {
+.container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    height: 100vh;
+}
+
+.menu {
+    width: 250px;
+    background-color: #1a1a1a;
     padding: 20px;
+    box-sizing: border-box;
 }
 
-
-.shelf p {
-    margin:0;
-}
-
-.game-cover {
-    margin: 10px;
+.menu-header {
     text-align: center;
+    background-color: #f8f8f8;
+    color: #444;
+    font-weight: bold;
+    padding: 1em;
 }
 
-.game-cover img {
-    width: 150px;
-    height: 150px;
-    border: 2px solid #0f0;
-    margin-bottom: 5px;
+.menu-header h1 {
+    font-size: 1.5em;
 }
 
-.game-cover a {
-    color: #0f0;
+.menu-header img {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+.menu nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu nav ul li {
+    margin: 10px 0;
+    color: #666;
+}
+
+.menu nav ul li a {
     text-decoration: none;
+    color: #00FF00;
+    font-size: 1.2em;
 }
 
-.game-cover:hover a {
-    color: #ff0;
-}
-.game-cover img:hover {
-    border: 2px solid #ff0;
+.menu nav ul li a:hover {
+    text-decoration: underline;
+    color: #fff;
 }
 
-.game-details {
-    display: none;
-    text-align: left;
-    background-color: #222;
-    color: #0f0;
+.content {
+    flex: 1;
     padding: 20px;
-    border: 2px solid #0f0;
-    margin: 20px auto;
-    max-width: 640px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
-.game-details:target {
-    display: block;
+.content section {
+    margin-bottom: 200px;
+    border: 1px solid white;
+    padding: 0 12px;
 }
 
-.game-details a {
-    color: #0f0;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
-    padding:2px 8px;
-    border: 1px solid #0f0;
+.content h2 {
+    color: #00FF00;
+    border-bottom: 1px solid #00FF00;
+    padding-bottom: 10px;
 }
 
-.game-details a:hover {
-    color: #ff0;
-    border: 1px solid #ff0;
-}   
-
-.game-details img {
-    border: 4px solid #000;
+.content p {
+    line-height: 1.6;
 }
 
-footer p {
-    font-size: 12px;
+ul.infobox,
+ul.gallery {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+ul.infobox li,
+ul.gallery li {
+    margin: 10px;
+    background-color: #006000;
+    padding: 10px;
+    color: #00FF00;
+}
+
+ul.gallery li {
+    background-color: #000;
+    border-radius: 8px;
+}
+
+ul.infobox a {
+    color: #fff;
 }
