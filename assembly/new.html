@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X86 Assembly - Smol Programs and Games</title>
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+    <nav class="dos-nav"  id="home">
+        <ul>
+            <li>0x00 X86 Assembly from P1X</li>
+            <li>
+                0x01 <a href="#about">ABOUT</a>
+                <div class="submenu">
+                    <a href="#introduction">INTRODUCTION</a>
+                    <a href="#running">RUN ON REAL HARDWARE</a>
+                    <a href="#emulation">RUN IN EMULATOR/ONLINE</a>
+                </div>
+            </li>
+            <li>
+                0x02 <a href="#projects">PROJECTS</a>
+                <div class="submenu">
+                    <a href="#games">GAMES</a>
+                    <a href="#demos">DEMOS</a>
+                    <a href="#progs">PROGRAMS</a>
+                </div>
+            </li>
+            <li>
+                0x03 <a href="#resources">TIPS&amp;TRICKS</a>
+                <div class="submenu">
+                    <a href="#basic">BASIC</a>
+                    <a href="#advanced">ADVANCED</a>
+                    <a href="#tools">TOOLS</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>X86 Assembly - Smol Programs and Games</h1>
+
+        
+
+        <div class="window about" id="about">
+            <div class="window-title">
+                <span>ABOUT</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <h3 id="introduction">INTRODUCTION</h3>
+                <div class="ascii-art" style="float:left; margin:1em;">
+      _________________
+     /_/ Intel x86  /_/;
+    / ' boot disk  ' //
+   / '------------' //
+  /   .--------.   //
+ /   /         /  //
+.___/_________/__//
+'===\_________\=='
+        </div>
+
+                <p>Assembly is a wild beast. You can tame it and become a real programmer or run away screaming and get lost in a mist of abstractions.</p>                    
+                <p>Current compilers can summon incredible machine code. They fear no man except this one place called boot sector. 512 bytes of space. No more no less. Only the best of the best would be able to fit in such narrow passage.</p>
+                <p>A hero is in need. Where we are going there will be no Operating Systems. No debuggers. One small mistake and the world freezes. A fatal system crash is unavoidable.</p>
+                <p>I took my tools, floppy disks and run for the incredible journey!</p>                    
+            
+                
+
+                <h3 id="skills">RUN ON REAL HARDWARE</h3>
+                <p>Expert in x86 assembly, low-level optimization, and hardware interfacing.</p>
+                
+                <h3 id="experience">RUN IN EMULATOR/ONLINE</h3>
+                <p>10+ years of assembly programming, including contributions to open-source projects and demoscene productions.</p>
+            </div>
+        </div>
+        
+        <div class="window projects">
+            <div class="window-title">
+                <span>Projects</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <h3 id="games">Games</h3>
+                
+                <div class="subwindow">
+                    <div class="subwindow-title">Assembly Blaster</div>
+                    <div class="subwindow-content">
+                        <p>A fast-paced space shooter written entirely in x86 assembly. Navigate through asteroid fields and battle alien ships in this retro-style arcade game.</p>
+                        <img src="/api/placeholder/320/200" alt="Assembly Blaster Screenshot" class="screenshot" />
+                        <p>Features:</p>
+                        <ul>
+                            <li>Smooth 60 FPS gameplay</li>
+                            <li>Multiple enemy types</li>
+                            <li>Power-ups and weapon upgrades</li>
+                            <li>Retro sound effects</li>
+                        </ul>
+                        <a href="#download-assembly-blaster" class="download-btn">Download (64KB)</a>
+                    </div>
+                </div>
+
+                <div class="subwindow">
+                    <div class="subwindow-title">Memory Maze</div>
+                    <div class="subwindow-content">
+                        <p>Navigate through a procedurally generated maze in this mind-bending puzzle game. Test your memory and spatial awareness as you explore increasingly complex labyrinths.</p>
+                        <img src="/api/placeholder/320/200" alt="Memory Maze Screenshot" class="screenshot" />
+                        <p>Features:</p>
+                        <ul>
+                            <li>Infinite, procedurally generated mazes</li>
+                            <li>Multiple difficulty levels</li>
+                            <li>Time attack mode</li>
+                            <li>Minimalist, yet atmospheric graphics</li>
+                        </ul>
+                        <a href="#download-memory-maze" class="download-btn">Download (32KB)</a>
+                    </div>
+                </div>
+                
+                <h3 id="demos">Demos</h3>
+                <ul>
+                    <li><a href="#demo1">Pixel Pusher</a> - A demo showcasing advanced graphics techniques</li>
+                </ul>
+                
+                <h3 id="tools">Tools</h3>
+                <ul>
+                    <li><a href="#tool1">ASM Optimizer</a> - A tool for optimizing x86 assembly code</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="window why-assembly">
+            <div class="window-title">
+                <span>Why Assembly?</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <p>Assembly language offers unparalleled control over hardware, allowing for optimizations that higher-level languages can't match. It's the perfect tool for creating efficient, high-performance code.</p>
+            </div>
+        </div>
+        
+        <div class="window contact">
+            <div class="window-title">
+                <span>Contact</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <p>Want to discuss x86 assembly or collaborate on a project? Reach out to me:</p>
+                <p class="blink">EMAIL: asm.enthusiast@example.com</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.dos-nav a').forEach(link => {
+            link.addEventListener('focus', function() {
+                this.click();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+body {
+    background-color: #000;
+    color: #AAA;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+h1, h2, h3 {
+    color: #FFF;
+    text-shadow: 0 0 5px #FFF;
+}
+a {
+    color: #55F;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.ascii-art {
+    font-size: 12px;
+    white-space: pre;
+    line-height: 1.2;
+    color: #0F0;
+}
+.blink {
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+.dos-nav {
+    background-color: #00A;
+    color: #FFF;
+    padding: 5px 0;
+}
+.dos-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+.dos-nav li {
+    padding: 5px 10px;
+    position: relative;
+}
+.dos-nav a {
+    color: #FFF;
+    text-decoration: none;
+}
+.dos-nav a:hover, .dos-nav a:focus {
+    background-color: #FFF;
+    color: #00A;
+}
+.active {
+    background-color: #FFF;
+    color: #00A !important;
+}
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #00A;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(255,255,255,0.2);
+    z-index: 1;
+}
+.submenu a {
+    color: #FFF;
+    padding: 5px 10px;
+    display: block;
+}
+.dos-nav li:hover .submenu, .dos-nav li:focus-within .submenu {
+    display: block;
+}
+.submenu a:hover, .submenu a:focus {
+    background-color: #FFF;
+    color: #00A;
+}
+.window {
+    border: 2px solid;
+    margin-bottom: 20px;
+    position: relative;
+}
+.window-title {
+    color: #000;
+    padding: 5px 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.window-content {
+    padding: 10px;
+    background-color: #000;
+}
+.close-btn {
+    background-color: #000;
+    border: 1px solid;
+    padding: 0 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.close-btn:hover {
+    background-color: #FFF;
+}
+
+/* DOS 16-color palette for windows */
+.window.about { border-color: #0F0; }
+.window.about .window-title { background-color: #0F0; }
+.window.about .close-btn { color: #0F0; border-color: #0F0; }
+.window.about .close-btn:hover { color: #000; }
+
+.window.projects { border-color: #F0F; }
+.window.projects .window-title { background-color: #F0F; }
+.window.projects .close-btn { color: #F0F; border-color: #F0F; }
+.window.projects .close-btn:hover { color: #000; }
+
+.window.why-assembly { border-color: #FF0; }
+.window.why-assembly .window-title { background-color: #FF0; }
+.window.why-assembly .close-btn { color: #FF0; border-color: #FF0; }
+.window.why-assembly .close-btn:hover { color: #000; }
+
+.window.contact { border-color: #0FF; }
+.window.contact .window-title { background-color: #0FF; }
+.window.contact .close-btn { color: #0FF; border-color: #0FF; }
+.window.contact .close-btn:hover { color: #000; }
+
+/* Subwindow styles */
+.subwindow {
+    border: 1px solid #F0F;
+    margin-bottom: 10px;
+}
+.subwindow-title {
+    background-color: #F0F;
+    color: #000;
+    padding: 2px 5px;
+    font-weight: bold;
+}
+.subwindow-content {
+    padding: 5px;
+}
+.screenshot {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #F0F;
+}
+.download-btn {
+    display: inline-block;
+    background-color: #0F0;
+    color: #000;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.download-btn:hover {
+    background-color: #000;
+    color: #0F0;
+}
