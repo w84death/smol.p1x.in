@@ -7,39 +7,32 @@
     <link rel="stylesheet" href="theme.css">
 </head>
 <body>
-    <nav class="dos-nav"  id="home">
+    <nav class="dos-nav" id="home">
         <ul>
             <li>0x00 X86 Assembly from P1X</li>
             <li>
                 0x01 <a href="#about">ABOUT</a>
                 <div class="submenu">
                     <a href="#introduction">INTRODUCTION</a>
-                    <a href="#running">RUN ON REAL HARDWARE</a>
-                    <a href="#emulation">RUN IN EMULATOR/ONLINE</a>
+                    <a href="#how-to">HOW TO RUN</a>
                 </div>
             </li>
             <li>
                 0x02 <a href="#projects">PROJECTS</a>
                 <div class="submenu">
-                    <a href="#games">GAMES</a>
-                    <a href="#demos">DEMOS</a>
-                    <a href="#progs">PROGRAMS</a>
+                    <a href="#land-me">LAND ME</a>
+                    <a href="#fly-escape">FLY ESCAPE</a>
+                    <a href="#bit-of-treasure">BIT OF A TREASURE</a>
+                    <a href="#tools">TOOLS</a>
                 </div>
             </li>
             <li>
-                0x03 <a href="#resources">TIPS&amp;TRICKS</a>
-                <div class="submenu">
-                    <a href="#basic">BASIC</a>
-                    <a href="#advanced">ADVANCED</a>
-                    <a href="#tools">TOOLS</a>
-                </div>
+                0x03 <a href="#resources">RESOURCES</a>
             </li>
         </ul>
     </nav>
     <div class="container">
         <h1>X86 Assembly - Smol Programs and Games</h1>
-
-        
 
         <div class="window about" id="about">
             <div class="window-title">
@@ -57,24 +50,25 @@
  /   /         /  //
 .___/_________/__//
 '===\_________\=='
-        </div>
+                </div>
 
                 <p>Assembly is a wild beast. You can tame it and become a real programmer or run away screaming and get lost in a mist of abstractions.</p>                    
                 <p>Current compilers can summon incredible machine code. They fear no man except this one place called boot sector. 512 bytes of space. No more no less. Only the best of the best would be able to fit in such narrow passage.</p>
                 <p>A hero is in need. Where we are going there will be no Operating Systems. No debuggers. One small mistake and the world freezes. A fatal system crash is unavoidable.</p>
                 <p>I took my tools, floppy disks and run for the incredible journey!</p>                    
             
-                
-
-                <h3 id="skills">RUN ON REAL HARDWARE</h3>
-                <p>Expert in x86 assembly, low-level optimization, and hardware interfacing.</p>
-                
-                <h3 id="experience">RUN IN EMULATOR/ONLINE</h3>
-                <p>10+ years of assembly programming, including contributions to open-source projects and demoscene productions.</p>
+                <h3 id="how-to">HOW TO RUN?</h3>
+                <p>It's simple.</p>
+                <ol>
+                    <li>You need a floppy disk.</li>
+                    <li>You need a computer with a floppy drive.</li>
+                    <li>You need to boot from the floppy drive.</li>
+                </ol>
+                <p>Using online emulation is also possible. You can use <a href="https://copy.sh/v86/">copy.sh</a> (floppy image) or <a href="https://www.bootsector.games/">BootSector.Games</a> (source code) to run the games.</p>
             </div>
         </div>
         
-        <div class="window projects">
+        <div class="window projects" id="projects">
             <div class="window-title">
                 <span>Projects</span>
                 <a href="#home" class="close-btn">X</a>
@@ -82,77 +76,119 @@
             <div class="window-content">
                 <h3 id="games">Games</h3>
                 
-                <div class="subwindow">
-                    <div class="subwindow-title">Assembly Blaster</div>
+                <div class="subwindow" id="land-me">
+                    <div class="subwindow-title">LAND ME</div>
                     <div class="subwindow-content">
-                        <p>A fast-paced space shooter written entirely in x86 assembly. Navigate through asteroid fields and battle alien ships in this retro-style arcade game.</p>
-                        <img src="/api/placeholder/320/200" alt="Assembly Blaster Screenshot" class="screenshot" />
-                        <p>Features:</p>
-                        <ul>
-                            <li>Smooth 60 FPS gameplay</li>
-                            <li>Multiple enemy types</li>
-                            <li>Power-ups and weapon upgrades</li>
-                            <li>Retro sound effects</li>
+                        <p>My first game for boot sector. I learned basics needed to have a minimum viable game engine. Double-buffering. Keyboard input. A lot and a lot of try and error.</p>
+                        <p>I survived. As a result I'm present this simple game.</p>
+                        <h4>Game-play</h4>
+                        <p>Player steers movement of a rocket: left or right. Trying to avoid blocks and land on a sailing platform instead of an ocean.</p>
+                        <img src="game1/game1-gameplay.gif" alt="Gameplay of Land Me game." class="screenshot" />
+                        <h4>Download</h4>
+                        <ul class="infobox">
+                            <li>Codename: GAME1</li>
+                            <li>Download: <a href="game1/floppy.img" class="download-btn">Boot Floppy 386+</a></li>
+                            <li>Source Code: <a href="game1/game1.asm">game1.asm</a></li>
                         </ul>
-                        <a href="#download-assembly-blaster" class="download-btn">Download (64KB)</a>
                     </div>
                 </div>
 
-                <div class="subwindow">
-                    <div class="subwindow-title">Memory Maze</div>
+                <div class="subwindow" id="fly-escape">
+                    <div class="subwindow-title">FLY ESCAPE</div>
                     <div class="subwindow-content">
-                        <p>Navigate through a procedurally generated maze in this mind-bending puzzle game. Test your memory and spatial awareness as you explore increasingly complex labyrinths.</p>
-                        <img src="/api/placeholder/320/200" alt="Memory Maze Screenshot" class="screenshot" />
-                        <p>Features:</p>
+                        <p>Fly Escape is a boot sector game developed by Krzysztof Krystian Jankowski ^ P1X, released version 2.1 on May 26, 2024. The game runs on Intel 286 processors in 16-bit real mode and features a simple yet engaging game-play experience in a VGA 320x200x256 graphics mode. The objective of the game is to control a fly, avoid spiders, and collect flowers to advance through levels.</p>
+                        <h4>Features</h4>
                         <ul>
-                            <li>Infinite, procedurally generated mazes</li>
-                            <li>Multiple difficulty levels</li>
-                            <li>Time attack mode</li>
-                            <li>Minimalist, yet atmospheric graphics</li>
+                            <li>VGA Graphics: Runs in 320x200 resolution with 256 colors.</li>
+                            <li>Double Buffering: Smooth rendering with minimal flickering.</li>
+                            <li>Player Control: Control a fly, avoiding spiders and collecting flowers.</li>
+                            <li>Randomized Levels: Entity positions and rotations are pseudo-randomly generated.</li>
+                            <li>Collision Detection: Accurate pixel-based collision detection.</li>
+                            <li>Multiple Levels: Progress through increasing levels of difficulty.</li>
+                            <li>Life System: Start with 4 lives; lose a life when colliding with spiders.</li>
+                            <li>Animated sprites: Three sprites each 8x7 pixels in 2 frames</li>
+                            <li>Level and live indicator: Dots in top-left of the screen and a line under fly.</li>
+                            <li>Keyboard Controls: Rotate the fly to navigate through the game environment.</li>
+                            <li>Compact Size: Entire game fits within a 512-byte boot sector.</li>
                         </ul>
-                        <a href="#download-memory-maze" class="download-btn">Download (32KB)</a>
+                        <img src="game3/game3-gameplay.gif" alt="Gameplay of Fly Escape! game." class="screenshot" />
+                        <h4>Download</h4>
+                        <ul class="infobox">
+                            <li>Codename: GAME3</li>
+                            <li>Download: <a href="game3/floppy.img" class="download-btn">Boot Floppy 386+</a></li>
+                            <li>Source Code: <a href="game3/game3.asm">game3.asm</a></li>
+                            <li>Scene: <a href="https://www.pouet.net/prod.php?which=97179">Pouet</a></li>
+                            <li>Support: <a href="https://w84death.itch.io/fly-escape">Itch.io</a></li>
+                        </ul>
                     </div>
                 </div>
-                
-                <h3 id="demos">Demos</h3>
-                <ul>
-                    <li><a href="#demo1">Pixel Pusher</a> - A demo showcasing advanced graphics techniques</li>
-                </ul>
-                
+
+                <div class="subwindow" id="bit-of-treasure">
+                    <div class="subwindow-title">BIT OF A TREASURE</div>
+                    <div class="subwindow-content">
+                        <p>The game involves navigating a player character through a level to collect a treasure while avoiding collisions with non-movable tiles. The game features simple but effective isometric graphics to create a pseudo-3D effect.</p>
+                        <h4>Game-play</h4>
+                        <p>Collect the <b>treasure</b> and avoid the walls. Swap level designs to find the best path.</p>
+                        <h4>Controls</h4>
+                        <ul>
+                            <li><b>Arrow keys</b> -  move the player</li>
+                            <li><b>Enter</b> - toggle  level designs (4 in total)</li>
+                            <li><b>ESC</b> -  restart game after failed move</li>
+                        </ul>
+                        <h4>Features</h4>
+                        <ul>
+                            <li><b>Pixel Art Sprites</b>: 8x8 with 2 colors</li>
+                            <li><b>Isometric Graphics</b>: The game employs isometric projection to create a 3D-like visual experience using 2D sprites.</li>
+                            <li><b>Map</b>: One, procedurally generated, map with four level designs.</li>
+                            <li><b>VGA Mode</b>: Utilizes 320x200 pixels VGA mode with 256 colors.</li>
+                            <li><b>Keyboard Controls</b>: Intuitive input is used to control the player character. Auto alignment moves to the grid.</li>
+                            <li><b>Double Buffering</b>: Implements double buffering to reduce flickering and provide smoother animations.</li>
+                        </ul>
+                        <img src="game6/game6-gameplay.gif" alt="Gameplay of Bit of a Treasure game." class="screenshot" />
+                        <h4>Download</h4>
+                        <ul class="infobox">
+                            <li>Codename: GAME6</li>
+                            <li>Download: <a href="game6/floppy.img" class="download-btn">Boot Floppy 386+</a> <a href="game6/game6-dos.com" class="download-btn">MS-DOS .COM</a></li>
+                            <li>Source Code: <a href="game6/game6.asm">game6.asm</a> <a href="game6/game6-dos.asm">game6-dos.asm</a></li>
+                        </ul>
+                    </div>
+                </div>
+
                 <h3 id="tools">Tools</h3>
+                <div class="subwindow">
+                    <div class="subwindow-title">VGA GAME FRAMEWORK</div>
+                    <div class="subwindow-content">
+                        <p>Details about VGA Game Framework...</p>
+                        <h4>Download</h4>
+                        <ul class="infobox">
+                            <li>Codename: VGA</li>
+                            <li>Download: <a href="vga/floppy.img" class="download-btn">Boot Floppy 386+</a></li>
+                            <li>Source Code: <a href="vga/vga.asm">vga.asm</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="window resources" id="resources">
+            <div class="window-title">
+                <span>Resources</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <h2>ON-LINE RESOURCES</h2>
+                <p>All the useful things I found for the x86 Assembly and boot sector programming.</p>
+                <h3>Software</h3>
                 <ul>
-                    <li><a href="#tool1">ASM Optimizer</a> - A tool for optimizing x86 assembly code</li>
+                    <li><a href="https://fresh.flatassembler.net">Fresh</a> - a visual assembly language IDE with built-in FASM assembler.</li>
                 </ul>
-            </div>
-        </div>
-        
-        <div class="window why-assembly">
-            <div class="window-title">
-                <span>Why Assembly?</span>
-                <a href="#home" class="close-btn">X</a>
-            </div>
-            <div class="window-content">
-                <p>Assembly language offers unparalleled control over hardware, allowing for optimizations that higher-level languages can't match. It's the perfect tool for creating efficient, high-performance code.</p>
-            </div>
-        </div>
-        
-        <div class="window contact">
-            <div class="window-title">
-                <span>Contact</span>
-                <a href="#home" class="close-btn">X</a>
-            </div>
-            <div class="window-content">
-                <p>Want to discuss x86 assembly or collaborate on a project? Reach out to me:</p>
-                <p class="blink">EMAIL: asm.enthusiast@example.com</p>
             </div>
         </div>
     </div>
-    <script>
-        document.querySelectorAll('.dos-nav a').forEach(link => {
-            link.addEventListener('focus', function() {
-                this.click();
-            });
-        });
-    </script>
+
+    <footer>
+        <p>Contact: <a href="mailto:kj@p1x.in">kj@p1x.in</a></p>
+        <p>Follow me on Mastodon: <a href="https://fosstodon.org/@w84death">@w84death@fosstodon.org</a></p>
+    </footer>
 </body>
 </html>

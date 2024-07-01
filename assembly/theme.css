@@ -46,6 +46,7 @@ a:hover {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 .dos-nav li {
@@ -125,15 +126,10 @@ a:hover {
 .window.projects .close-btn { color: #F0F; border-color: #F0F; }
 .window.projects .close-btn:hover { color: #000; }
 
-.window.why-assembly { border-color: #FF0; }
-.window.why-assembly .window-title { background-color: #FF0; }
-.window.why-assembly .close-btn { color: #FF0; border-color: #FF0; }
-.window.why-assembly .close-btn:hover { color: #000; }
-
-.window.contact { border-color: #0FF; }
-.window.contact .window-title { background-color: #0FF; }
-.window.contact .close-btn { color: #0FF; border-color: #0FF; }
-.window.contact .close-btn:hover { color: #000; }
+.window.resources { border-color: #FF0; }
+.window.resources .window-title { background-color: #FF0; }
+.window.resources .close-btn { color: #FF0; border-color: #FF0; }
+.window.resources .close-btn:hover { color: #000; }
 
 /* Subwindow styles */
 .subwindow {
@@ -166,4 +162,21 @@ a:hover {
 .download-btn:hover {
     background-color: #000;
     color: #0F0;
+}
+
+/* Navigation color updates */
+.dos-nav a[href="#about"] { color: #0F0; }
+.dos-nav a[href="#projects"] { color: #F0F; }
+.dos-nav a[href="#resources"] { color: #FF0; }
+
+/* Footer styles */
+footer {
+    background-color: #00A;
+    color: #FFF;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+footer a {
+    color: #FF0;
 }
