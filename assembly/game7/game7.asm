@@ -1,21 +1,25 @@
-; Set 320x200 256-color mode
+; GAME7 - MOTH HUNTER
+; Compile with FASM
+; Run on (Free)DOS
+;
+
 org 0x100
 use16
 
 VGA_MEMORY_ADR equ 0xA000                   ; VGA memory address
 DBUFFER_MEMORY_ADR equ 0x8000               ; Doublebuffer memory address
-SCREEN_BUFFER_SIZE equ 0xFa00               ; Size of the VGA buffer size
+
 SPRITE_WIDTH equ 0x08
 SPRITE_LINES equ 0x08
+
 STATE_ADR equ 0xfe00
 STATE_ON equ 0x01
 STATE_OVER equ 0x02
 STATE_NEWALIEN equ 0x03
 ; game variables 01-0f
 HEALTH_ADR equ 0x7e01                       ; 1 byte
-WEAPON_SHOOT_ADR equ 0x7e02                 ; 1 byte
-HITS_ADR equ 0x7e03
-WEAPON_AIM_ADR equ 0x7e05
+HITS_ADR equ 0x7e02                         ; 2
+WEAPON_AIM_ADR equ 0x7e04                   ; 4
 ; aliens
 ALIENS_ADR equ 0x7e10
 
@@ -27,76 +31,79 @@ start:
     push DBUFFER_MEMORY_ADR                 ; Set doublebuffer memory
     pop es                                  ; as target
 
+
+    mov ax, 7
+    mov cx, 1
+    mov dx,319
+    int 33h
+
+    ; hide cursor
+    mov ax, 2    ; Function 2 - Hide mouse cursor
+    int 33h      ; Call mouse interrupt
+
+restart_game:
     mov byte [STATE_ADR],STATE_ON
-    mov byte [HEALTH_ADR],0x04
+    mov byte [HEALTH_ADR],0x0a
     mov word [HITS_ADR],0x00
 
 
 create_aliens:
     mov si, ALIENS_ADR
-    mov word [si], 320*20+160
-    mov word [si+2],0x0000
+    mov word [si], 320*100+160
+    ;mov word [si+2], 0x0000
     mov word [si+4], 0xffff
 
 ; main loop
 game_loop:
-    mov ax,0x1112
-    mov cx,SCREEN_BUFFER_SIZE               ; Set buffer size to fullscreen
-    rep stosw                               ; Fill the buffer with color
 
+    draw_bg:
+    xor di,di
+    mov cx, 200
+    .l:
+       push cx
+       xchg ax, cx
+       add ax, bp
+       shr ax, 2
+       and al,0x05
+       add al, 0x12
+       mov cx, 320
+       rep stosb
+       pop cx
+    loop .l
+
+    inc bp
+    inc bp
 
 mouse_handler:
     mov ax, 0x0003
     int 0x33
-    cmp byte [WEAPON_SHOOT_ADR], 0x0
-    jnz .done
-        mov byte [WEAPON_SHOOT_ADR],al
-    .done:
     mov word [WEAPON_AIM_ADR], cx
     mov word [WEAPON_AIM_ADR+2], dx
-    mov bx, 320
-    mov ax, dx
-    mul bx
-    add ax, cx
-    mov di, ax
-    mov ax, 0x0f
+    ; draw crosshair dot
+    imul dx, 320
+    add dx, cx
+    mov di,dx
+    mov al,0x0f
     stosb
 
 
-; get aliens
-
-cmp byte [STATE_ADR], STATE_ON
-jne skip_aliens_loop
-
-  mov si, ALIENS_ADR
-  ;xor bx,bx
+mov si, ALIENS_ADR
 aliens_loop:
 
   rdtsc
-  add ax, si
-  xor ax, 0x1337
-  and ax, 0x0f ; MLT size
+  and ax, 0x07 ; MLT size
   mov di, ax
   shl di, 1
   mov ax, [MLT+di]
   add ax, [MLT+di]
   mov di,[si]
   add di, ax
-  jnz .ok1
-  inc di
-  .ok1:
-  add ax, 320*40
-  cmp di, 320*160
-  jb .ok2
-  and di, 320*160
-  .ok2:
   mov [si],di
 
   inc si
   inc si
 
   ; check collisions
-
   mov ax,di    ; linear pos
   mov bx,320
   xor dx,dx
@@ -116,6 +123,10 @@ aliens_loop:
   jg .no_hit
 
   inc word [HITS_ADR]
+  mov word ax, [HITS_ADR]
+  ; check for win
+  and al, 0x05
+  jnz .hit
   mov byte [STATE_ADR],STATE_NEWALIEN
   jmp .hit
 
@@ -128,18 +139,22 @@ aliens_loop:
       dec byte [HEALTH_ADR]
       cmp byte [HEALTH_ADR], 0x0
       ja .game_on
-      mov byte [STATE_ADR], STATE_OVER
+        .wait_for_esc:
+        in ax, 0x60
+        dec al
+        jnz .wait_for_esc
+        out 60h,al
+        jmp restart_game
       .game_on:
       .hit:
       push si
-      mov bx, 0x04
+      mov bx, 0x28
       mov si, HitSpr
       call draw_sprite
       call vga_blit
       pop si
       rdtsc
-      and ax, 320*160
-      add ax, 320*20
+      and ax, 320*32
       mov [si-2], ax
       mov word [si], 0x0000
   .continue:
@@ -149,35 +164,31 @@ aliens_loop:
 
 ; draw sprite
   push si
-  mov si, UfoSpr
+  mov si, EnemySpr
+  mov ax, bx
+  shr ax,1
+  jnc .ok
+  add si, 8
+  .ok:
   call draw_sprite
   pop si
 
-; move to next slot
-
   inc si
   inc si
-
   mov ax,[si]
   cmp ax,0xffff
   jnz aliens_loop
-
-skip_aliens_loop:
-
 
 add_alien:
     mov byte al, [STATE_ADR]
     cmp al, STATE_NEWALIEN
     jne .skip
         mov byte [STATE_ADR], STATE_ON
-
         rdtsc
-        and ax, 320*160
-        add ax, 320*20
+        and ax, 320*32
         mov [si], ax
         mov word [si+2], 0x0000
         mov word [si+4], 0xffff
-
    .skip:
 
 draw_health_bar:
@@ -186,30 +197,30 @@ draw_health_bar:
     cmp cx,0x0
     jz .skip
     mov si, HealthSpr
-    mov di, 320*4+4
-    .l:
+    mov di, 320*4+80
     mov bx, 0x28
-    call draw_sprite
-    add di, 0x8
+    .l:
+        call draw_sprite
+        add di, 0x10
     loop .l
     .skip:
 
 draw_hits_counter:
-    ;xor cx,cx
     mov word cx, [HITS_ADR]
     cmp cx,0x0
     jz .skip
     mov si, OneMoreSpr
-    mov di, 320*4+4+56
+    mov di, 320*190+4
     .l:
-    mov bx, 0x0f
+    mov bx, 0x1e
     call draw_sprite
     add di, 0x3
     loop .l
     .skip:
 
     call vga_blit
-    ; =========================================== DELAY CYCLE ======================
+
+; =========================================== DELAY CYCLE ======================
 
 delay:
     push es
@@ -223,17 +234,16 @@ wait_for_tick:
     pop es
 
 
-    in al,60h                           ; Read keyboard
+; =========================================== ESC OR LOOP =====================
+
+    in al,0x60                           ; Read keyboard
     dec al
     jnz game_loop
 
-    ; Return to text mode 0x03
+; =========================================== TERMINATE PROGRAM ================
+
     mov ax, 0x0003
     int 0x10
-
-    ; Terminate program
-    mov ax, 0x4C00
-    int 0x21
 
 ; =========================================== VGA BLIT PROCEDURE ===============
 
@@ -253,6 +263,7 @@ vga_blit:
     pop ds
     pop es
     ret
+
 
 ; =========================================== DRAWING SPRITE PROCEDURE =========
 
@@ -279,21 +290,27 @@ draw_sprite:
 
 ; Data segment
 
-MLT dw -322,-318,318,322,-1,1,-1,1,-1,-1,1,1,-1,-1,1,1      ; Movement Lookup Table
-                                            ; 0 - up/left
-                                            ; 1 - up/right
-                                            ; 2 - down/left
-                                            ; 3 - down/right
+MLT dw 1,-1,318,322,-1,1,-2,2      ; Movement Lookup Table
 
-UfoSpr:
-db 10111101b
+EnemySpr:
+; Frame 1
+db 11000011b
 db 01011010b
-db 11100111b
-db 10011001b
-db 11111111b
 db 00111100b
 db 01011010b
-db 11100111b
+db 11111111b
+db 10100101b
+db 10011001b
+db 01000010b
+; Frame 2
+db 00000000b
+db 01011010b
+db 11111111b
+db 01011010b
+db 11111111b
+db 10100101b
+db 10011001b
+db 01000010b
 HitSpr:
 db 10010001b
 db 01000010b
@@ -304,14 +321,14 @@ db 00011000b
 db 01000010b
 db 10010001b
 HealthSpr:
-db 00111100b
-db 01100110b
-db 01000010b
-db 01100110b
 db 01111110b
-db 00111100b
-db 01000010b
-db 00111100b
+db 11000011b
+db 10011001b
+db 10111101b
+db 10111101b
+db 10011001b
+db 11000011b
+db 01111110b
 OneMoreSpr:
 db 00000100b
 db 00001000b

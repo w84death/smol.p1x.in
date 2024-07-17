@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>VR Scene with Randomized Elements and Teleportation - Oculus Quest 2</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.4.0/dist/aframe-extras.min.js"></script>
+    <script>
+      AFRAME.registerComponent('random-position', {
+        init: function () {
+          const groundSize = 100;
+          const margin = 10;
+          const x = Math.random() * (groundSize - 2 * margin) - (groundSize / 2 - margin);
+          const z = Math.random() * (groundSize - 2 * margin) - (groundSize / 2 - margin);
+          this.el.setAttribute('position', {x: x, y: this.el.getAttribute('position').y, z: z});
+        }
+      });
+
+      AFRAME.registerComponent('house-with-roof', {
+        init: function () {
+          // Create house body
+          var house = document.createElement('a-box');
+          house.setAttribute('color', '#FFF');
+          house.setAttribute('width', '4');
+          house.setAttribute('height', '3');
+          house.setAttribute('depth', '4');
+          this.el.appendChild(house);
+
+          // Create roof
+          var roof = document.createElement('a-entity');
+          roof.setAttribute('geometry', {
+            primitive: 'cone',
+            radiusBottom: 2.8,
+            radiusTop: 0.1,
+            height: 2
+          });
+          roof.setAttribute('material', 'color', '#A52A2A');
+          roof.setAttribute('position', '0 2.5 0');
+          roof.setAttribute('rotation', '0 45 0');
+          this.el.appendChild(roof);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Player -->
+      <a-entity id="rig" movement-controls="constrainToNavMesh: true;">
+        <a-entity camera position="0 1.6 0" look-controls></a-entity>
+        <a-entity cursor="rayOrigin: mouse"></a-entity>
+        <a-entity oculus-touch-controls="hand: left" custom-teleport></a-entity>
+        <a-entity oculus-touch-controls="hand: right"></a-entity>
+      </a-entity>
+
+      <!-- Ground (now with ground attribute for teleportation) -->
+      <a-plane ground position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#4CAF50"></a-plane>
+
+      <!-- Ocean (surrounding the ground) -->
+      <a-ocean width="200" depth="200" density="40" position="0 -0.5 0" color="#0077be"></a-ocean>
+
+     <!-- Houses -->
+     <a-entity id="houses">
+        <a-entity random-position="min: -40 0 -40; max: 40 0 40" house-with-roof></a-entity>
+        <a-entity random-position="min: -40 0 -40; max: 40 0 40" house-with-roof></a-entity>
+        <a-entity random-position="min: -40 0 -40; max: 40 0 40" house-with-roof></a-entity>
+        <a-entity random-position="min: -40 0 -40; max: 40 0 40" house-with-roof></a-entity>
+      </a-entity>
+      
+      <!-- Trees -->
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="3" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="1" position="0 2 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="4" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="1.2" position="0 2.5 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="3.5" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="1.1" position="0 2.25 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="3.2" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="0.9" position="0 2.1 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="3" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="1" position="0 2 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="4" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="1.2" position="0 2.5 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="3.5" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="1.1" position="0 2.25 0"></a-sphere>
+      </a-entity>
+
+      <a-entity random-position position="0 0 0">
+        <a-cylinder color="#8B4513" height="3.2" radius="0.2"></a-cylinder>
+        <a-sphere color="#228B22" radius="0.9" position="0 2.1 0"></a-sphere>
+      </a-entity>
+
+      <!-- Lighting -->
+      <a-light type="ambient" color="#445451"></a-light>
+      <a-light type="point" intensity="2" position="2 4 4"></a-light>
+
+      <!-- Sky -->
+      <a-sky color="#87CEEB"></a-sky>
+    </a-scene>
+  </body>
+</html>

@@ -18,16 +18,21 @@
                 </div>
             </li>
             <li>
-                0x02 <a href="#projects">PROJECTS</a>
+                0x02 <a href="#bootsector">BOOTSECTOR/512B</a>
                 <div class="submenu">
                     <a href="#land-me">LAND ME</a>
                     <a href="#fly-escape">FLY ESCAPE</a>
                     <a href="#bit-of-treasure">BIT OF A TREASURE</a>
-                    <a href="#tools">TOOLS</a>
                 </div>
             </li>
             <li>
-                0x03 <a href="#resources">RESOURCES</a>
+                0x03 <a href="#dos">DOS/1024B</a>
+                <div class="submenu">
+                    <a href="#moth-hunter">MOTH HUNTER</a>
+                </div>
+            </li>
+            <li>
+                0x04 <a href="#resources">RESOURCES</a>
             </li>
         </ul>
     </nav>
@@ -68,9 +73,9 @@
             </div>
         </div>
         
-        <div class="window projects" id="projects">
+        <div class="window projects" id="bootsector">
             <div class="window-title">
-                <span>Projects</span>
+                <span>BOOTSECTOR/512B</span>
                 <a href="#home" class="close-btn">X</a>
             </div>
             <div class="window-content">
@@ -87,6 +92,7 @@
                         <h4>Download</h4>
                         <ul class="infobox">
                             <li>Codename: GAME1</li>
+                            <li>Size: 512B</li>
                             <li>Download: <a href="game1/floppy.img" class="download-btn">Boot Floppy 386+</a></li>
                             <li>Source Code: <a href="game1/game1.asm">game1.asm</a></li>
                         </ul>
@@ -115,6 +121,7 @@
                         <h4>Download</h4>
                         <ul class="infobox">
                             <li>Codename: GAME3</li>
+                            <li>Size: 512B</li>
                             <li>Download: <a href="game3/floppy.img" class="download-btn">Boot Floppy 386+</a></li>
                             <li>Source Code: <a href="game3/game3.asm">game3.asm</a></li>
                             <li>Scene: <a href="https://www.pouet.net/prod.php?which=97179">Pouet</a></li>
@@ -148,22 +155,37 @@
                         <h4>Download</h4>
                         <ul class="infobox">
                             <li>Codename: GAME6</li>
+                            <li>Size: 512B</li>
                             <li>Download: <a href="game6/floppy.img" class="download-btn">Boot Floppy 386+</a> <a href="game6/game6-dos.com" class="download-btn">MS-DOS .COM</a></li>
                             <li>Source Code: <a href="game6/game6.asm">game6.asm</a> <a href="game6/game6-dos.asm">game6-dos.asm</a></li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <h3 id="tools">Tools</h3>
-                <div class="subwindow">
-                    <div class="subwindow-title">VGA GAME FRAMEWORK</div>
+        <div class="window projects" id="dos">
+            <div class="window-title">
+                <span>DOS/1024B</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <h3 id="games">Games</h3>
+                
+                <div class="subwindow" id="land-me">
+                    <div class="subwindow-title">MOTH HUNTER</div>
                     <div class="subwindow-content">
-                        <p>Details about VGA Game Framework...</p>
+                        
+                        <h4>Game-play</h4>
+                        <p>Player steers movement of a rocket: left or right. Trying to avoid blocks and land on a sailing platform instead of an ocean.</p>
+                        <img src="game7/game7-screen1.jpg" alt="Screenshot of Moth Hunter game." class="screenshot" />    
+                        <img src="game7/game7-screen2.jpg" alt="Screenshot of Moth Hunter game." class="screenshot" />    
                         <h4>Download</h4>
                         <ul class="infobox">
-                            <li>Codename: VGA</li>
-                            <li>Download: <a href="vga/floppy.img" class="download-btn">Boot Floppy 386+</a></li>
-                            <li>Source Code: <a href="vga/vga.asm">vga.asm</a></li>
+                            <li>Codename: GAME7</li>
+                            <li>Size: 508B</li>
+                            <li>Download: <a href="game7/game7.com" class="download-btn">MS-DOS .COM</a></li>
+                            <li>Source Code: <a href="game7/game7.asm">game7.asm</a></li>
                         </ul>
                     </div>
                 </div>
@@ -187,7 +209,7 @@
     </div>
 
     <footer>
-        <p>Contact: <a href="mailto:kj@p1x.in">kj@p1x.in</a></p>
+        <p>Contact: <a href="mailto:smol@p1x.in">smol@p1x.in</a></p>
         <p>Follow me on Mastodon: <a href="https://fosstodon.org/@w84death">@w84death@fosstodon.org</a></p>
     </footer>
 </body>
