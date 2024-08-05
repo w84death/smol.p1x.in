@@ -1,0 +1,15 @@
+body {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    max-width: 640px;
+    padding-left: 2%;
+    padding-right: 3%;
+    margin: 0 auto 2em auto;
+    background: black url('img/hack-bg.jpg') no-repeat center top fixed;
+    color: white;
+}
+h1,h2,h3,h4,h5,h6 { color: yellow;}
+img {max-width:640px;}
+a {background-color:black; color:yellow; padding:0.25em 0.5em; line-height: 2.5em;}
+a:hover {background-color: yellow; color:black;}
+header {text-align:center;}
+footer {text-align:right;}
