@@ -49,8 +49,8 @@
             background-color: rgba(255,255,255,0.2);    
         }
         textarea {
-            width: 160px;
-            height: 360px;
+            width: 286px;
+            height: 212px;
             margin-top: 20px;
             overflow: hidden;
             background-color: black;
@@ -126,7 +126,7 @@
         }
 
         function exportLevel() {
-            let output = '';
+            let output = '; Custom Level, 40 bytes\n; Made in smol.p1x.in/4bitleveleditor\n';
             for (let y = 0; y < gridHeight; y++) {
                 let line = '';
                 for (let x = 0; x < gridWidth; x++) {
@@ -135,8 +135,7 @@
                 // Split the 32-bit line into two 16-bit words
                 const firstHalf = line.slice(0, 16);
                 const secondHalf = line.slice(16);
-                output += `dw ${firstHalf}b\n`;
-                output += `dw ${secondHalf}b\n`;
+                output += `dw ${firstHalf}b,${secondHalf}b\n`;
             }
             document.getElementById('exportData').value = output;
         }
