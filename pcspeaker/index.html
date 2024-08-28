@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Speaker Composer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+        }
+        h1 {
+            color: #bb86fc;
+            text-align: center;
+        }
+        #composition, #export {
+            width: 100%;
+            background-color: #2d2d2d;
+            color: #f0f0f0;
+            border: 1px solid #bb86fc;
+            padding: 10px;
+            font-family: monospace;
+        }
+        #composition {
+            height: 200px;
+            margin-top: 10px;
+        }
+        #export {
+            height: 100px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        #noteButtons {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        #durationSelect {
+            margin-right: 10px;
+            padding: 5px;
+            background-color: #3700b3;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+        }
+        .action-btn {
+            background-color: #03dac6;
+            color: #000000;
+        }
+        .note-btn-c { background-color: #ff7597; }
+        .note-btn-d { background-color: #ff9e59; }
+        .note-btn-e { background-color: #ffd03f; }
+        .note-btn-f { background-color: #a8ff3f; }
+        .note-btn-g { background-color: #3fe8ff; }
+        .note-btn-a { background-color: #7c4dff; }
+        .note-btn-b { background-color: #ff4dff; }
+        .note-btn-c5 { background-color: #ff7597; }
+    </style>
+</head>
+<body>
+    <h1>PC Speaker Composer</h1>
+    <div id="noteButtons">
+        <select id="durationSelect">
+            <option value="250">1/4 Note (250ms)</option>
+            <option value="500">1/2 Note (500ms)</option>
+            <option value="1000">Whole Note (1000ms)</option>
+        </select>
+        <button class="note-btn-c" onmousedown="previewNote(261.63)" onmouseup="stopPreview()" onclick="addNote(261.63)">C</button>
+        <button class="note-btn-d" onmousedown="previewNote(293.66)" onmouseup="stopPreview()" onclick="addNote(293.66)">D</button>
+        <button class="note-btn-e" onmousedown="previewNote(329.63)" onmouseup="stopPreview()" onclick="addNote(329.63)">E</button>
+        <button class="note-btn-f" onmousedown="previewNote(349.23)" onmouseup="stopPreview()" onclick="addNote(349.23)">F</button>
+        <button class="note-btn-g" onmousedown="previewNote(392.00)" onmouseup="stopPreview()" onclick="addNote(392.00)">G</button>
+        <button class="note-btn-a" onmousedown="previewNote(440.00)" onmouseup="stopPreview()" onclick="addNote(440.00)">A</button>
+        <button class="note-btn-b" onmousedown="previewNote(493.88)" onmouseup="stopPreview()" onclick="addNote(493.88)">B</button>
+        <button class="note-btn-c5" onmousedown="previewNote(523.25)" onmouseup="stopPreview()" onclick="addNote(523.25)">C5</button>
+    </div>
+    <textarea id="composition" placeholder="440,250&#10;880,500"></textarea>
+    <br>
+    <button id="playButton" class="action-btn">Play Composition</button>
+    <button onclick="exportComposition()" class="action-btn">Export Composition</button>
+    <br>
+    <textarea id="export" readonly></textarea>
+
+    <script>
+        let synth;
+        let audioContextStarted = false;
+
+        async function initAudio() {
+            if (!audioContextStarted) {
+                await Tone.start();
+                audioContextStarted = true;
+                synth = new Tone.Synth().toDestination();
+            }
+        }
+
+        document.getElementById('playButton').addEventListener('click', async () => {
+            await initAudio();
+            playComposition();
+        });
+
+        async function previewNote(frequency) {
+            await initAudio();
+            synth.triggerAttack(frequency);
+        }
+
+        function stopPreview() {
+            if (synth) {
+                synth.triggerRelease();
+            }
+        }
+
+        function addNote(frequency) {
+            const duration = document.getElementById('durationSelect').value;
+            const composition = document.getElementById('composition');
+            if (composition.value && !composition.value.endsWith('\n')) {
+                composition.value += '\n';
+            }
+            composition.value += `${frequency},${duration}\n`;
+        }
+
+        function playComposition() {
+            const composition = document.getElementById('composition').value;
+            const notes = composition.split('\n').filter(line => line.trim() !== '');
+
+            let time = Tone.now();
+
+            notes.forEach(note => {
+                const [freq, duration] = note.split(',').map(Number);
+                synth.triggerAttackRelease(freq, duration / 1000, time);
+                time += duration / 1000;
+            });
+        }
+
+        function exportComposition() {
+            const composition = document.getElementById('composition').value;
+            const notes = composition.split('\n').filter(line => line.trim() !== '');
+            let exportData = '';
+
+            notes.forEach(note => {
+                const [freq, duration] = note.split(',').map(Number);
+                const freqByte = Math.round(1193180 / freq);
+                exportData += `dw 0x${freqByte.toString(16).padStart(4, '0')}, 0x${duration.toString(16).padStart(4, '0')}\n`;
+            });
+
+            document.getElementById('export').value = exportData;
+        }
+    </script>
+</body>
+</html>
