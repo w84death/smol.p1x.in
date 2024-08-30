@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.gif" type="image/gif">
     <title>Assembly Game Level Editor</title>
     <style>
         body {
@@ -33,24 +32,64 @@
         .tile.selected {
             border: 2px solid #f00;
         }
-        .level-grid {
+        .entity-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        .entity-selector div {
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 16px;
+            height: 16px;
+            border:1px solid #ccc;
+        }
+        .level-grid-container {
+            position: relative;
+            width: 256px; /* 32px * 8 cells */
+            height: 128px; /* 8px * 16 cells */
+        }
+        .level-grid, .entity-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
             gap: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-        .cell {
+        .entity-grid {
+            grid-template-columns: repeat(24, 1fr);
+            pointer-events: none; /* Disabled by default */
+        }
+        .cell, .entity-cell {
             width: 32px;
             height: 8px;
             background-color: rgba(255,255,255,0.1);
             cursor: pointer;
             background-size: cover;
         }
-        .cell:hover {
-            background-color: rgba(255,255,255,0.2);    
+        .cell:hover, .entity-cell:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        .entity-cell {
+            width: 10.66px; /* 32px / 3 */
+            position: relative;
+        }
+        .entity-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
         }
         textarea {
-            width: 286px;
-            height: 212px;
+            width: 354px;
+            height: 584px;
             margin-top: 20px;
             overflow: hidden;
             background-color: black;
@@ -62,42 +101,48 @@
         img.border {
             border: 1px solid white;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h1>4-bit Level Editor</h1>
+    <h1>Assembly Game Level Editor (8x16 Terrain, 24x16 Entities)</h1>
     <div class="container">
         <div>
-            <h2>Meta-Tiles</h2>
+            <h2>Tile Selector</h2>
             <div class="tile-selector" id="tileSelector"></div>
         </div>
         <div>
-            <h2>Level Grid (8x10)</h2>
-            <div class="level-grid" id="levelGrid"></div>
-        </div>
-    </div>    
-    <div class="container">
-        <div>
-            <h3>Example in game</h3>
-            <img src="example.gif" class="border" alt="Example in game" width="256">
+            <h2>Entity Selector</h2>
+            <div class="entity-selector" id="entitySelector"></div>
         </div>
         <div>
-            <h3>Export Level Data</h3>
-            <button onclick="exportLevel()">Export Level Data</button><br/>
-            <textarea id="exportData" readonly></textarea>
+            <h2>Level Grid with Entities</h2>
+            <div class="level-grid-container">
+                <div class="level-grid" id="levelGrid"></div>
+                <div class="entity-grid hidden" id="entityGrid"></div>
+            </div>
         </div>
     </div>
-    <footer>
-        <p>Contact: <a href="mailto:smol@p1x.in">smol@p1x.in</a></p>
-        <p>Follow me on Mastodon: <a href="https://fosstodon.org/@w84death">@w84death@fosstodon.org</a></p>
-    </footer>
+    <button onclick="toggleMode()">Toggle Mode</button>
+    <button onclick="exportLevel()">Export Level Data</button>
+    <textarea id="exportData" readonly></textarea>
 
     <script>
         const numTiles = 16; // 0-15
-        const gridWidth = 8;
-        const gridHeight = 10;
+        const terrainGridWidth = 8;
+        const terrainGridHeight = 16;
+        const entityGridWidth = 24; // 3 times denser horizontally
+        const entityGridHeight = 16;
+        const entities = ['d', 't', 'b', 'f', 'm']; // D: Player/Dino, T: Tree, B: Bush, F: Fish, M: Monkey
         let selectedTile = 0;
-        const levelData = Array(gridHeight).fill().map(() => Array(gridWidth).fill(15)); // Initialize with empty tiles
+        let selectedEntity = null;
+        let isEditingEntities = false;
+
+        // Terrain grid and entity grid data
+        const terrainData = Array(terrainGridHeight).fill().map(() => Array(terrainGridWidth).fill(15)); // Initialize with empty tiles
+        const entityData = Array(entityGridHeight).fill().map(() => Array(entityGridWidth).fill(null));
 
         function createTileSelector() {
             const tileSelector = document.getElementById('tileSelector');
@@ -110,50 +155,123 @@
             }
         }
 
+        function createEntitySelector() {
+            const entitySelector = document.getElementById('entitySelector');
+            for (let i = 0; i < entities.length; i++) {
+                const entity = document.createElement('div');
+                entity.className = 'entity';
+                entity.style.backgroundImage = `url('${entities[i]}.gif')`;
+                entity.onclick = () => selectEntity(i);
+                entitySelector.appendChild(entity);
+            }
+        }
+
         function createLevelGrid() {
             const levelGrid = document.getElementById('levelGrid');
-            for (let y = 0; y < gridHeight; y++) {
-                for (let x = 0; x < gridWidth; x++) {
+            for (let y = 0; y < terrainGridHeight; y++) {
+                for (let x = 0; x < terrainGridWidth; x++) {
                     const cell = document.createElement('div');
                     cell.className = 'cell';
                     cell.style.backgroundImage = `url('tile15.gif')`; // Start with empty tile
-                    cell.onclick = () => paintTile(x, y);
+                    cell.onclick = () => paintTerrainCell(x, y);
                     levelGrid.appendChild(cell);
+                }
+            }
+        }
+
+        function createEntityGrid() {
+            const entityGrid = document.getElementById('entityGrid');
+            for (let y = 0; y < entityGridHeight; y++) {
+                for (let x = 0; x < entityGridWidth; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'entity-cell';
+                    cell.onclick = () => paintEntityCell(x, y);
+                    entityGrid.appendChild(cell);
                 }
             }
         }
 
         function selectTile(index) {
             selectedTile = index;
+            selectedEntity = null;
             document.querySelectorAll('.tile').forEach((tile, i) => {
                 tile.className = i === index ? 'tile selected' : 'tile';
             });
+            document.querySelectorAll('.entity').forEach(entity => {
+                entity.className = 'entity';
+            });
         }
 
-        function paintTile(x, y) {
-            levelData[y][x] = selectedTile;
-            const index = y * gridWidth + x;
-            const cell = document.querySelectorAll('.cell')[index];
-            cell.style.backgroundImage = `url('tile${selectedTile}.gif')`;
+        function selectEntity(index) {
+            selectedEntity = index;
+            selectedTile = null;
+            document.querySelectorAll('.entity').forEach((entity, i) => {
+                entity.className = i === index ? 'entity selected' : 'entity';
+            });
+            document.querySelectorAll('.tile').forEach(tile => {
+                tile.className = 'tile';
+            });
+        }
+
+        function paintTerrainCell(x, y) {
+            if (!isEditingEntities) {
+                const cell = document.querySelectorAll('.cell')[y * terrainGridWidth + x];
+                if (selectedTile !== null) {
+                    terrainData[y][x] = selectedTile;
+                    cell.style.backgroundImage = `url('tile${selectedTile}.gif')`;
+                }
+            }
+        }
+
+        function paintEntityCell(x, y) {
+            if (isEditingEntities) {
+                const cell = document.querySelectorAll('.entity-cell')[y * entityGridWidth + x];
+                if (selectedEntity !== null) {
+                    entityData[y][x] = selectedEntity;
+                    cell.style.backgroundImage = `url('${entities[selectedEntity]}.gif')`;
+                }
+            }
+        }
+
+        function toggleMode() {
+            isEditingEntities = !isEditingEntities;
+            document.getElementById('entityGrid').classList.toggle('hidden', !isEditingEntities);
+            document.getElementById('entityGrid').style.pointerEvents = isEditingEntities ? 'auto' : 'none';
+            document.getElementById('levelGrid').style.pointerEvents = isEditingEntities ? 'none' : 'auto';
         }
 
         function exportLevel() {
-            let output = '; Custom Level, 40 bytes\n; Made in smol.p1x.in/4bitleveleditor\n';
-            for (let y = 0; y < gridHeight; y++) {
+            let output = '*; Custom Level mady in smol.p1x.in/4bitleveleditor\n';
+            for (let y = 0; y < terrainGridHeight; y++) {
                 let line = '';
-                for (let x = 0; x < gridWidth; x++) {
-                    line += levelData[y][x].toString(2).padStart(4, '0');
+                for (let x = 0; x < terrainGridWidth; x++) {
+                    line += terrainData[y][x].toString(2).padStart(4, '0');
                 }
-                // Split the 32-bit line into two 16-bit words
                 const firstHalf = line.slice(0, 16);
                 const secondHalf = line.slice(16);
                 output += `dw ${firstHalf}b,${secondHalf}b\n`;
+            }
+
+            output += '\n*; Entities*\n';
+            for (let y = 0; y < entityGridHeight; y++) {
+                for (let x = 0; x < entityGridWidth; x++) {
+                    if (entityData[y][x] !== null) {
+                        const id = entityData[y][x];
+                        const yy = y.toString(16).padStart(2, '0').toUpperCase();
+                        const xx = x.toString(16).padStart(2, '0').toUpperCase();
+                        output += `db ${id}\n`;
+                        output += `dw 0x${yy}${xx}\n`;
+                        output += `db 0x00,0x00,0x01\n\n`;
+                    }
+                }
             }
             document.getElementById('exportData').value = output;
         }
 
         createTileSelector();
+        createEntitySelector();
         createLevelGrid();
+        createEntityGrid();
         selectTile(0);
     </script>
 </body>
