@@ -13,6 +13,7 @@
             padding: 20px;
             background-color: #007cfc;
         }
+        h2 {font-size:12px;}
         .container {
             display: flex;
             gap: 20px;
@@ -112,7 +113,7 @@
     </style>
 </head>
 <body>
-    <h1>Assembly Game Level Editor (8x16 Terrain, 24x16 Entities)</h1>
+    <h1>Assembly Game Level Editor (8x16 Terrain, 32x16 Entities)</h1>
     <div class="container">
         <div style="width:175px;" id="tileGroup">
             <h2>Tile Selector</h2>
@@ -140,7 +141,7 @@
         const terrainGridHeight = 16;
         const entityGridWidth = 32;
         const entityGridHeight = 16;
-        const entities = ['Dino', 'Tree', 'Bush', 'Fish', 'Monkey']; // D: Player/Dino, T: Tree, B: Bush, F: Fish, M: Monkey
+        const entities = ['Remove', 'Tree', 'Bush', 'Fish', 'Monkey'];
         let selectedTile = 0;
         let selectedEntity = null;
         let isEditingEntities = false;
@@ -232,7 +233,10 @@
         function paintEntityCell(x, y) {
             if (isEditingEntities) {
                 const cell = document.querySelectorAll('.entity-cell')[y * entityGridWidth + x];
-                if (selectedEntity !== null) {
+                if (selectedEntity === 0) { // "remove" entity
+                    entityData[y][x] = null;
+                    cell.style.backgroundImage = 'none'; // Clear the cell
+                } else if (selectedEntity !== null) {
                     entityData[y][x] = selectedEntity;
                     cell.style.backgroundImage = `url('${entities[selectedEntity]}.gif')`;
                 }
@@ -256,7 +260,8 @@
 
 
         function exportLevel() {
-            let output = '; Custom Level mady in smol.p1x.in/4bitleveleditor\nLevelData:\n';
+            let output = '; Custom Level mady in smol.p1x.in/4bitleveleditor\n\nLevelData:\n';
+            
             for (let y = 0; y < terrainGridHeight; y++) {
                 let line = '';
                 for (let x = 0; x < terrainGridWidth; x++) {
@@ -267,18 +272,29 @@
                 output += `dw ${firstHalf}b,${secondHalf}b\n`;
             }
 
-            output += '\nEntityData:\n';
+            // Count entities and prepare entity data
+            let entityCount = 0;
+            let entityOutput = '';
+
             for (let y = 0; y < entityGridHeight; y++) {
                 for (let x = 0; x < entityGridWidth; x++) {
                     if (entityData[y][x] !== null) {
+                        entityCount++; // Increment the entity count
                         const id = entityData[y][x];
                         const yy = y.toString(16).padStart(2, '0').toUpperCase();
                         const xx = x.toString(16).padStart(2, '0').toUpperCase();
-                        output += `db ${id}\n`;
-                        output += `dw 0x${yy}${xx}\n`;
+                        entityOutput += `db ${id}\n`;
+                        entityOutput += `dw 0x${yy}${xx}\n`;
                     }
                 }
             }
+
+            // Export entity count as the first byte
+            output += `\nEntityData:\n`;
+            output += `db ${entityCount}\n\n`; // Export entity count
+
+            // Append entity data
+            output += entityOutput;
             document.getElementById('exportData').value = output;
         }
 
