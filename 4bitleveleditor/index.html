@@ -22,27 +22,32 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 5px;
         }
-        .tile {
+        .tile,.entity {
             width: 32px;
             height: 8px;
             border: 1px solid #ccc;
             cursor: pointer;
             background-size: cover;
         }
-        .tile.selected {
+        .tile.selected,
+        .entity.selected {
             border: 2px solid #f00;
         }
         .entity-selector {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 5px;
         }
         .entity-selector div {
             background-repeat: no-repeat;
-            background-position: center;
-            width: 16px;
+            background-position: 2px;
+            font-size: 13px;
+            color: #ccc;
+            padding-left: 12px;
+            width: 60px;
             height: 16px;
             border:1px solid #ccc;
+            background-size: auto;
         }
         .level-grid-container {
             position: relative;
@@ -109,13 +114,13 @@
 <body>
     <h1>Assembly Game Level Editor (8x16 Terrain, 24x16 Entities)</h1>
     <div class="container">
-        <div>
+        <div style="width:160px;">
             <h2>Tile Selector</h2>
             <div class="tile-selector" id="tileSelector"></div>
         </div>
-        <div>
+        <div style="width:175px;">
             <h2>Entity Selector</h2>
-            <div class="entity-selector" id="entitySelector"></div>
+            <div class="entity-selector hidden" id="entitySelector"></div>
         </div>
         <div>
             <h2>Level Grid with Entities</h2>
@@ -135,7 +140,7 @@
         const terrainGridHeight = 16;
         const entityGridWidth = 24; // 3 times denser horizontally
         const entityGridHeight = 16;
-        const entities = ['d', 't', 'b', 'f', 'm']; // D: Player/Dino, T: Tree, B: Bush, F: Fish, M: Monkey
+        const entities = ['Dino', 'Tree', 'Bush', 'Fish', 'Monkey']; // D: Player/Dino, T: Tree, B: Bush, F: Fish, M: Monkey
         let selectedTile = 0;
         let selectedEntity = null;
         let isEditingEntities = false;
@@ -160,6 +165,7 @@
             for (let i = 0; i < entities.length; i++) {
                 const entity = document.createElement('div');
                 entity.className = 'entity';
+                entity.innerHTML = `${entities[i]}`;
                 entity.style.backgroundImage = `url('${entities[i]}.gif')`;
                 entity.onclick = () => selectEntity(i);
                 entitySelector.appendChild(entity);
@@ -235,10 +241,19 @@
 
         function toggleMode() {
             isEditingEntities = !isEditingEntities;
+
+            // Toggle entity grid visibility and interactivity
             document.getElementById('entityGrid').classList.toggle('hidden', !isEditingEntities);
             document.getElementById('entityGrid').style.pointerEvents = isEditingEntities ? 'auto' : 'none';
+
+            // Toggle level grid interactivity
             document.getElementById('levelGrid').style.pointerEvents = isEditingEntities ? 'none' : 'auto';
+
+            // Toggle selectors visibility
+            document.getElementById('tileSelector').classList.toggle('hidden', isEditingEntities);
+            document.getElementById('entitySelector').classList.toggle('hidden', !isEditingEntities);
         }
+
 
         function exportLevel() {
             let output = '*; Custom Level mady in smol.p1x.in/4bitleveleditor\n';
