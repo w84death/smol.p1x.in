@@ -290,10 +290,11 @@
             }
 
             // Export entity count as the first byte
-            output += `\nEntityData:\n`;
-            output += `db ${entityCount}\n\n`; // Export entity count
+            output += `\nEntityCount:\n`;
+            output += `dw ${entityCount}\n\n`; // Export entity count
 
             // Append entity data
+            output += `\nEntityData:\n`;
             output += entityOutput;
             document.getElementById('exportData').value = output;
         }
