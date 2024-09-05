@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smol ASM Viewer</title>
+    <style>
+        @font-face {
+            font-family: 'DepartureMono';
+            src: url('DepartureMono-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'DepartureMono', cursive;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            text-shadow: 0 0 5px #cccccc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        h1, h2 {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        h1 { font-size: 24px; }
+        h2 { font-size: 20px; }
+        h3 { font-size: 18px; color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+        #fileInput, #saveButton {
+            margin-bottom: 20px;
+            background-color: #1a1a1a;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            padding: 5px;
+            font-family: 'DepartureMono', cursive;
+        }
+        #saveButton {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #headerDescription {
+            color: #ffff00;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+        .asmSection {
+            margin-bottom: 30px;
+        }
+        .asmView {
+            white-space: pre-wrap;
+            display: flex;
+        }
+        .code-column {
+            flex: 1;
+            color: #00ffff;
+            padding-right: 20px;
+        }
+        .comment-column {
+            flex: 1;
+            color: #ff00ff;
+        }
+        .line-number {
+            color: #ffff00;
+            margin-right: 10px;
+        }
+        .sectionDescription {
+            color: #ffff00;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>smol ASM Viewer</h1>
+    <input type="file" id="fileInput" accept=".asm">
+    <button id="saveButton" style="display: none;">Save as HTML</button>
+    <div id="headerDescription"></div>
+    <div id="asmContent"></div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const saveButton = document.getElementById('saveButton');
+        const headerDescription = document.getElementById('headerDescription');
+        const asmContent = document.getElementById('asmContent');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    const lines = content.split('\n');
+                    
+                    let headerLines = [];
+                    let mainContent = [];
+                    let foundOrg = false;
+
+                    for (const line of lines) {
+                        if (!foundOrg && !line.toLowerCase().includes('org')) {
+                            headerLines.push(line);
+                        } else {
+                            foundOrg = true;
+                            mainContent.push(line);
+                        }
+                    }
+
+                    // Extract file header (first line)
+                    let fileHeader = '';
+                    if (headerLines.length > 0) {
+                        fileHeader = headerLines.shift().substring(1).trim();
+                    }
+
+                    headerDescription.innerHTML = `<h2>${fileHeader}</h2>${headerLines.join('\n')}`;
+
+                    let currentSection = '';
+                    let codeOutput = '';
+                    let commentOutput = '';
+                    let descriptionOutput = '';
+                    
+                    mainContent.forEach((line, index) => {
+                        if (line.trim().startsWith(';')) {
+                            const commentContent = line.trim().substring(1).trim();
+                            if (commentContent.includes('=')) {
+                                // This is a header 3
+                                if (currentSection) {
+                                    asmContent.innerHTML += `
+                                        <div class="asmSection">
+                                            <h3>${currentSection}</h3>
+                                            <div class="sectionDescription">${descriptionOutput}</div>
+                                            <div class="asmView">
+                                                <div class="code-column">${codeOutput}</div>
+                                                <div class="comment-column">${commentOutput}</div>
+                                            </div>
+                                        </div>
+                                    `;
+                                    codeOutput = '';
+                                    commentOutput = '';
+                                    descriptionOutput = '';
+                                }
+                                currentSection = commentContent.replace(/=/g, '').trim();
+                            } else {
+                                // This is a description
+                                descriptionOutput += `${commentContent}\n`;
+                            }
+                        } else {
+                            const [code, ...commentParts] = line.split(';');
+                            const comment = commentParts.join(';').trim();
+                            
+                            codeOutput += `<span class="line-number">${(index + 1).toString().padStart(4, ' ')}</span>${code}\n`;
+                            commentOutput += comment ? `; ${comment}\n` : '\n';
+                        }
+                    });
+
+                    // Add the last section
+                    if (currentSection) {
+                        asmContent.innerHTML += `
+                            <div class="asmSection">
+                                <h3>${currentSection}</h3>
+                                <div class="sectionDescription">${descriptionOutput}</div>
+                                <div class="asmView">
+                                    <div class="code-column">${codeOutput}</div>
+                                    <div class="comment-column">${commentOutput}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    saveButton.style.display = 'inline-block';
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        saveButton.addEventListener('click', function() {
+            const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smol ASM Viewer - Static Page</title>
+    <style>
+        ${document.querySelector('style').innerHTML}
+    </style>
+</head>
+<body>
+    <h1>smol ASM Viewer - Static Page</h1>
+    <div id="headerDescription">${headerDescription.innerHTML}</div>
+    <div id="asmContent">${asmContent.innerHTML}</div>
+</body>
+</html>`;
+
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'asm_viewer_static.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>

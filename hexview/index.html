@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smol HEX Dump Viewer</title>
+    <style>
+        @font-face {
+            font-family: 'DepartureMono';
+            src: url('DepartureMono-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'DepartureMono', cursive;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        h1 {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+            font-size: 24px;
+        }
+        #fileInput {
+            margin-bottom: 20px;
+            background-color: #1a1a1a;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            padding: 5px;
+            font-family: 'DepartureMono', cursive;
+        }
+        #hexDump {
+            white-space: pre-wrap;
+        }
+        .ascii {
+            color: #ff00ff;
+        }
+        .non-printable {
+            color: #444;
+        }
+        .byte-counter {
+            color: #ffff00;
+        }
+    </style>
+</head>
+<body>
+    <h1>smol HEX Dump Viewer</h1>
+    <input type="file" id="fileInput" accept=".txt,.bin,.dat">
+    <div id="hexDump"></div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const hexDump = document.getElementById('hexDump');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const arrayBuffer = e.target.result;
+                    const uint8Array = new Uint8Array(arrayBuffer);
+                    
+                    if (uint8Array.length > 4096) {
+                        hexDump.textContent = 'File size exceeds 4KB limit.';
+                        return;
+                    }
+
+                    let output = '';
+                    for (let i = 0; i < uint8Array.length; i += 16) {
+                        output += `<span style="color: #00ffff;">${i.toString(16).padStart(8, '0')}</span>  `;
+                        
+                        for (let j = 0; j < 16; j++) {
+                            if (i + j < uint8Array.length) {
+                                output += `<span style="color: #ff00ff;">${uint8Array[i + j].toString(16).padStart(2, '0')}</span> `;
+                            } else {
+                                output += '   ';
+                            }
+                            if (j === 7) output += ' ';
+                        }
+                        
+                        output += ' |';
+                        for (let j = 0; j < 16; j++) {
+                            if (i + j < uint8Array.length) {
+                                const char = uint8Array[i + j];
+                                if (char >= 32 && char <= 126) {
+                                    output += `<span class="ascii" style="color: hsl(${char * 2}, 100%, 60%);">${String.fromCharCode(char)}</span>`;
+                                } else {
+                                    output += '<span class="non-printable">.</span>';
+                                }
+                            } else {
+                                output += ' ';
+                            }
+                        }
+                        output += '| ';
+                        
+                        // Add cumulative byte counter
+                        const lineEnd = Math.min(i + 16, uint8Array.length);
+                        output += `<span class="byte-counter">${lineEnd.toString().padStart(4, ' ')} bytes</span>`;
+                        
+                        output += '\n';
+                    }
+                    
+                    hexDump.innerHTML = output;
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+    </script>
+</body>
+</html>
+

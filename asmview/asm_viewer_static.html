@@ -1,0 +1,2866 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>smol ASM Viewer - Static Page</title>
+    <style>
+        
+        @font-face {
+            font-family: 'DepartureMono';
+            src: url('DepartureMono-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'DepartureMono', cursive;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        h1, h2 {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        h1 { font-size: 24px; }
+        h2 { font-size: 20px; }
+        #fileInput, #saveButton {
+            margin-bottom: 20px;
+            background-color: #1a1a1a;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            padding: 5px;
+            font-family: 'DepartureMono', cursive;
+        }
+        #saveButton {
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #headerDescription {
+            color: #ffff00;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+        .asmSection {
+            margin-bottom: 30px;
+        }
+        .asmView {
+            white-space: pre-wrap;
+            display: flex;
+        }
+        .code-column {
+            flex: 1;
+            color: #00ffff;
+            padding-right: 20px;
+        }
+        .comment-column {
+            flex: 1;
+            color: #ff00ff;
+        }
+        .line-number {
+            color: #ffff00;
+            margin-right: 10px;
+        }
+    
+    </style>
+</head>
+<body>
+    <h1>smol ASM Viewer - Static Page</h1>
+    <div id="headerDescription">; GAME9 - DINOPIX
+; DOS VERSION
+;
+; Description:
+;   Dino cook serving food to sea creatures.
+;
+; Size category: 2KB
+;
+; Author: Krzysztof Krystian Jankowski
+; Web: smol.p1x.in/assembly/#dinopix
+; License: MIT
+</div>
+    <div id="asmContent">
+                                    <div class="asmSection">
+                                        <h2>Memory adresses</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">   1</span>org 0x100
+<span class="line-number">   2</span>use16
+<span class="line-number">   3</span>
+<span class="line-number">   5</span>_VGA_MEMORY_ equ 0xA000
+<span class="line-number">   6</span>_DBUFFER_MEMORY_ equ 0x8000
+<span class="line-number">   7</span>_ENTITIES_ equ 0x7000
+<span class="line-number">   8</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Constants</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">  10</span>BEEPER_ENABLED equ 0x0        
+<span class="line-number">  11</span>BEEPER_FREQ equ 4800          
+<span class="line-number">  12</span>LEVEL_START_POSITION equ 320*60
+<span class="line-number">  13</span>SPEED_EXPLORE equ 0x12c
+<span class="line-number">  14</span>COLOR_SKY equ 0x3b3b
+<span class="line-number">  15</span>COLOR_WATER equ 0x3636
+<span class="line-number">  16</span>
+<span class="line-number">  17</span>start:
+<span class="line-number">  18</span>    mov ax,0x13                             
+<span class="line-number">  19</span>    int 0x10                                
+<span class="line-number">  20</span>
+<span class="line-number">  21</span>    push _DBUFFER_MEMORY_                 
+<span class="line-number">  22</span>    pop es                                  
+<span class="line-number">  23</span>
+<span class="line-number">  24</span>set_keyboard_rate:
+<span class="line-number">  25</span>    xor ax, ax
+<span class="line-number">  26</span>    xor bx, bx
+<span class="line-number">  27</span>    mov ah, 03h         
+<span class="line-number">  28</span>    mov bl, 1Fh         
+<span class="line-number">  29</span>    int 16h
+<span class="line-number">  30</span>
+<span class="line-number">  31</span>restart_game:
+</div>
+                                            <div class="comment-column">; 0 - disabled, 1 - enabled PC Speaker Sound
+; Frequency for the PC Speaker Sound
+
+
+
+
+
+
+; Init VGA 320x200x256
+; Video BIOS interrupt
+
+; Set doublebuffer memory
+; as target
+
+
+
+
+; BIOS function to set typematic rate and delay
+; BL = 31 (0x1F) for maximum repeat rate (30 Hz)
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>ENTITES</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>0 0x00 - type: 0 player, 1 tree, 2 grass, 3 fish, 4 monkey</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+1 0x0000 - Position YY/XX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+2 ----</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+3 0x00 - Mirror Y/X</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+4 0x00 - Sprite data offset</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+5 0x00 - Status</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>0000 - 0 stopped ; do not drawn</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>0001 - 1 exploring ; draw</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>0010 - 2 waiting for placing order</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>0100 - 4 waiting for food</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>1001 - 9 served, back</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>10000 - source</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>NOT IMPLEMENTED YET:</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+6 0x0000 - status timer</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>+7 ----</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>0 Player</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">  50</span>spawn_entities:
+<span class="line-number">  51</span>  mov si, EntityData    
+<span class="line-number">  52</span>  mov di, _ENTITIES_    
+<span class="line-number">  53</span>
+<span class="line-number">  54</span>  mov cx, [EntityCount] 
+<span class="line-number">  55</span>  .next_entitie:
+<span class="line-number">  56</span>
+</div>
+                                            <div class="comment-column">
+; Load entity data (type, position, sprite data)
+; Load destination address
+
+; Load number of entities
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>1 Palm Tree - 0x22</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>2 grass - 0x46</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>3 fish swim - 0/0</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>4 monkey - 70/0x3a</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">  62</span>
+</div>
+                                            <div class="comment-column">
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Copy position</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">  64</span>    mov word ax, [si+1]
+<span class="line-number">  65</span>    mov word [di+1], ax
+<span class="line-number">  66</span>
+</div>
+                                            <div class="comment-column">
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Set mirror based on screen position (left/right)</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">  68</span>    mov ah,0x0
+<span class="line-number">  69</span>    cmp al, 0x10
+<span class="line-number">  70</span>    jl .skip_mirror_x
+<span class="line-number">  71</span>      inc ah
+<span class="line-number">  72</span>    .skip_mirror_x:
+<span class="line-number">  73</span>    mov byte [di+4], ah
+<span class="line-number">  74</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Set sprite data offset</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>TODO: Refactoring</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">  77</span>    mov byte al, [si]
+<span class="line-number">  78</span>    mov byte [di],al
+<span class="line-number">  79</span>    mov ah, 0x01
+<span class="line-number">  80</span>    .nz:
+<span class="line-number">  81</span>    cmp al, 0x00
+<span class="line-number">  82</span>    jne .n1
+<span class="line-number">  83</span>      mov al, 0x6a
+<span class="line-number">  84</span>    .n1:
+<span class="line-number">  85</span>    cmp al, 0x01
+<span class="line-number">  86</span>    jne .n2
+<span class="line-number">  87</span>      mov al, 0x22
+<span class="line-number">  88</span>    .n2:
+<span class="line-number">  89</span>    cmp al, 0x02
+<span class="line-number">  90</span>    jne .n3
+<span class="line-number">  91</span>      mov al, 0x46
+<span class="line-number">  92</span>    .n3:
+<span class="line-number">  93</span>    cmp al, 0x03
+<span class="line-number">  94</span>    jne .n4
+<span class="line-number">  95</span>      mov al, 0x00
+<span class="line-number">  96</span>    .n4:
+<span class="line-number">  97</span>     cmp al, 0x04
+<span class="line-number">  98</span>    jne .n5
+<span class="line-number">  99</span>      mov al, 0x58
+<span class="line-number"> 100</span>    .n5:
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Copy sprite data offset</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 102</span>    mov byte [di+3], al
+</div>
+                                            <div class="comment-column">
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Copy status</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 104</span>    mov byte [di+5], ah
+<span class="line-number"> 105</span>
+<span class="line-number"> 106</span>    add si, 0x03      
+<span class="line-number"> 107</span>    add di, 0x06      
+<span class="line-number"> 108</span>  loop .next_entitie
+<span class="line-number"> 109</span>
+<span class="line-number"> 110</span>
+</div>
+                                            <div class="comment-column">
+
+; Move to the next entity data
+; Move to the next destination address
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>TEST STATUS</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 112</span>mov di, _ENTITIES_
+<span class="line-number"> 113</span>mov byte [di+5], 0x10
+</div>
+                                            <div class="comment-column">
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>TEST STATUS</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 115</span>
+<span class="line-number"> 116</span>game_loop:
+<span class="line-number"> 117</span>    xor di,di                   
+<span class="line-number"> 118</span>    xor si,si                   
+<span class="line-number"> 119</span>
+</div>
+                                            <div class="comment-column">
+
+; Clear destination address
+; Clear source address
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== DRAW BACKGROUND ==================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 121</span>draw_bg:
+<span class="line-number"> 122</span>  mov ax, COLOR_SKY             
+<span class="line-number"> 123</span>  mov cl, 0xa                  
+<span class="line-number"> 124</span>  .draw_bars:
+<span class="line-number"> 125</span>     push cx
+<span class="line-number"> 126</span>
+<span class="line-number"> 127</span>     mov cx, 320*3           
+<span class="line-number"> 128</span>     rep stosw               
+<span class="line-number"> 129</span>     inc ax                  
+<span class="line-number"> 130</span>     xchg al, ah             
+<span class="line-number"> 131</span>
+<span class="line-number"> 132</span>     pop cx                  
+<span class="line-number"> 133</span>     loop .draw_bars
+<span class="line-number"> 134</span>
+<span class="line-number"> 135</span>  mov cx, 320*70              
+<span class="line-number"> 136</span>  mov ax, COLOR_WATER              
+<span class="line-number"> 137</span>  rep stosw                   
+<span class="line-number"> 138</span>
+</div>
+                                            <div class="comment-column">
+; Set color of the sky
+; 16 bars to draw
+
+
+
+; 3 pixels high
+; Write to the doublebuffer
+; Increment color index for next bar
+; Swap colors
+
+; Decrement bar counter
+
+
+; Clear the rest of the screen
+; Set color to 36
+; Write to the doublebuffer
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== DRAW TERRAIN =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 140</span>
+<span class="line-number"> 141</span>draw_terrain:
+<span class="line-number"> 142</span>  mov di, LEVEL_START_POSITION
+<span class="line-number"> 143</span>  sub di, 32    
+<span class="line-number"> 144</span>
+</div>
+                                            <div class="comment-column">
+
+
+; bug
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>draw metatiles</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 146</span>  mov si, LevelData
+<span class="line-number"> 147</span>  mov cl, 0x20 
+<span class="line-number"> 148</span>  .draw_meta_tiles:
+<span class="line-number"> 149</span>  push cx
+<span class="line-number"> 150</span>  push si
+<span class="line-number"> 151</span>
+<span class="line-number"> 152</span>  dec cx
+<span class="line-number"> 153</span>  shr cx, 0x1
+<span class="line-number"> 154</span>  jnc .no_new_line
+<span class="line-number"> 155</span>    add di, 320*8-(32*8)
+<span class="line-number"> 156</span>  .no_new_line:
+<span class="line-number"> 157</span>
+<span class="line-number"> 158</span>  mov ax, [si]      
+<span class="line-number"> 159</span>  mov cl, 0x4
+<span class="line-number"> 160</span>  .small_loop:
+<span class="line-number"> 161</span>    push cx
+<span class="line-number"> 162</span>
+<span class="line-number"> 163</span>    mov cl, 0x4           
+<span class="line-number"> 164</span>    call convert_value
+<span class="line-number"> 165</span>    push ax             
+<span class="line-number"> 166</span>
+<span class="line-number"> 167</span>    mov si, MetaTiles
+<span class="line-number"> 168</span>    mov ax, bx
+<span class="line-number"> 169</span>   imul ax, 0x4
+<span class="line-number"> 170</span>    add si, ax
+<span class="line-number"> 171</span>    mov ax, [si] 
+<span class="line-number"> 172</span>    mov cl, 0x4
+<span class="line-number"> 173</span>    .draw_tile:
+<span class="line-number"> 174</span>      push cx
+<span class="line-number"> 175</span>      push si
+<span class="line-number"> 176</span>
+<span class="line-number"> 177</span>      mov ax, [si]
+<span class="line-number"> 178</span>      shl ax, 1         
+<span class="line-number"> 179</span>      jnc .skip_tile
+<span class="line-number"> 180</span>
+<span class="line-number"> 181</span>      mov cl, 0x3           
+<span class="line-number"> 182</span>      call convert_value
+<span class="line-number"> 183</span>
+<span class="line-number"> 184</span>      mov si, bx
+<span class="line-number"> 185</span>     imul si, 0x14
+<span class="line-number"> 186</span>      add si, Tiles
+<span class="line-number"> 187</span>
+<span class="line-number"> 188</span>      mov cl, 0x2           
+<span class="line-number"> 189</span>      call convert_value
+<span class="line-number"> 190</span>
+<span class="line-number"> 191</span>      mov dx, bx
+<span class="line-number"> 192</span>      xor bp, bp
+<span class="line-number"> 193</span>      call draw_sprite
+<span class="line-number"> 194</span>
+<span class="line-number"> 195</span>      .skip_tile:
+<span class="line-number"> 196</span>
+<span class="line-number"> 197</span>      add di,0x8
+<span class="line-number"> 198</span>      pop si
+<span class="line-number"> 199</span>      inc si
+<span class="line-number"> 200</span>      pop cx
+<span class="line-number"> 201</span>    loop .draw_tile
+<span class="line-number"> 202</span>
+<span class="line-number"> 203</span>    pop ax
+<span class="line-number"> 204</span>    pop cx
+<span class="line-number"> 205</span>  loop .small_loop
+<span class="line-number"> 206</span>
+<span class="line-number"> 207</span>  pop si
+<span class="line-number"> 208</span>  inc si
+<span class="line-number"> 209</span>  inc si
+<span class="line-number"> 210</span>  pop cx
+<span class="line-number"> 211</span>loop .draw_meta_tiles
+<span class="line-number"> 212</span>
+</div>
+                                            <div class="comment-column">
+; 20 reads, 2 per line - 16 lines, 32 reads
+
+
+
+
+
+
+
+
+
+
+; AX - LevelData
+
+
+
+
+; Set up counter for loop
+
+; Preserve AX - LevelData
+
+
+
+
+
+; AX - MeTatile
+
+
+
+
+
+
+; Cut left bit
+
+
+; Set up counter for loop
+
+
+
+
+
+
+; Set up counter for loop
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== KEYBOARD INPUT ==================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 214</span>
+<span class="line-number"> 215</span>check_keyboard:
+<span class="line-number"> 216</span>  mov ah, 01h         
+<span class="line-number"> 217</span>  int 16h             
+<span class="line-number"> 218</span>  jz .no_key_press           
+<span class="line-number"> 219</span>
+<span class="line-number"> 220</span>  mov si, _ENTITIES_
+<span class="line-number"> 221</span>  mov cx, [si+1]   
+<span class="line-number"> 222</span>  call conv_pos2mem
+<span class="line-number"> 223</span>
+<span class="line-number"> 224</span>  mov ah, 00h         
+<span class="line-number"> 225</span>  int 16h             
+<span class="line-number"> 226</span>
+<span class="line-number"> 227</span>  .check_enter:
+<span class="line-number"> 228</span>  cmp ah, 1ch         
+<span class="line-number"> 229</span>  jne .check_up
+<span class="line-number"> 230</span>    jmp restart_game
+<span class="line-number"> 231</span>
+<span class="line-number"> 232</span>  .check_up:
+<span class="line-number"> 233</span>  cmp ah, 48h         
+<span class="line-number"> 234</span>  jne .check_down
+<span class="line-number"> 235</span>    sub di, 320*6
+<span class="line-number"> 236</span>    call check_water
+<span class="line-number"> 237</span>    jz .no_key
+<span class="line-number"> 238</span>    dec ch
+<span class="line-number"> 239</span>    call check_friends
+<span class="line-number"> 240</span>    jz .no_key
+<span class="line-number"> 241</span>    sub word [si+1],0x0100
+<span class="line-number"> 242</span>
+<span class="line-number"> 243</span>  .check_down:
+<span class="line-number"> 244</span>  cmp ah, 50h         
+<span class="line-number"> 245</span>  jne .check_left
+<span class="line-number"> 246</span>    add di, 320*6
+<span class="line-number"> 247</span>    call check_water
+<span class="line-number"> 248</span>    jz .no_key
+<span class="line-number"> 249</span>    inc ch
+<span class="line-number"> 250</span>    call  check_friends
+<span class="line-number"> 251</span>    jz .no_key
+<span class="line-number"> 252</span>    add word [si+1],0x0100
+<span class="line-number"> 253</span>
+<span class="line-number"> 254</span>  .check_left:
+<span class="line-number"> 255</span>  cmp ah, 4Bh         
+<span class="line-number"> 256</span>  jne .check_right
+<span class="line-number"> 257</span>    sub di, 8
+<span class="line-number"> 258</span>    call check_water
+<span class="line-number"> 259</span>    jz .no_key
+<span class="line-number"> 260</span>    dec  cl
+<span class="line-number"> 261</span>    call  check_friends
+<span class="line-number"> 262</span>    jz .no_key
+<span class="line-number"> 263</span>    sub word [si+1],0x0001
+<span class="line-number"> 264</span>    mov byte [si+4], 0x01
+<span class="line-number"> 265</span>
+<span class="line-number"> 266</span>  .check_right:
+<span class="line-number"> 267</span>  cmp ah, 4Dh         
+<span class="line-number"> 268</span>  jne .no_key
+<span class="line-number"> 269</span>    add di, 6
+<span class="line-number"> 270</span>    call check_water
+<span class="line-number"> 271</span>    jz .no_key
+<span class="line-number"> 272</span>    inc cl
+<span class="line-number"> 273</span>    call  check_friends
+<span class="line-number"> 274</span>    jz .no_key
+<span class="line-number"> 275</span>
+<span class="line-number"> 276</span>    add word [si+1],0x0001
+<span class="line-number"> 277</span>    mov byte [si+4], 0x00
+<span class="line-number"> 278</span>
+<span class="line-number"> 279</span>  .no_key:
+<span class="line-number"> 280</span>  mov bx, BEEPER_ENABLED
+<span class="line-number"> 281</span>  cmp bx, 0x1
+<span class="line-number"> 282</span>  jnz .no_key_press
+<span class="line-number"> 283</span>    mov bx, BEEPER_FREQ
+<span class="line-number"> 284</span>    add bl, ah
+<span class="line-number"> 285</span>    call set_freq
+<span class="line-number"> 286</span>    call beep
+<span class="line-number"> 287</span>  .no_key_press:
+<span class="line-number"> 288</span>
+</div>
+                                            <div class="comment-column">
+
+; BIOS keyboard status function
+; Call BIOS interrupt
+; Jump if Zero Flag is set (no key pressed)
+
+
+; Load player position into CX (Y in CH, X in CL)
+
+
+; BIOS keyboard read function
+; Call BIOS interrupt
+
+
+; Compare scan code with enter
+
+
+
+
+; Compare scan code with up arrow
+
+
+
+
+
+
+
+
+
+
+; Compare scan code with down arrow
+
+
+
+
+
+
+
+
+
+
+; Compare scan code with left arrow
+
+
+
+
+
+
+
+
+
+
+
+; Compare scan code with right arrow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== AI ENITIES ===============</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 290</span>
+<span class="line-number"> 291</span>ai_entities:
+<span class="line-number"> 292</span>  mov si, _ENTITIES_
+<span class="line-number"> 293</span>  mov cx, [EntityCount]
+<span class="line-number"> 294</span>  .next_entity:
+<span class="line-number"> 295</span>    push cx
+<span class="line-number"> 296</span>
+<span class="line-number"> 297</span>    cmp byte [si], 0x3  
+<span class="line-number"> 298</span>    jne .skip_entity
+<span class="line-number"> 299</span>      mov byte al, [si+5]   
+<span class="line-number"> 300</span>      and ax, 0x1
+<span class="line-number"> 301</span>      cmp ax, 0x1
+<span class="line-number"> 302</span>      jnz .skip_explore
+<span class="line-number"> 303</span>
+<span class="line-number"> 304</span>      rdtsc
+<span class="line-number"> 305</span>      and ax, SPEED_EXPLORE
+<span class="line-number"> 306</span>      cmp ax, SPEED_EXPLORE
+<span class="line-number"> 307</span>      jnz .skip_entity
+<span class="line-number"> 308</span>
+<span class="line-number"> 309</span>      .explore:
+<span class="line-number"> 310</span>        mov cx, [si+1]
+<span class="line-number"> 311</span>        call random_move
+<span class="line-number"> 312</span>
+<span class="line-number"> 313</span>        call check_bounds
+<span class="line-number"> 314</span>        cmp ax, 0x1
+<span class="line-number"> 315</span>        jnz .can_not_move
+<span class="line-number"> 316</span>
+<span class="line-number"> 317</span>        call check_friends
+<span class="line-number"> 318</span>        cmp ax, 0x1
+<span class="line-number"> 319</span>        jnz .can_not_move
+<span class="line-number"> 320</span>
+<span class="line-number"> 321</span>        call conv_pos2mem
+<span class="line-number"> 322</span>        call check_water
+<span class="line-number"> 323</span>        jz .move_to_new_pos
+<span class="line-number"> 324</span>
+<span class="line-number"> 325</span>          mov byte al, [si+5]
+<span class="line-number"> 326</span>          and al, 0x8
+<span class="line-number"> 327</span>          cmp al, 0x8 
+<span class="line-number"> 328</span>          jz .can_not_move
+<span class="line-number"> 329</span>          mov byte [si+3], 0x0e 
+<span class="line-number"> 330</span>          mov byte [si+5], 0x02 
+<span class="line-number"> 331</span>          jmp .can_not_move
+<span class="line-number"> 332</span>        .move_to_new_pos:
+<span class="line-number"> 333</span>          mov word [si+1], cx
+<span class="line-number"> 334</span>        .can_not_move:
+<span class="line-number"> 335</span>
+<span class="line-number"> 336</span>      .skip_explore:
+<span class="line-number"> 337</span>      mov byte al, [si+5]   
+<span class="line-number"> 338</span>      and ax, 0x2
+<span class="line-number"> 339</span>      cmp ax, 0x2
+<span class="line-number"> 340</span>      jnz .skip_waiting
+<span class="line-number"> 341</span>
+<span class="line-number"> 342</span>      .waiting:
+<span class="line-number"> 343</span>        call check_player
+<span class="line-number"> 344</span>        cmp ax, 0x0
+<span class="line-number"> 345</span>        jz .wait_more
+<span class="line-number"> 346</span>          mov byte [si+3],0x00 
+<span class="line-number"> 347</span>          xor byte [si+4],0x01 
+<span class="line-number"> 348</span>          mov byte [si+5],0x09 
+<span class="line-number"> 349</span>       .wait_more:
+<span class="line-number"> 350</span>      .skip_waiting:
+<span class="line-number"> 351</span>
+<span class="line-number"> 352</span>    .skip_entity:
+<span class="line-number"> 353</span>    add si,0x6
+<span class="line-number"> 354</span>    pop cx
+<span class="line-number"> 355</span>  loop .next_entity
+<span class="line-number"> 356</span>
+<span class="line-number"> 357</span>
+<span class="line-number"> 358</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+; Fish
+
+; State
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; already served
+
+; second fish sprite
+; waiting
+
+
+
+
+
+
+; State
+
+
+
+
+
+
+
+
+; First fish sprite
+; Reverse
+; Served
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== SORT ENITIES ===============</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 360</span>
+<span class="line-number"> 361</span>sort_entities:
+<span class="line-number"> 362</span>  mov dx, [EntityCount]
+<span class="line-number"> 363</span>  dec dx
+<span class="line-number"> 364</span>  dec dx
+<span class="line-number"> 365</span>  mov si, _ENTITIES_
+<span class="line-number"> 366</span>  add si, 0x6
+<span class="line-number"> 367</span>  .sort_loop:
+<span class="line-number"> 368</span>    mov cx, dx
+<span class="line-number"> 369</span>    .next_entitie:
+<span class="line-number"> 370</span>      mov word ax, [si+1]
+<span class="line-number"> 371</span>      mov word bx, [si+7]
+<span class="line-number"> 372</span>      cmp ah, bh
+<span class="line-number"> 373</span>      jle .skip_swap
+<span class="line-number"> 374</span>        mov word [si+1], bx
+<span class="line-number"> 375</span>        mov word [si+7], ax
+<span class="line-number"> 376</span>
+<span class="line-number"> 377</span>        mov byte al, [si]
+<span class="line-number"> 378</span>        mov byte bl, [si+6]
+<span class="line-number"> 379</span>        mov byte [si], bl
+<span class="line-number"> 380</span>        mov byte [si+6], al
+<span class="line-number"> 381</span>
+<span class="line-number"> 382</span>        mov byte al, [si+3]
+<span class="line-number"> 383</span>        mov byte bl, [si+9]
+<span class="line-number"> 384</span>        mov byte [si+3], bl
+<span class="line-number"> 385</span>        mov byte [si+9], al
+<span class="line-number"> 386</span>
+<span class="line-number"> 387</span>        mov byte al, [si+4]
+<span class="line-number"> 388</span>        mov byte bl, [si+10]
+<span class="line-number"> 389</span>        mov byte [si+4], bl
+<span class="line-number"> 390</span>        mov byte [si+10], al
+<span class="line-number"> 391</span>
+<span class="line-number"> 392</span>        mov byte al, [si+5]
+<span class="line-number"> 393</span>        mov byte bl, [si+11]
+<span class="line-number"> 394</span>        mov byte [si+5], bl
+<span class="line-number"> 395</span>        mov byte [si+11], al
+<span class="line-number"> 396</span>
+<span class="line-number"> 397</span>        .skip_swap:
+<span class="line-number"> 398</span>
+<span class="line-number"> 399</span>      add si, 0x6
+<span class="line-number"> 400</span>    loop .next_entitie
+<span class="line-number"> 401</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== DRAW ENITIES ===============</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 403</span>
+<span class="line-number"> 404</span>draw_entities:
+<span class="line-number"> 405</span>  mov si, _ENTITIES_
+<span class="line-number"> 406</span>  mov cx, [EntityCount]
+<span class="line-number"> 407</span>  .next:
+<span class="line-number"> 408</span>    push cx
+<span class="line-number"> 409</span>    push si
+<span class="line-number"> 410</span>
+<span class="line-number"> 411</span>    cmp byte [si+5], 0x0
+<span class="line-number"> 412</span>    jz .skip_entitie
+<span class="line-number"> 413</span>
+<span class="line-number"> 414</span>    mov word cx, [si+1]
+<span class="line-number"> 415</span>    call conv_pos2mem
+<span class="line-number"> 416</span>
+<span class="line-number"> 417</span>    mov byte dl, [si+4]
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>jnz .skip_adjust</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>sub di, 4</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>.skip_adjust:</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 421</span>
+<span class="line-number"> 422</span>    mov byte bl, [si+5]
+<span class="line-number"> 423</span>    mov byte al, [si]
+<span class="line-number"> 424</span>    cmp al, 0x1
+<span class="line-number"> 425</span>    jnz .not_tree
+<span class="line-number"> 426</span>      sub di, 320*9
+<span class="line-number"> 427</span>    .not_tree:
+<span class="line-number"> 428</span>
+<span class="line-number"> 429</span>    cmp al, 0x02
+<span class="line-number"> 430</span>    jnz .not_grass
+<span class="line-number"> 431</span>      add di, 320*3
+<span class="line-number"> 432</span>    .not_grass:
+<span class="line-number"> 433</span>
+<span class="line-number"> 434</span>
+<span class="line-number"> 435</span>    xor ax, ax
+<span class="line-number"> 436</span>    mov byte al, [si+3]
+<span class="line-number"> 437</span>    mov si, EntitiesSpr
+<span class="line-number"> 438</span>    add si, ax
+<span class="line-number"> 439</span>    xor bp, bp
+<span class="line-number"> 440</span>    call draw_sprite
+<span class="line-number"> 441</span>
+<span class="line-number"> 442</span>    cmp bl, 0x2 
+<span class="line-number"> 443</span>    jne .skip_caption
+<span class="line-number"> 444</span>      call draw_caption
+<span class="line-number"> 445</span>    .skip_caption:
+<span class="line-number"> 446</span>
+<span class="line-number"> 447</span>    cmp bl, 0x10 
+<span class="line-number"> 448</span>    jne .skip_source
+<span class="line-number"> 449</span>      call draw_source
+<span class="line-number"> 450</span>    .skip_source:
+<span class="line-number"> 451</span>
+<span class="line-number"> 452</span>    .skip_entitie:
+<span class="line-number"> 453</span>    pop si
+<span class="line-number"> 454</span>    add si, 0x6
+<span class="line-number"> 455</span>    pop cx
+<span class="line-number"> 456</span>  loop .next
+<span class="line-number"> 457</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; draw caption for order (waiting)
+
+
+
+
+; Draw caption for source
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== VGA BLIT PROCEDURE ===============</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 459</span>
+<span class="line-number"> 460</span>vga_blit:
+<span class="line-number"> 461</span>    push es
+<span class="line-number"> 462</span>    push ds
+<span class="line-number"> 463</span>
+<span class="line-number"> 464</span>    push _VGA_MEMORY_                     
+<span class="line-number"> 465</span>    pop es                                  
+<span class="line-number"> 466</span>    push _DBUFFER_MEMORY_                 
+<span class="line-number"> 467</span>    pop ds                                  
+<span class="line-number"> 468</span>    mov cx,0x7D00                           
+<span class="line-number"> 469</span>    xor si,si                               
+<span class="line-number"> 470</span>    xor di,di                               
+<span class="line-number"> 471</span>    rep movsw                               
+<span class="line-number"> 472</span>
+<span class="line-number"> 473</span>    pop ds
+<span class="line-number"> 474</span>    pop es
+<span class="line-number"> 475</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+; Set VGA memory
+; as target
+; Set doublebuffer memory
+; as source
+; Half of 320x200 pixels
+; Clear SI
+; Clear DI
+; Push words (2x pixels)
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== DELAY CYCLE ======================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 477</span>
+<span class="line-number"> 478</span>delay:
+<span class="line-number"> 479</span>    push es
+<span class="line-number"> 480</span>    push 0x0040
+<span class="line-number"> 481</span>    pop es
+<span class="line-number"> 482</span>    mov bx, [es:0x006C]  
+<span class="line-number"> 483</span>wait_for_tick:
+<span class="line-number"> 484</span>    mov ax, [es:0x006C]  
+<span class="line-number"> 485</span>    sub ax, bx           
+<span class="line-number"> 486</span>    jz wait_for_tick     
+<span class="line-number"> 487</span>    pop es
+<span class="line-number"> 488</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+; Load the current tick count into BX
+
+; Load the current tick count
+; Calculate elapsed ticks
+; If not enough time has passed, keep waiting
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== SFX END ============================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 490</span>disable_speaker:
+<span class="line-number"> 491</span>  mov bx, BEEPER_ENABLED
+<span class="line-number"> 492</span>  cmp bx, 0x1
+<span class="line-number"> 493</span>  jnz .beep_disabled
+<span class="line-number"> 494</span>    in al, 0x61    
+<span class="line-number"> 495</span>    and al, 0x0FC  
+<span class="line-number"> 496</span>    out 0x61, al   
+<span class="line-number"> 497</span>  .beep_disabled:
+<span class="line-number"> 498</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+; Read the PIC chip
+; Clear bit 0 to disable the speaker
+; Write the updated value back to the PIC chip
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== ESC OR LOOP =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 500</span>
+<span class="line-number"> 501</span>    in al,0x60                           
+<span class="line-number"> 502</span>    dec al
+<span class="line-number"> 503</span>    jnz game_loop
+<span class="line-number"> 504</span>
+</div>
+                                            <div class="comment-column">
+; Read keyboard
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== TERMINATE PROGRAM ================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 506</span>exit:
+<span class="line-number"> 507</span>    mov ax, 0x0003
+<span class="line-number"> 508</span>    int 0x10
+<span class="line-number"> 509</span>    ret
+<span class="line-number"> 510</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== CNVERT XY TO MEM =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>CX - position YY/XX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: DI memory position</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 514</span>conv_pos2mem:
+<span class="line-number"> 515</span>  mov di, LEVEL_START_POSITION
+<span class="line-number"> 516</span>  add di, 320*8+32
+<span class="line-number"> 517</span>  xor ax, ax               
+<span class="line-number"> 518</span>  mov al, ch               
+<span class="line-number"> 519</span> imul ax, 320*8
+<span class="line-number"> 520</span>  xor dh, dh               
+<span class="line-number"> 521</span>  mov dl, cl               
+<span class="line-number"> 522</span>  shl dx, 3                
+<span class="line-number"> 523</span>  add ax, dx               
+<span class="line-number"> 524</span>  add di, ax               
+<span class="line-number"> 525</span>ret
+<span class="line-number"> 526</span>
+</div>
+                                            <div class="comment-column">
+
+
+; Clear AX
+; Move Y coordinate to AL
+
+; Clear DH
+; Move X coordinate to DL
+; DX = X * 8
+; AX = Y * 2560 + X * 8
+; Move result to DI
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== RANDOM MOVE =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>CX - position YY/XX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: CX new position</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 530</span>random_move:
+<span class="line-number"> 531</span>  rdtsc
+<span class="line-number"> 532</span>  and ax, 0x3
+<span class="line-number"> 533</span>  cmp ax, 0x3
+<span class="line-number"> 534</span>  jnz .check_y
+<span class="line-number"> 535</span>    sub cl,1
+<span class="line-number"> 536</span>    cmp byte [si+4], 0x01
+<span class="line-number"> 537</span>    jz .skip_right
+<span class="line-number"> 538</span>      add cl, 0x2
+<span class="line-number"> 539</span>    .skip_right:
+<span class="line-number"> 540</span>  ret
+<span class="line-number"> 541</span>  .check_y:
+<span class="line-number"> 542</span>    rdtsc
+<span class="line-number"> 543</span>    and ax, 0x10
+<span class="line-number"> 544</span>    cmp ax, 0x10
+<span class="line-number"> 545</span>    jnz .skip_move
+<span class="line-number"> 546</span>      sub ch, 1
+<span class="line-number"> 547</span>      rdtsc
+<span class="line-number"> 548</span>      and ax, 0x1
+<span class="line-number"> 549</span>      jz .skip_down
+<span class="line-number"> 550</span>         add ch, 0x2
+<span class="line-number"> 551</span>     .skip_down:
+<span class="line-number"> 552</span>  .skip_move:
+<span class="line-number"> 553</span>ret
+<span class="line-number"> 554</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== CHECK WATER =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>DI - memory position to check for water</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: Zero if water</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 558</span>check_water:
+<span class="line-number"> 559</span>  mov ax, [es:di]
+<span class="line-number"> 560</span>  mov word [es:di], 0x0 
+<span class="line-number"> 561</span>  cmp ax, COLOR_WATER
+<span class="line-number"> 562</span>ret
+<span class="line-number"> 563</span>
+</div>
+                                            <div class="comment-column">
+
+; DEBUG ONLY
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== CHECK BOUNDS =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>CX - Positin YY/XX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: AX 0 - out of bounds, 1 - in bounds</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 567</span>check_bounds:
+<span class="line-number"> 568</span>  cmp ch, 0x00
+<span class="line-number"> 569</span>  jl .bound
+<span class="line-number"> 570</span>  cmp ch, 0x0f
+<span class="line-number"> 571</span>  jg .bound
+<span class="line-number"> 572</span>  cmp cl, 0x00
+<span class="line-number"> 573</span>  jl .bound
+<span class="line-number"> 574</span>  cmp cl, 0x20
+<span class="line-number"> 575</span>  jg .bound
+<span class="line-number"> 576</span>
+<span class="line-number"> 577</span>  jmp .no_bound
+<span class="line-number"> 578</span>
+<span class="line-number"> 579</span>  .bound:
+<span class="line-number"> 580</span>  mov ax, 0x0
+<span class="line-number"> 581</span>ret
+<span class="line-number"> 582</span>  .no_bound:
+<span class="line-number"> 583</span>  mov ax, 0x1
+<span class="line-number"> 584</span>ret
+<span class="line-number"> 585</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== CHECK FRIENDS =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>CX - Position YY/XX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: AX 0 - no friends, 1 - friends</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 589</span>check_friends:
+<span class="line-number"> 590</span>  push si
+<span class="line-number"> 591</span>  push cx
+<span class="line-number"> 592</span>  xor bx, bx
+<span class="line-number"> 593</span>  mov ax, cx
+<span class="line-number"> 594</span>
+<span class="line-number"> 595</span>  mov cx, [EntityCount]
+<span class="line-number"> 596</span>  mov si, _ENTITIES_
+<span class="line-number"> 597</span>  .next_entity:
+<span class="line-number"> 598</span>    cmp word [si+1], ax
+<span class="line-number"> 599</span>    jnz .different
+<span class="line-number"> 600</span>    inc bx
+<span class="line-number"> 601</span>    .different:
+<span class="line-number"> 602</span>    add si, 0x6
+<span class="line-number"> 603</span>  loop .next_entity
+<span class="line-number"> 604</span>
+<span class="line-number"> 605</span>  pop cx
+<span class="line-number"> 606</span>  pop si
+<span class="line-number"> 607</span>  cmp bx,0x1
+<span class="line-number"> 608</span>  jnz .no_friend
+<span class="line-number"> 609</span>  mov ax, 0x0
+<span class="line-number"> 610</span>ret
+<span class="line-number"> 611</span>  .no_friend:
+<span class="line-number"> 612</span>  mov ax, 0x1
+<span class="line-number"> 613</span>ret
+<span class="line-number"> 614</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== CHECK PLAYER =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>CX - Position YY/XX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: AX 0 - no player, 1 - player</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 618</span>check_player:
+<span class="line-number"> 619</span>   mov ax, [_ENTITIES_+1]
+<span class="line-number"> 620</span>
+<span class="line-number"> 621</span>   cmp ch, ah
+<span class="line-number"> 622</span>   jz .pass_y
+<span class="line-number"> 623</span>   inc ah
+<span class="line-number"> 624</span>   cmp ch, ah
+<span class="line-number"> 625</span>   jz .pass_y
+<span class="line-number"> 626</span>   inc ah
+<span class="line-number"> 627</span>   cmp ch, ah
+<span class="line-number"> 628</span>   jz .pass_y
+<span class="line-number"> 629</span>   mov ax, 0x0
+<span class="line-number"> 630</span>   ret
+<span class="line-number"> 631</span>
+<span class="line-number"> 632</span>   .pass_y:
+<span class="line-number"> 633</span>
+<span class="line-number"> 634</span>   dec al
+<span class="line-number"> 635</span>   cmp cl, al
+<span class="line-number"> 636</span>   jz .pass_x
+<span class="line-number"> 637</span>   inc al
+<span class="line-number"> 638</span>   cmp cl, al
+<span class="line-number"> 639</span>   jz .pass_x
+<span class="line-number"> 640</span>   inc al
+<span class="line-number"> 641</span>   cmp cl, al
+<span class="line-number"> 642</span>   jz .pass_x
+<span class="line-number"> 643</span>
+<span class="line-number"> 644</span>   mov ax, 0x0
+<span class="line-number"> 645</span>   ret
+<span class="line-number"> 646</span>   .pass_x:
+<span class="line-number"> 647</span>   mov ax, 0x1
+<span class="line-number"> 648</span>ret
+<span class="line-number"> 649</span>
+<span class="line-number"> 650</span>draw_source:
+<span class="line-number"> 651</span>  mov si, CaptionSpr
+<span class="line-number"> 652</span>  sub di, 320*2
+<span class="line-number"> 653</span>  mov cx, 0x3
+<span class="line-number"> 654</span>  .next_color:
+<span class="line-number"> 655</span>    add bp, 0x8
+<span class="line-number"> 656</span>    call draw_sprite
+<span class="line-number"> 657</span>    sub di, 320*4
+<span class="line-number"> 658</span>  loop .next_color
+<span class="line-number"> 659</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== DRAW CAPTION =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>DI - memory position</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: -</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 663</span>draw_caption:
+<span class="line-number"> 664</span>  xor dx, dx
+<span class="line-number"> 665</span>  xor bp, bp
+<span class="line-number"> 666</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>mov si, CaptionSpr</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>sub di, 320*9-2</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>call draw_sprite</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 670</span>
+</div>
+                                            <div class="comment-column">
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>mov si, IconsSpr</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>add di, 320*4</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>call draw_sprite</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 674</span>
+<span class="line-number"> 675</span>  mov si, CaptionSpr
+<span class="line-number"> 676</span>  sub di, 320*14-2
+<span class="line-number"> 677</span>  call draw_sprite
+<span class="line-number"> 678</span>  add di, 320*5-2
+<span class="line-number"> 679</span>  mov bp, 0x8
+<span class="line-number"> 680</span>  call draw_sprite
+<span class="line-number"> 681</span>
+<span class="line-number"> 682</span> ret
+<span class="line-number"> 683</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== SET FREQUENCY =====================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>BX - Frequency</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 686</span>set_freq:
+<span class="line-number"> 687</span>  mov al, 0x0B6  
+<span class="line-number"> 688</span>  out 0x43, al   
+<span class="line-number"> 689</span>  mov ax, bx  
+<span class="line-number"> 690</span>  out 0x42, al   
+<span class="line-number"> 691</span>  mov al, ah
+<span class="line-number"> 692</span>  out 0x42, al   
+<span class="line-number"> 693</span>ret
+<span class="line-number"> 694</span>
+</div>
+                                            <div class="comment-column">
+; Command to set the speaker frequency
+; Write the command to the PIT chip
+; Frequency value for 440 Hz
+; Write the low byte of the frequency value
+
+; Write the high byte of the frequency value
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== BEEP ============================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Run set_freq first</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Start beep</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 698</span>beep:
+<span class="line-number"> 699</span>  in al, 0x61    
+<span class="line-number"> 700</span>  or al, 0x03    
+<span class="line-number"> 701</span>  out 0x61, al   
+<span class="line-number"> 702</span>ret
+<span class="line-number"> 703</span>
+</div>
+                                            <div class="comment-column">
+; Read the PIC chip
+; Set bit 0 to enable the speaker
+; Write the updated value back to the PIC chip
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== DRAW SPRITE PROCEDURE ============</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>BP - color shit</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>DI - positon (linear)</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>SI - sprite data addr</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>DX - settings</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>- 00 - normal</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>- 01 - mirrored x</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>- 10 - mirrored y</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>- 11 - mirrored X&amp;Y</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 713</span>draw_sprite:
+<span class="line-number"> 714</span>    pusha
+<span class="line-number"> 715</span>    mov cx, [si]        
+<span class="line-number"> 716</span>    inc si
+<span class="line-number"> 717</span>    inc si              
+<span class="line-number"> 718</span>    add bp, [si]        
+<span class="line-number"> 719</span>    inc si
+<span class="line-number"> 720</span>    inc si              
+<span class="line-number"> 721</span>    mov bx, dx
+<span class="line-number"> 722</span>    and bx, 1
+<span class="line-number"> 723</span>    jz .revX3
+<span class="line-number"> 724</span>    add di, 0x7
+<span class="line-number"> 725</span>    .revX3:
+</div>
+                                            <div class="comment-column">
+
+; Get the sprite lines
+
+; Mov si to the color data
+; Get the start color of the palette
+
+; Mov si to the sprite data
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>check DX, go to the end of si (si+cx*2)</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 727</span>    mov bx, dx
+<span class="line-number"> 728</span>    and bx, 2
+<span class="line-number"> 729</span>    jz .revY
+<span class="line-number"> 730</span>    add si, cx
+<span class="line-number"> 731</span>    add si, cx
+<span class="line-number"> 732</span>    sub si, 2
+<span class="line-number"> 733</span>    .revY:
+<span class="line-number"> 734</span>
+<span class="line-number"> 735</span>
+<span class="line-number"> 736</span>    .default:
+<span class="line-number"> 737</span>    .plot_line:
+<span class="line-number"> 738</span>        push cx           
+<span class="line-number"> 739</span>        mov ax, [si]      
+<span class="line-number"> 740</span>        mov cl, 0x08      
+<span class="line-number"> 741</span>        .draw_pixel:
+<span class="line-number"> 742</span>            push cx
+<span class="line-number"> 743</span>
+<span class="line-number"> 744</span>            mov cl, 2
+<span class="line-number"> 745</span>            call convert_value
+<span class="line-number"> 746</span>
+<span class="line-number"> 747</span>            cmp bx, 0        
+<span class="line-number"> 748</span>            jz .skip_pixel
+<span class="line-number"> 749</span>
+<span class="line-number"> 750</span>            imul bx, 0x03    
+<span class="line-number"> 751</span>            add bx, bp       
+<span class="line-number"> 752</span>
+<span class="line-number"> 753</span>            mov [es:di], bl  
+<span class="line-number"> 754</span>            .skip_pixel:     
+<span class="line-number"> 755</span>            inc di           
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+; Save lines couter
+; Get sprite line
+; 8 pixels in line
+
+
+
+
+
+
+; transparency
+
+
+; Poors man palette
+; Palette colors shift by 12,16,1a,1e
+
+; Write pixel color
+; Or skip this pixel - alpha color
+; Move destination to next pixel (+1)
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>cmp dx, 0        ; Check if mirroring X enabled</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 757</span>            mov bx, dx
+<span class="line-number"> 758</span>            and bx, 1
+<span class="line-number"> 759</span>            jz .revX          
+<span class="line-number"> 760</span>            dec di           
+<span class="line-number"> 761</span>            dec di           
+<span class="line-number"> 762</span>            .revX:
+<span class="line-number"> 763</span>            pop cx
+<span class="line-number"> 764</span>            loop .draw_pixel
+<span class="line-number"> 765</span>
+<span class="line-number"> 766</span>        inc si               
+<span class="line-number"> 767</span>        inc si               
+<span class="line-number"> 768</span>
+</div>
+                                            <div class="comment-column">
+
+; Jump if not
+; Remove previous shift (now it's 0)
+; Move destination 1px left (-1)
+
+
+
+
+; Move to the next
+; Sprite line data
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>check DX, si -4 if mirror Y</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 770</span>        mov bx, dx
+<span class="line-number"> 771</span>        and bx, 2
+<span class="line-number"> 772</span>        jz .revY2
+<span class="line-number"> 773</span>        sub si, 4
+<span class="line-number"> 774</span>        .revY2:
+<span class="line-number"> 775</span>
+<span class="line-number"> 776</span>        add di, 312          
+<span class="line-number"> 777</span>
+<span class="line-number"> 778</span>        mov bx, dx
+<span class="line-number"> 779</span>        and bx, 1
+<span class="line-number"> 780</span>        jz .revX2
+<span class="line-number"> 781</span>        add di, 0x10           
+<span class="line-number"> 782</span>        .revX2:
+<span class="line-number"> 783</span>    pop cx                   
+<span class="line-number"> 784</span>    loop .plot_line
+<span class="line-number"> 785</span>    popa
+<span class="line-number"> 786</span>    ret
+<span class="line-number"> 787</span>
+<span class="line-number"> 788</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+; And next line in destination
+
+
+
+
+; If mirrored adjust next line position
+
+; Restore line counter
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== CONVERT VALUE ===================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>AX - source</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>CL - number of bits to convert</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Return: BX</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 793</span>convert_value:
+<span class="line-number"> 794</span>    xor bx, bx          
+<span class="line-number"> 795</span>    .rotate_loop:
+<span class="line-number"> 796</span>        rol ax, 1       
+<span class="line-number"> 797</span>        adc bx, 0       
+<span class="line-number"> 798</span>        shl bx, 1       
+<span class="line-number"> 799</span>        loop .rotate_loop
+<span class="line-number"> 800</span>    shr bx, 1           
+<span class="line-number"> 801</span>    ret
+<span class="line-number"> 802</span>
+</div>
+                                            <div class="comment-column">
+; Clear BX
+
+; Rotate left, moving leftmost bit to carry flag
+; Add carry to BX (0 or 1)
+; Shift BX left, making room for next bit
+
+; Adjust final result (undo last shift)
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== SPRITE DATA ======================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 804</span>
+<span class="line-number"> 805</span>Tiles:
+</div>
+                                            <div class="comment-column">
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Dense grass</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 807</span>dw 0x8,0x56
+<span class="line-number"> 808</span>dw 1010101010101010b
+<span class="line-number"> 809</span>dw 1001101001100110b
+<span class="line-number"> 810</span>dw 1010101010101001b
+<span class="line-number"> 811</span>dw 0110011010011010b
+<span class="line-number"> 812</span>dw 1010101010101010b
+<span class="line-number"> 813</span>dw 0101101001101110b
+<span class="line-number"> 814</span>dw 1010101010101010b
+<span class="line-number"> 815</span>dw 1010011010011010b
+<span class="line-number"> 816</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Light grass</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 818</span>dw 0x8,0x56
+<span class="line-number"> 819</span>dw 1010101010101010b
+<span class="line-number"> 820</span>dw 1010101010101010b
+<span class="line-number"> 821</span>dw 1001101010100110b
+<span class="line-number"> 822</span>dw 1010101010101010b
+<span class="line-number"> 823</span>dw 1010100110101010b
+<span class="line-number"> 824</span>dw 1010101010101010b
+<span class="line-number"> 825</span>dw 1010101001101010b
+<span class="line-number"> 826</span>dw 0110101010101010b
+<span class="line-number"> 827</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Right bank</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 829</span>dw 0x8,0x56
+<span class="line-number"> 830</span>dw 1010100111011111b
+<span class="line-number"> 831</span>dw 1010101001111111b
+<span class="line-number"> 832</span>dw 1001101001111111b
+<span class="line-number"> 833</span>dw 1010101001111111b
+<span class="line-number"> 834</span>dw 1010011001111111b
+<span class="line-number"> 835</span>dw 1010101001111111b
+<span class="line-number"> 836</span>dw 1010101001111111b
+<span class="line-number"> 837</span>dw 1001100111011111b
+<span class="line-number"> 838</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Bottom bank</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 840</span>dw 0x8,0x56
+<span class="line-number"> 841</span>dw 1001101010101001b
+<span class="line-number"> 842</span>dw 1010101010101010b
+<span class="line-number"> 843</span>dw 1010011010011010b
+<span class="line-number"> 844</span>dw 0101101010010111b
+<span class="line-number"> 845</span>dw 1101010101111111b
+<span class="line-number"> 846</span>dw 1111111111111111b
+<span class="line-number"> 847</span>dw 0111111111110100b
+<span class="line-number"> 848</span>dw 0001010101010000b
+<span class="line-number"> 849</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Corner</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 851</span>dw 0x8,0x56
+<span class="line-number"> 852</span>dw 1010100111110100b
+<span class="line-number"> 853</span>dw 1010010111111100b
+<span class="line-number"> 854</span>dw 1010011111111100b
+<span class="line-number"> 855</span>dw 0101111111110100b
+<span class="line-number"> 856</span>dw 1111111111010000b
+<span class="line-number"> 857</span>dw 1111111101000000b
+<span class="line-number"> 858</span>dw 0111110100000000b
+<span class="line-number"> 859</span>dw 0000000000000000b
+<span class="line-number"> 860</span>
+<span class="line-number"> 861</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== SPRITE DATA ======================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 863</span>
+<span class="line-number"> 864</span>EntitiesSpr:
+</div>
+                                            <div class="comment-column">
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Fish Swim  -  0x00</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 866</span>dw 0x5, 0x64
+<span class="line-number"> 867</span>dw 0011010000110100b
+<span class="line-number"> 868</span>dw 1101110111011101b
+<span class="line-number"> 869</span>dw 1111011111100111b
+<span class="line-number"> 870</span>dw 0011111110111110b
+<span class="line-number"> 871</span>dw 1111101011111111b
+<span class="line-number"> 872</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Fish Waiting   - 14 /0xe</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 874</span>dw 0x8, 0x64
+<span class="line-number"> 875</span>dw 0011011100110111b
+<span class="line-number"> 876</span>dw 0001100111011011b
+<span class="line-number"> 877</span>dw 0011011111010111b
+<span class="line-number"> 878</span>dw 0011111001101001b
+<span class="line-number"> 879</span>dw 1110111001101001b
+<span class="line-number"> 880</span>dw 1011111110010100b
+<span class="line-number"> 881</span>dw 1010101111111000b
+<span class="line-number"> 882</span>dw 0010111011101000b
+<span class="line-number"> 883</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Palm Tree - 34 / 0x22</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 885</span>dw 0x10, 0x27
+<span class="line-number"> 886</span>dw 0010101100101011b
+<span class="line-number"> 887</span>dw 1010111010111000b
+<span class="line-number"> 888</span>dw 1000111010101110b
+<span class="line-number"> 889</span>dw 0011101010101000b
+<span class="line-number"> 890</span>dw 0010101011101010b
+<span class="line-number"> 891</span>dw 1010101101101111b
+<span class="line-number"> 892</span>dw 0010110110111011b
+<span class="line-number"> 893</span>dw 0010000111110010b
+<span class="line-number"> 894</span>dw 1011001101100011b
+<span class="line-number"> 895</span>dw 1100001101011000b
+<span class="line-number"> 896</span>dw 1100001011011100b
+<span class="line-number"> 897</span>dw 0000001101011000b
+<span class="line-number"> 898</span>dw 0000100101110000b
+<span class="line-number"> 899</span>dw 0010110101111000b
+<span class="line-number"> 900</span>dw 1011010101011110b
+<span class="line-number"> 901</span>dw 0010111111111000b
+<span class="line-number"> 902</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>grass - 70/0x46</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 904</span>dw 0x7,0x2a
+<span class="line-number"> 905</span>dw 0000011000000000b
+<span class="line-number"> 906</span>dw 0000001101000010b
+<span class="line-number"> 907</span>dw 0010001110000010b
+<span class="line-number"> 908</span>dw 0010001100001000b
+<span class="line-number"> 909</span>dw 0010111100111011b
+<span class="line-number"> 910</span>dw 1011111111111100b
+<span class="line-number"> 911</span>dw 0000111111110000b
+<span class="line-number"> 912</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>monkey - 84+4/0x58</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 914</span>dw 0x7,0x6e
+<span class="line-number"> 915</span>dw 0010101000000000b
+<span class="line-number"> 916</span>dw 1000000000101000b
+<span class="line-number"> 917</span>dw 0110000010111000b
+<span class="line-number"> 918</span>dw 0001101010010100b
+<span class="line-number"> 919</span>dw 0000101001000000b
+<span class="line-number"> 920</span>dw 0000010100010000b
+<span class="line-number"> 921</span>dw 0001000100010000b
+<span class="line-number"> 922</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>dino - 102+4/0x6a</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 924</span>dw 0x8, 0x20
+<span class="line-number"> 925</span>dw 0000011011111100b
+<span class="line-number"> 926</span>dw 0000001010010111b
+<span class="line-number"> 927</span>dw 1100000010101010b
+<span class="line-number"> 928</span>dw 1000001010010000b
+<span class="line-number"> 929</span>dw 0110101010101100b
+<span class="line-number"> 930</span>dw 0001101011100000b
+<span class="line-number"> 931</span>dw 0000001010100000b
+<span class="line-number"> 932</span>dw 0000010000010000b
+<span class="line-number"> 933</span>
+<span class="line-number"> 934</span>CaptionSpr:
+<span class="line-number"> 935</span>dw 0x09, 0x15
+<span class="line-number"> 936</span>dw 0011111111111100b
+<span class="line-number"> 937</span>dw 1100111111111111b
+<span class="line-number"> 938</span>dw 1111111111111111b
+<span class="line-number"> 939</span>dw 1111111111111111b
+<span class="line-number"> 940</span>dw 1111111111111111b
+<span class="line-number"> 941</span>dw 1111111111111111b
+<span class="line-number"> 942</span>dw 0011111111111100b
+<span class="line-number"> 943</span>dw 0000000011110000b
+<span class="line-number"> 944</span>dw 0000000011000000b
+<span class="line-number"> 945</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== META TILES ======================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 947</span>
+<span class="line-number"> 948</span>MetaTiles:
+</div>
+                                            <div class="comment-column">
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>List of tiles, one row of 4 tiles per meta-tile</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 950</span>db 0b
+<span class="line-number"> 951</span>db 11001100b,10111000b,10111100b,11001000b  
+<span class="line-number"> 952</span>db 11000100b,10110100b,10110000b,11000000b  
+<span class="line-number"> 953</span>db 11001100b,10111000b,10111100b,10111000b  
+<span class="line-number"> 954</span>db 10111000b,10111100b,10111000b,11001000b  
+<span class="line-number"> 955</span>db 11000100b,10110000b,10110100b,10110000b  
+<span class="line-number"> 956</span>db 10110000b,10110100b,10110000b,11000000b  
+<span class="line-number"> 957</span>db 10100100b,10000100b,10000100b,10000100b  
+<span class="line-number"> 958</span>db 10000000b,10000100b,10000000b,10100000b  
+<span class="line-number"> 959</span>db 10111100b,10111000b,10111100b,10111000b  
+<span class="line-number"> 960</span>db 10110100b,10110100b,10110100b,10110100b  
+<span class="line-number"> 961</span>db 10100100b,10000100b,10000100b,10100000b  
+<span class="line-number"> 962</span>db 10000100b,10000000b,10000000b,10000100b  
+<span class="line-number"> 963</span>db 10010100b,10010000b,10010100b,10010000b  
+<span class="line-number"> 964</span>db 00000000b,00000000b,00000000b,00000000b  
+<span class="line-number"> 965</span>db 00000000b,00000000b,00000000b,00000000b  
+<span class="line-number"> 966</span>db 00000000b,00000000b,00000000b,00000000b  
+<span class="line-number"> 967</span>
+</div>
+                                            <div class="comment-column">
+; 0000 up-ball
+; 0001 down-ball
+; 0010 up-left-long-ball
+; 0011 up-right-long-ball
+; 0100 down-left-long-ball
+; 0101 down-right-long-ball
+; 0110 left-bank
+; 0111 right-bank
+; 1000 top-bank
+; 1001 bottom-bank
+; 1010 both-banks
+; 1011 light-terrain
+; 1100 dense-terrain
+; 1101 ???
+; 1101 ???
+; 1111 empty-filler
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>=========================================== LEVEL DATA ======================</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 969</span>
+</div>
+                                            <div class="comment-column">
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Custom Level mady in smol.p1x.in/4bitleveleditor</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number"> 971</span>
+<span class="line-number"> 972</span>LevelData:
+<span class="line-number"> 973</span>dw 1111111111111111b,1111111111111111b
+<span class="line-number"> 974</span>dw 1111000011111111b,1111111111111111b
+<span class="line-number"> 975</span>dw 0010101000111111b,1111111111111111b
+<span class="line-number"> 976</span>dw 0110101001011111b,1111111111111111b
+<span class="line-number"> 977</span>dw 0110101011110000b,1111111111111111b
+<span class="line-number"> 978</span>dw 0110101011111010b,1111111111111111b
+<span class="line-number"> 979</span>dw 0100101010001010b,1000100000111111b
+<span class="line-number"> 980</span>dw 1111011010111010b,1011110001111111b
+<span class="line-number"> 981</span>dw 1111011010111010b,1100101101111111b
+<span class="line-number"> 982</span>dw 1111010010011010b,1001101001011111b
+<span class="line-number"> 983</span>dw 1111111111111010b,1111101011111111b
+<span class="line-number"> 984</span>dw 1111111111110001b,1111101011111111b
+<span class="line-number"> 985</span>dw 1111111111111111b,1111101011111111b
+<span class="line-number"> 986</span>dw 1111111111111111b,1111101011111111b
+<span class="line-number"> 987</span>dw 1111111111111111b,1111000111111111b
+<span class="line-number"> 988</span>dw 1111111111111111b,1111111111111111b
+<span class="line-number"> 989</span>
+<span class="line-number"> 990</span>EntityCount:
+<span class="line-number"> 991</span>dw 24
+<span class="line-number"> 992</span>
+<span class="line-number"> 993</span>EntityData:
+<span class="line-number"> 994</span>db 0
+<span class="line-number"> 995</span>dw 0x080e
+<span class="line-number"> 996</span>db 1
+<span class="line-number"> 997</span>dw 0x0209
+<span class="line-number"> 998</span>db 1
+<span class="line-number"> 999</span>dw 0x020A
+<span class="line-number">1000</span>db 3
+<span class="line-number">1001</span>dw 0x0211
+<span class="line-number">1002</span>db 1
+<span class="line-number">1003</span>dw 0x0301
+<span class="line-number">1004</span>db 1
+<span class="line-number">1005</span>dw 0x0309
+<span class="line-number">1006</span>db 1
+<span class="line-number">1007</span>dw 0x0401
+<span class="line-number">1008</span>db 1
+<span class="line-number">1009</span>dw 0x0402
+<span class="line-number">1010</span>db 3
+<span class="line-number">1011</span>dw 0x041C
+<span class="line-number">1012</span>db 1
+<span class="line-number">1013</span>dw 0x0501
+<span class="line-number">1014</span>db 1
+<span class="line-number">1015</span>dw 0x050D
+<span class="line-number">1016</span>db 1
+<span class="line-number">1017</span>dw 0x050E
+<span class="line-number">1018</span>db 2
+<span class="line-number">1019</span>dw 0x0515
+<span class="line-number">1020</span>db 2
+<span class="line-number">1021</span>dw 0x0516
+<span class="line-number">1022</span>db 1
+<span class="line-number">1023</span>dw 0x060D
+<span class="line-number">1024</span>db 2
+<span class="line-number">1025</span>dw 0x0716
+<span class="line-number">1026</span>db 2
+<span class="line-number">1027</span>dw 0x0807
+<span class="line-number">1028</span>db 2
+<span class="line-number">1029</span>dw 0x080A
+<span class="line-number">1030</span>db 4
+<span class="line-number">1031</span>dw 0x080D
+<span class="line-number">1032</span>db 2
+<span class="line-number">1033</span>dw 0x091A
+<span class="line-number">1034</span>db 3
+<span class="line-number">1035</span>dw 0x0A02
+<span class="line-number">1036</span>db 2
+<span class="line-number">1037</span>dw 0x0A09
+<span class="line-number">1038</span>db 1
+<span class="line-number">1039</span>dw 0x0A0D
+<span class="line-number">1040</span>db 3
+<span class="line-number">1041</span>dw 0x0E1B
+<span class="line-number">1042</span>
+</div>
+                                            <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>End of Level Data</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"><span class="line-number">1044</span>
+<span class="line-number">1045</span>Logo:
+<span class="line-number">1046</span>db "P1X"
+</div>
+                                            <div class="comment-column">
+
+
+</div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="asmSection">
+                                        <h2>Thanks for reading the source code!</h2>
+                                        <div class="asmView">
+                                            <div class="code-column"></div>
+                                            <div class="comment-column"></div>
+                                        </div>
+                                    </div>
+                                
+                            <div class="asmSection">
+                                <h2>Visit http://smol.p1x.in for more.</h2>
+                                <div class="asmView">
+                                    <div class="code-column"></div>
+                                    <div class="comment-column"></div>
+                                </div>
+                            </div>
+                        </div>
+</body>
+</html>
