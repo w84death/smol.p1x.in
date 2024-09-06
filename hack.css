@@ -15,7 +15,7 @@ body {
     color: white;
 }
 h1,h2,h3,h4,h5,h6 { color: yellow;}
-img {max-width:640px;}
+img {max-width:640px;  image-rendering: pixelated;}
 a {background-color:black; color:yellow; padding:0.25em 0.5em; line-height: 2.5em;}
 a:hover {background-color: yellow; color:black;}
 header {text-align:center;}
