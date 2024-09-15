@@ -637,6 +637,13 @@ function loadMetaTileIntoEditor(metaTile) {
 const levelGrid = document.getElementById('level-grid');
 const levelData = [];
 for (let i = 0; i < GRID_COLUMNS * GRID_ROWS; i++) {
+    levelData.push({
+        metatileId: 0,
+        mirror: 0,
+    });
+}
+
+for (let i = 0; i < GRID_COLUMNS * GRID_ROWS; i++) {
     const cell = document.createElement('div');
     cell.className = 'level-cell';
     cell.dataset.index = i;
