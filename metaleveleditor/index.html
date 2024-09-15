@@ -175,7 +175,8 @@
 
     #level-grid {
         display: grid;
-        grid-template-columns: repeat(16, 64px);
+        grid-template-columns: repeat(16, 64px); /* 18 columns */
+        grid-template-rows: repeat(8, 64px);     /* 8 rows */
         grid-gap: 0;
         justify-content: center;
     }
@@ -295,7 +296,7 @@
         </div>
 
         <!-- Level Design Mode -->
-        <h2>Level Design Mode</h2>
+        <h2>Level Design (16x8)</h2>
         <div id="level-editor">
             <div class="mirror-buttons">
                 <button id="mirror-metatile-x">Mirror Meta-Tile X</button>
@@ -315,6 +316,10 @@
 
 <script>
 // Initialize tileset with images
+const GRID_COLUMNS = 16;
+const GRID_ROWS = 8;
+
+
 const tilesetDiv = document.getElementById('tileset');
 const tileset = [];
 for (let i = 0; i < 16; i++) {
@@ -514,8 +519,8 @@ function drawMetaTileInCell(cell) {
             img.style.top = pos < 2 ? '0' : '32px';
 
             // Calculate the tile's own mirroring
-            let tileMirrorX = (tileMirrors[idx] & 0b0100) ? -1 : 1;
-            let tileMirrorY = (tileMirrors[idx] & 0b1000) ? -1 : 1;
+            let tileMirrorX = (tileMirrors[idx] & 0b00010000) ? -1 : 1;
+            let tileMirrorY = (tileMirrors[idx] & 0b00100000) ? -1 : 1;
 
             // Apply the cell's mirroring
             tileMirrorX *= mirrorX ? -1 : 1;
@@ -565,9 +570,10 @@ saveMetatileBtn.addEventListener('click', () => {
         img.style.position = 'absolute';
         img.style.left = idx % 2 === 0 ? '0' : '32px';
         img.style.top = idx < 2 ? '0' : '32px';
+        
+        let mirrorX = (currentMetatile.mirrors[idx] & 0b00010000) ? -1 : 1;
+        let mirrorY = (currentMetatile.mirrors[idx] & 0b00100000) ? -1 : 1;
 
-        let mirrorX = (currentMetatile.mirrors[idx] & 0b0100) ? -1 : 1;
-        let mirrorY = (currentMetatile.mirrors[idx] & 0b1000) ? -1 : 1;
         img.style.transform = `scaleX(${mirrorX}) scaleY(${mirrorY})`;
 
         metatileDiv.appendChild(img);
@@ -605,8 +611,9 @@ function loadMetaTileIntoEditor(metaTile) {
             img.height = 32;
             slot.appendChild(img);
             slot.dataset.tileId = tileId;
-            let mirrorX = (metaTile.mirrors[idx] & 0b0100) ? '1' : '0';
-            let mirrorY = (metaTile.mirrors[idx] & 0b1000) ? '1' : '0';
+            let mirrorX = (metaTile.mirrors[idx] & 0b00010000) ? '1' : '0';
+            let mirrorY = (metaTile.mirrors[idx] & 0b00100000) ? '1' : '0';
+
             slot.dataset.mirrorX = mirrorX;
             slot.dataset.mirrorY = mirrorY;
             img.style.transform = `scaleX(${mirrorX === '1' ? -1 : 1}) scaleY(${mirrorY === '1' ? -1 : 1})`;
@@ -629,7 +636,7 @@ function loadMetaTileIntoEditor(metaTile) {
 // Level Editor
 const levelGrid = document.getElementById('level-grid');
 const levelData = [];
-for (let i = 0; i < 16 * 12; i++) {
+for (let i = 0; i < GRID_COLUMNS * GRID_ROWS; i++) {
     const cell = document.createElement('div');
     cell.className = 'level-cell';
     cell.dataset.index = i;
@@ -698,20 +705,20 @@ function updateLevelData(cell) {
     let mirrorY = cell.dataset.mirrorY === '1' ? 1 : 0;
     levelData[index] = {
         metatileId,
-        mirror: (mirrorY << 5) | (mirrorX << 4),
+        mirror: (mirrorX << 4) | (mirrorY << 5),
     };
     updateDataPreview();
 }
-
 
 function updateDataPreview() {
     let metaTilesPreview = 'MetaTiles:\n';
     metatiles.forEach((mt) => {
         let line = `db `;
         mt.tiles.forEach((tileId, i) => {
-            let mirrorBits = mt.mirrors[i];
             let tileIdValue = tileId !== null ? tileId & 0x0F : 0;
-            let byteValue = tileIdValue | mirrorBits;
+            let mirrorX = (mt.mirrors[i] & 0b00010000) ? 1 : 0;
+            let mirrorY = (mt.mirrors[i] & 0b00100000) ? 1 : 0;
+            let byteValue = tileIdValue | (mirrorX << 4) | (mirrorY << 5);
             line += `${byteValue.toString(2).padStart(8, '0')}b`;
             if (i < 3) line += ', ';
         });
@@ -724,7 +731,10 @@ function updateDataPreview() {
         let cell = levelData[idx];
         let byteValue;
         if (cell) {
-            byteValue = (cell.metatileId & 0x0F) | cell.mirror;
+            let metatileIdValue = cell.metatileId & 0x0F;
+            let mirrorX = (cell.mirror >> 4) & 1;
+            let mirrorY = (cell.mirror >> 5) & 1;
+            byteValue = metatileIdValue | (mirrorX << 4) | (mirrorY << 5);
         } else {
             byteValue = 0;
         }
@@ -744,6 +754,7 @@ function updateDataPreview() {
 
     document.getElementById('data-preview').textContent = metaTilesPreview + '\n' + levelDataPreview;
 }
+
 
 
 // Add keyboard shortcuts for mirror X and Y
