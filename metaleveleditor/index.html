@@ -822,7 +822,7 @@ saveDataButton.addEventListener('click', () => {
 loadDataTriggerButton.addEventListener('click', () => {
     loadDataButton.click();
 });
-
+// Function to load meta-tiles and level data from a JSON file
 loadDataButton.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -850,8 +850,9 @@ loadDataButton.addEventListener('change', (event) => {
                         img.style.left = i % 2 === 0 ? '0' : '32px';
                         img.style.top = i < 2 ? '0' : '32px';
 
-                        let mirrorX = (mt.mirrors[i] & 0b0100) ? -1 : 1;
-                        let mirrorY = (mt.mirrors[i] & 0b1000) ? -1 : 1;
+                        // Update bit masks to match bits 4 and 5
+                        let mirrorX = (mt.mirrors[i] & 0b00010000) ? -1 : 1;
+                        let mirrorY = (mt.mirrors[i] & 0b00100000) ? -1 : 1;
                         img.style.transform = `scaleX(${mirrorX}) scaleY(${mirrorY})`;
 
                         metatileDiv.appendChild(img);
