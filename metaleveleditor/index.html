@@ -540,8 +540,9 @@ function updateCurrentMetatile() {
     let mirrorX = selectedTileSlot.dataset.mirrorX === '1' ? 1 : 0;
     let mirrorY = selectedTileSlot.dataset.mirrorY === '1' ? 1 : 0;
     currentMetatile.tiles[index] = tileId;
-    currentMetatile.mirrors[index] = (mirrorY << 3) | (mirrorX << 2);
+    currentMetatile.mirrors[index] = (mirrorX << 4) | (mirrorY << 5);
 }
+
 saveMetatileBtn.addEventListener('click', () => {
     if (currentMetatile.tiles.includes(null)) {
         alert('Please fill all tile slots before saving the meta-tile.');
