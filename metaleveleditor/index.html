@@ -255,6 +255,7 @@
         <h1>Level Editor</h1>
 
         <div id="save-load-section">
+            <a href="default-tileset.json" download>Download Default Tileset</a>
             <button id="load-data-button">Load Level</button>
             <button id="save-data">Save Level</button>
             <input type="file" id="load-data" style="display: none;">            
@@ -711,7 +712,7 @@ function updateDataPreview() {
             let mirrorBits = mt.mirrors[i];
             let tileIdValue = tileId !== null ? tileId & 0x0F : 0;
             let byteValue = tileIdValue | mirrorBits;
-            line += `0b${byteValue.toString(2).padStart(8, '0')}`;
+            line += `${byteValue.toString(2).padStart(8, '0')}b`;
             if (i < 3) line += ', ';
         });
         metaTilesPreview += line + '\n';
@@ -727,7 +728,7 @@ function updateDataPreview() {
         } else {
             byteValue = 0;
         }
-        lineBuffer.push(`0b${byteValue.toString(2).padStart(8, '0')}`);
+        lineBuffer.push(`${byteValue.toString(2).padStart(8, '0')}b`);
 
         // Group by 4 bytes per line
         if (lineBuffer.length === 4) {
