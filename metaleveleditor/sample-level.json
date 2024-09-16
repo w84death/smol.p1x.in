@@ -1,0 +1,622 @@
+{
+  "metatiles": [
+    {
+      "tiles": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        2,
+        2,
+        5,
+        5
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        1,
+        5,
+        1,
+        5
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        3,
+        2,
+        1,
+        5
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        5,
+        5,
+        5,
+        5
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "mirrors": [
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        6,
+        6,
+        7,
+        6
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        7,
+        7,
+        7,
+        7
+      ],
+      "mirrors": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        4,
+        5,
+        5,
+        5
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        4,
+        5,
+        5,
+        4
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        48
+      ]
+    },
+    {
+      "tiles": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "mirrors": [
+        0,
+        16,
+        0,
+        16
+      ]
+    },
+    {
+      "tiles": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "tiles": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "mirrors": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "levelData": [
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 16
+    },
+    {
+      "metatileId": 1,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 16
+    },
+    {
+      "metatileId": 1,
+      "mirror": 16
+    },
+    {
+      "metatileId": 3,
+      "mirror": 16
+    },
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 16
+    },
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 16
+    },
+    null,
+    {
+      "metatileId": 2,
+      "mirror": 32
+    },
+    {
+      "metatileId": 5,
+      "mirror": 0
+    },
+    {
+      "metatileId": 5,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    null,
+    {
+      "metatileId": 2,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 16
+    },
+    {
+      "metatileId": 8,
+      "mirror": 48
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    null,
+    {
+      "metatileId": 2,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    null,
+    {
+      "metatileId": 2,
+      "mirror": 0
+    },
+    {
+      "metatileId": 5,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 7,
+      "mirror": 0
+    },
+    {
+      "metatileId": 7,
+      "mirror": 16
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    {
+      "metatileId": 12,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    null,
+    null,
+    {
+      "metatileId": 2,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 32
+    },
+    {
+      "metatileId": 8,
+      "mirror": 32
+    },
+    {
+      "metatileId": 5,
+      "mirror": 0
+    },
+    {
+      "metatileId": 7,
+      "mirror": 0
+    },
+    {
+      "metatileId": 6,
+      "mirror": 0
+    },
+    {
+      "metatileId": 8,
+      "mirror": 48
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    null,
+    {
+      "metatileId": 2,
+      "mirror": 0
+    },
+    {
+      "metatileId": 5,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    {
+      "metatileId": 12,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 0
+    },
+    {
+      "metatileId": 8,
+      "mirror": 0
+    },
+    {
+      "metatileId": 2,
+      "mirror": 16
+    },
+    null,
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 48
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    null,
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 12,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 12,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 16
+    },
+    {
+      "metatileId": 1,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 16
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 0
+    },
+    {
+      "metatileId": 1,
+      "mirror": 16
+    },
+    {
+      "metatileId": 1,
+      "mirror": 16
+    },
+    {
+      "metatileId": 1,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 16
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 48
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 32
+    },
+    {
+      "metatileId": 1,
+      "mirror": 48
+    },
+    {
+      "metatileId": 3,
+      "mirror": 48
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    }
+  ]
+}

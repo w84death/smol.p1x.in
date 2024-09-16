@@ -107,12 +107,7 @@
 
     #metatile-editor-container #save-metatile {
         margin-top: 10px;
-        padding: 8px 12px;
         background-color: #2ecc71;
-        border: none;
-        color: white;
-        cursor: pointer;
-        border-radius: 4px;
         font-size: 14px;
     }
 
@@ -121,7 +116,7 @@
     }
 
     /* Adjust mirror buttons */
-    .mirror-buttons button {
+    button{
         margin: 5px;
         padding: 6px 10px;
         background-color: #3498db;
@@ -132,8 +127,21 @@
         font-size: 12px;
     }
 
-    .mirror-buttons button:hover {
+    button:hover {
         background-color: #2980b9;
+    }
+
+
+
+    #switch-mode {
+        margin-top: 10px;
+        background-color: #e7451c;
+        font-size: 14px;
+        color: black;
+    }
+
+    #switch-mode:hover {
+        background-color: #bd3310;
     }
 
     /* Meta-tile grid styles */
@@ -197,6 +205,13 @@
         -ms-interpolation-mode: nearest-neighbor;
     }
 
+    #level-editor {
+        position: relative;
+        margin: 0 auto;
+        width: 1024px;
+        height: 512px;
+    }
+
     /* Level editor mirror buttons */
     #level-editor .mirror-buttons {
         margin-top: 10px;
@@ -233,20 +248,49 @@
         margin: 0 0 20px 0;
         text-align: center;
     }
+    
 
-    #save-load-section button {
-        padding: 5px 10px;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 12px;
-        margin-right: 10px;
+    /* Level Grid */
+    #level-grid,
+    #entity-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
-    #save-load-section button:hover {
-        background-color: #2980b9;
+    /* Entity Grid Overlay */
+    #entity-grid {
+        display: grid;
+        grid-template-columns: repeat(32, 32px); /* 32 columns */
+        grid-template-rows: repeat(16, 32px);    /* 16 rows */
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: auto;
+    }
+
+    /* Entity Cells */
+    .entity-cell {
+        width: 32px;
+        height: 32px;
+        position: relative;
+    }
+
+    /* Entity Selection */
+    #entity-selection {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top:20px;
+        /* Additional styles as needed */
+    }
+
+    .entity {
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .entity.selected {
+        outline: 2px solid blue;
     }
     </style>
     
@@ -254,12 +298,13 @@
 <body>
     <div id="container">
         <h1>Level Editor</h1>
-
         <div id="save-load-section">
-            <a href="default-tileset.json" download>Download Default Tileset</a>
+            Download: <a href="default-tileset.json" download>Default Tileset</a>
+            <a href="sample-level.json" download>Sample Level</a>
             <button id="load-data-button">Load Level</button>
             <button id="save-data">Save Level</button>
-            <input type="file" id="load-data" style="display: none;">            
+            <input type="file" id="load-data" style="display: none;">  
+            <button id="switch-mode">Switch to Entity Mode</button>          
         </div>
 
         <!-- Top Section with Tileset, Meta-Tile Editor, and Meta-Tile List -->
@@ -268,6 +313,10 @@
             <div id="tileset-container">
                 <h2>Tileset</h2>
                 <div id="tileset"></div>
+            </div>
+
+            <div id="entity-selection" style="display: none;">
+                <!-- Entity items will be appended here by JavaScript -->
             </div>
 
             <!-- Meta-Tile Editor Container -->
@@ -293,17 +342,19 @@
                 <h2>Meta-Tile List</h2>
                 <div id="metatile-list"></div>
             </div>
+            </div>
         </div>
 
         <!-- Level Design Mode -->
         <h2>Level Design (16x8)</h2>
-        <div id="level-editor">
-            <div class="mirror-buttons">
-                <button id="mirror-metatile-x">Mirror Meta-Tile X</button>
-                <button id="mirror-metatile-y">Mirror Meta-Tile Y</button>
-                <p><small>Use [X] and [Y] for mirroring after placing a tile. Use [0]-[9] for meta-tiles selection.</small></p>
-            </div>
+        <div class="mirror-buttons">
+            <button id="mirror-metatile-x">Mirror Meta-Tile X</button>
+            <button id="mirror-metatile-y">Mirror Meta-Tile Y</button>
+            <p><small>Use [X] and [Y] for mirroring after placing a tile. Use [0]-[9] for meta-tiles selection.</small></p>
+        </div>
+        <div id="level-editor">    
             <div id="level-grid"></div>
+            <div id="entity-grid" style="display: none;"></div>
         </div>
 
         <!-- Data Preview -->
@@ -651,7 +702,7 @@ for (let i = 0; i < GRID_COLUMNS * GRID_ROWS; i++) {
     levelGrid.appendChild(cell);
 
     cell.addEventListener('click', () => {
-        if (selectedMetatile !== null) {
+        if (selectedMetatile !== null && currentMode === 'level') {
             cell.dataset.metatileId = selectedMetatile;
             cell.dataset.mirrorX = '0';
             cell.dataset.mirrorY = '0';
@@ -760,7 +811,20 @@ function updateDataPreview() {
         levelDataPreview += `db ${lineBuffer.join(', ')}\n`;
     }
 
-    document.getElementById('data-preview').textContent = metaTilesPreview + '\n' + levelDataPreview;
+// Entities Data
+let entitiesPreview = 'EntityCount:\n';
+    const entitiesPlaced = entityData.filter(e => e !== null);
+    entitiesPreview += `dw 0x${entitiesPlaced.length.toString(16).padStart(2, '0')}\n\n`;
+    entitiesPreview += 'EntityData:\n';
+    entitiesPlaced.forEach(entity => {
+        const row = Math.floor(entity.position / 32);
+        const col = entity.position % 32;
+        const positionWord = ((row & 0xFF) << 8) | (col & 0xFF);
+        entitiesPreview += `db ${entity.id}\n`;
+        entitiesPreview += `dw 0x${positionWord.toString(16).padStart(4, '0')}\n`;
+    });
+
+    document.getElementById('data-preview').textContent = metaTilesPreview + '\n' + levelDataPreview + '\n' + entitiesPreview;
 }
 
 
@@ -804,6 +868,7 @@ saveDataButton.addEventListener('click', () => {
     const data = {
         metatiles,
         levelData,
+        entityData,
     };
     
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -872,6 +937,27 @@ loadDataButton.addEventListener('change', (event) => {
                     drawMetaTileInCell(cell);
                 }
             });
+
+             // Load Entity Data
+            if (data.entityData) {
+                entityData.length = 0;
+                entityData.push(...data.entityData);
+
+                entityGrid.querySelectorAll('.entity-cell').forEach((cell, idx) => {
+                    const entity = entityData[idx];
+                    if (entity) {
+                        cell.innerHTML = '';
+                        const img = document.createElement('img');
+                        img.src = entitiesList[entity.id].imageSrc;
+                        img.alt = `Entity ${entity.id}`;
+                        img.width = 32;
+                        img.height = 32;
+                        cell.appendChild(img);
+                    } else {
+                        cell.innerHTML = '';
+                    }
+                });
+            }
             updateDataPreview();
         }
     };
@@ -879,6 +965,107 @@ loadDataButton.addEventListener('change', (event) => {
     reader.readAsText(file);
 });
 
+// Mode Switching Variables
+let currentMode = 'level'; // 'level' or 'entity'
+const switchModeButton = document.getElementById('switch-mode');
+const entitySelectionDiv = document.getElementById('entity-selection');
+const entityGrid = document.getElementById('entity-grid');
+const tilesetToolset = document.getElementById('tileset-container');
+const metatileToolset = document.getElementById('metatile-editor-container');
+const metatileListCont = document.getElementById('metatile-list-container');
+let selectedEntity = null;
+
+// Mode Switch Event Listener
+switchModeButton.addEventListener('click', () => {
+    if (currentMode === 'level') {
+        currentMode = 'entity';
+        switchModeButton.textContent = 'Switch to Level Design Mode';
+        // Show entity selection and grid
+        entitySelectionDiv.style.display = 'flex';
+        entityGrid.style.display = 'grid';
+        // Disable level grid interactions
+        levelGrid.style.pointerEvents = 'none';
+
+        tilesetToolset.style.display = 'none';
+        metatileToolset.style.display = 'none';
+        metatileListCont.style.display = 'none';
+        
+    } else {
+        currentMode = 'level';
+        switchModeButton.textContent = 'Switch to Entity Mode';
+        // Hide entity selection and grid
+        entitySelectionDiv.style.display = 'none';
+        entityGrid.style.display = 'none';
+        // Enable level grid interactions
+        levelGrid.style.pointerEvents = 'auto';
+
+        tilesetToolset.style.display = 'block';
+        metatileToolset.style.display = 'block';
+        metatileListCont.style.display = 'grid  ';
+    }
+});
+
+// Entity Selection Setup
+const entitiesList = [];
+for (let i = 0; i <= 15; i++) { // 0 for erase option
+    const entity = {
+        id: i,
+        imageSrc: i === 0 ? 'erase.gif' : `${i}_e.gif`,
+    };
+    entitiesList.push(entity);
+
+    const entityDiv = document.createElement('div');
+    entityDiv.className = 'entity';
+    entityDiv.dataset.id = i;
+
+    const img = document.createElement('img');
+    img.src = entity.imageSrc;
+    img.alt = `Entity ${i}`;
+    img.width = 32;
+    img.height = 32;
+
+    entityDiv.appendChild(img);
+    entitySelectionDiv.appendChild(entityDiv);
+
+    entityDiv.addEventListener('click', () => {
+        document.querySelectorAll('#entity-selection .selected').forEach(el => el.classList.remove('selected'));
+        entityDiv.classList.add('selected');
+        selectedEntity = entity;
+    });
+}
+
+// Entity Grid Setup
+const entityData = new Array(32 * 16).fill(null);
+for (let i = 0; i < 32 * 16; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'entity-cell';
+    cell.dataset.index = i;
+    entityGrid.appendChild(cell);
+
+    cell.addEventListener('click', () => {
+        if (selectedEntity && currentMode === 'entity') {
+            if (selectedEntity.id === 0) {
+                // Erase entity
+                cell.innerHTML = '';
+                entityData[i] = null;
+            } else {
+                // Place entity
+                cell.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = selectedEntity.imageSrc;
+                img.alt = `Entity ${selectedEntity.id}`;
+                img.width = 32;
+                img.height = 32;
+                cell.appendChild(img);
+                entityData[i] = {
+                    id: selectedEntity.id,
+                    position: i,
+                };
+            }
+            updateDataPreview();
+        }
+    });
+}
 
 </script>
 
