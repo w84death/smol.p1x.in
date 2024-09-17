@@ -23,6 +23,12 @@
             font-size: 14px;
             line-height: 1.5;
         }
+        a {
+            color:#00ff00;
+        }
+        a:hover {
+            color:white;
+        }
         h1, h2 {
             color: #ff00ff;
             text-shadow: 0 0 10px #ff00ff;
@@ -78,6 +84,42 @@
     <h1>smol ASM Viewer</h1>
     <input type="file" id="fileInput" accept=".asm">
     <button id="saveButton" style="display: none;">Save as HTML</button>
+    
+    <div id="example">
+        <pre>
+            ; Example Assembly Program
+            ; Demonstration of smol ASM Viewer
+            ;
+            ; Description:
+            ;   This is a simple example to demonstrate how the smol ASM Viewer formats and displays assembly code.
+            ;   It shows how titles, descriptions, and code sections are rendered.
+            ;
+            ORG 100h
+            USE16
+            ;
+            ; === Initialization ===
+            ; This section initializes the data segment and registers.
+            MOV AX, @DATA      ; Load data segment address
+            MOV DS, AX         ; Initialize data segment
+            XOR AX, AX         ; Clear AX register
+            MOV CX, 10         ; Set loop counter to 10
+            ;
+            ; === Main Loop ===
+            ; Performs a simple loop operation.
+            LOOP_START:
+                INC AX         ; Increment AX
+                DEC CX         ; Decrement loop counter
+                JNZ LOOP_START ; Jump if CX not zero
+            ;
+            ; === Termination ===
+            ; Ends the program execution gracefully.
+            MOV AH, 4Ch        ; DOS terminate program function
+            INT 21h            ; Call DOS interrupt
+            
+        </pre>
+        <p>Download this <a href="example.asm" download>example.asm</a> and load into the viewer.</p>
+    </div>
+    
     <div id="headerDescription"></div>
     <div id="asmContent"></div>
 
@@ -86,10 +128,11 @@
         const saveButton = document.getElementById('saveButton');
         const headerDescription = document.getElementById('headerDescription');
         const asmContent = document.getElementById('asmContent');
-
+    
         fileInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
+                example.style.display = 'none';
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const content = e.target.result;
@@ -98,24 +141,61 @@
                     let headerLines = [];
                     let mainContent = [];
                     let foundOrg = false;
-
+    
                     for (const line of lines) {
-                        if (!foundOrg && !line.toLowerCase().includes('org')) {
+                        if (!foundOrg && !line.trim().toLowerCase().startsWith('org')) {
                             headerLines.push(line);
                         } else {
                             foundOrg = true;
                             mainContent.push(line);
                         }
                     }
-
-                    // Extract file header (first line)
-                    let fileHeader = '';
-                    if (headerLines.length > 0) {
-                        fileHeader = headerLines.shift().substring(1).trim();
+    
+                    // Process header lines
+                    let h1Title = '';
+                    let h2Title = '';
+                    let mainDescriptionLines = [];
+                    let inDescription = false;
+    
+                    for (let i = 0; i < headerLines.length; i++) {
+                        const line = headerLines[i].trim();
+    
+                        // Skip empty lines or lines with only semicolons
+                        if (line === '' || line === ';') continue;
+    
+                        if (line.startsWith(';')) {
+                            const content = line.substring(1).trim();
+    
+                            if (content.toLowerCase() === 'description:') {
+                                inDescription = true;
+                                continue;
+                            }
+    
+                            if (inDescription) {
+                                // Collect description lines
+                                mainDescriptionLines.push(content);
+                            } else if (h1Title === '') {
+                                h1Title = content;
+                            } else if (h2Title === '') {
+                                h2Title = content;
+                            } else {
+                                // Collect other metadata if needed
+                                // For example, handle Author, License, etc.
+                            }
+                        } else {
+                            // Non-commented line before ORG directive
+                            continue;
+                        }
                     }
-
-                    headerDescription.innerHTML = `<h2>${fileHeader}</h2>${headerLines.join('\n')}`;
-
+    
+                    const mainDescription = mainDescriptionLines.join('\n');
+    
+                    headerDescription.innerHTML = `
+                        <h1>${h1Title}</h1>
+                        <h2>${h2Title}</h2>
+                        <pre>${mainDescription}</pre>
+                    `;
+    
                     let currentSection = '';
                     let codeOutput = '';
                     let commentOutput = '';
@@ -154,7 +234,7 @@
                             commentOutput += comment ? `; ${comment}\n` : '\n';
                         }
                     });
-
+    
                     // Add the last section
                     if (currentSection) {
                         asmContent.innerHTML += `
@@ -168,32 +248,29 @@
                             </div>
                         `;
                     }
-
+    
                     saveButton.style.display = 'inline-block';
                 };
                 reader.readAsText(file);
             }
         });
-
+    
         saveButton.addEventListener('click', function() {
             const htmlContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>smol ASM Viewer - Static Page</title>
-    <style>
-        ${document.querySelector('style').innerHTML}
-    </style>
-</head>
-<body>
-    <h1>smol ASM Viewer - Static Page</h1>
-    <div id="headerDescription">${headerDescription.innerHTML}</div>
-    <div id="asmContent">${asmContent.innerHTML}</div>
-</body>
-</html>`;
-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>smol ASM Viewer - Static Page</title>
+        <style>
+            ${document.querySelector('style').innerHTML}
+        </style>
+    </head>
+    <body>
+        <div id="headerDescription">${headerDescription.innerHTML}</div>
+        <div id="asmContent">${asmContent.innerHTML}</div>
+    </body>
+    </html>`;
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -205,5 +282,7 @@
             URL.revokeObjectURL(url);
         });
     </script>
+    
+    
 </body>
 </html>
