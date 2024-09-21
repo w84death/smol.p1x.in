@@ -769,6 +769,49 @@ function updateLevelData(cell) {
     updateDataPreview();
 }
 
+function generateEntityData() {
+    let entitiesPreview = 'EntityCount:\n';
+
+    // Filter out non-null placed entities
+    const entitiesPlaced = entityData.filter(e => e !== null);
+
+    // Total count of all entities
+    entitiesPreview += `dw 0x${entitiesPlaced.length.toString(16).padStart(4, '0')}\n\n`;
+
+    // Entity Data
+    entitiesPreview += 'EntityData:\n';
+
+    // Group entities by ID
+    const entityGroups = {};
+    entitiesPlaced.forEach(entity => {
+        if (!entityGroups[entity.id]) {
+            entityGroups[entity.id] = [];
+        }
+        entityGroups[entity.id].push(entity.position);
+    });
+
+    // Iterate over each group of entities
+    Object.keys(entityGroups).forEach(entityId => {
+        const positions = entityGroups[entityId];
+        const count = positions.length;
+
+        // Output entity ID and count
+        entitiesPreview += `db ${entityId}, ${count}\n`;
+
+        // Output positions, swapping X and Y
+        positions.forEach(position => {
+            const row = Math.floor(position / 32);
+            const col = position % 32;
+            const positionWord = ((row & 0xFF) << 8) | (col & 0xFF);
+            entitiesPreview += `dw 0x${positionWord.toString(16).padStart(4, '0')}\n`;
+        });
+    });
+
+    entitiesPreview += 'db 0x0 ; End of entities'
+
+    return entitiesPreview;
+}
+
 function updateDataPreview() {
     let metaTilesPreview = 'MetaTiles:\n';
     metatiles.forEach((mt) => {
@@ -811,19 +854,7 @@ function updateDataPreview() {
         levelDataPreview += `db ${lineBuffer.join(', ')}\n`;
     }
 
-// Entities Data
-let entitiesPreview = 'EntityCount:\n';
-    const entitiesPlaced = entityData.filter(e => e !== null);
-    entitiesPreview += `dw 0x${entitiesPlaced.length.toString(16).padStart(2, '0')}\n\n`;
-    entitiesPreview += 'EntityData:\n';
-    entitiesPlaced.forEach(entity => {
-        const row = Math.floor(entity.position / 32);
-        const col = entity.position % 32;
-        const positionWord = ((row & 0xFF) << 8) | (col & 0xFF);
-        entitiesPreview += `db ${entity.id}\n`;
-        entitiesPreview += `dw 0x${positionWord.toString(16).padStart(4, '0')}\n`;
-    });
-
+    entitiesPreview = generateEntityData();
     document.getElementById('data-preview').textContent = metaTilesPreview + '\n' + levelDataPreview + '\n' + entitiesPreview;
 }
 
