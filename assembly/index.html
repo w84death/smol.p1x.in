@@ -26,9 +26,15 @@
                 </div>
             </li>
             <li>
-                0x03 <a href="#dos">DOS/1024B</a>
+                0x03 <a href="#dos">DOS/512B</a>
                 <div class="submenu">
                     <a href="#moth-hunter">MOTH HUNTER</a>
+                </div>
+            </li>
+            <li>
+                0x03 <a href="#bios">BAREMETAL/4096B</a>
+                <div class="submenu">
+                    <a href="#forgotten-isles">MYSTERIES OF THE FORGOTTEN ISLES</a>
                 </div>
             </li>
             <li>
@@ -173,7 +179,7 @@
 
         <div class="window projects" id="dos">
             <div class="window-title">
-                <span>DOS/1024B</span>
+                <span>DOS/512B</span>
                 <a href="#home" class="close-btn">X</a>
             </div>
             <div class="window-content">
@@ -201,6 +207,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="window projects" id="bios">
+            <div class="window-title">
+                <span>BAREMETAL/4096B</span>
+                <a href="#home" class="close-btn">X</a>
+            </div>
+            <div class="window-content">
+                <h3 id="games">Games</h3>
+                
+                <div class="subwindow" id="forgotten-isles">
+                    <div class="subwindow-title">MYSTERIES OF THE FORGOTTEN ISLES</div>
+                    <div class="subwindow-content">
+                        <img src="game10/forgotten-isles.gif" alt="Forgotten Isles game logo" />
+                        <p>Logic 2D game in VGA graphics, with PC Speaker sounds.</p>
+                        <h4>Game-play</h4>
+                        <p>Explore the islands. <img src="game10/crab.png" alt="Crab from Forgotten Isles game." /> Find all gold and bring it to the chest.</p>
+                        <p>Use rocks to build bridges on shallow water. Avoid wildlife. <img src="game10/snake.png" alt="Snake from Forgotten Isles game." /></p>
+                        <img src="game10/boot.jpg" alt="Screenshot bootloader of Forgotten Isles game." class="screenshot" />    
+                        <img src="game10/screen1.jpg" alt="Screenshot 1 of Forgotten Isles game." class="screenshot" />    
+                        <img src="game10/screen2.jpg" alt="Screenshot 2 of Forgotten Isles game." class="screenshot" />    
+                        <h4>Download</h4>
+                        <ul class="infobox">
+                            <li>Codename: GAME10</li>
+                            <li>Size: 3550B (2024-11-01)</li>
+                            <li>Play: <a href="game10/game10.html" class="download-btn">Run in browser</a></li>
+                            <li>Download: <a href="game10/game10.com" class="download-btn">MS-DOS .COM</a></li>
+                            <li>Source Code: <a href="game10/game10.asm">game10.asm</a> (<a href="game10/source.html">HTML Viewer</a>)</li>
+                            <li>ProMotion NG: <a href="game10/game10.pmp">sketches</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <div class="window resources" id="resources">
             <div class="window-title">
@@ -213,6 +252,8 @@
                 <h3>Software</h3>
                 <ul>
                     <li><a href="https://fresh.flatassembler.net">Fresh</a> - a visual assembly language IDE with built-in FASM assembler.</li>
+                    <li><a href="https://copy.sh/v86/">copy.sh</a></li>
+                    <li><a href="https://www.bootsector.games/">BootSector.Games</a></li>
                 </ul>
                 <h3>Knowledge</h3>
                 <ul>
