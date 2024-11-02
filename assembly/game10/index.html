@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="">
+  <head>
+    <meta charset="utf-8">
     <title>Mysteries of the Forgotten Isles - X86 Assembly - Smol Programs and Games</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        @font-face {
+      @font-face {
             font-family: 'TeapotPro'; /* You can change 'TeapotPro' to any name you prefer */
             src: 
             url('TeapotPro.woff') format('woff'), /* Modern browsers */
@@ -14,53 +14,66 @@
             font-style: normal; /* Specify if the font is normal, italic, etc. */
         }
         body {color:#f9d66a; background-color:#0d0e20; font-family: 'TeapotPro'; font-size:24px;}
-        .logo img {width:512px; image-rendering:pixelated;}
-        article {width: 1024px; min-height: 768px; padding: 0 0 2em 0; background:black url('background.gif') top no-repeat;}
-        article, footer {margin:0 auto; text-align:center; border-radius:1em;}
-        article .gallery {border:8px solid #0d0e20; background-color:#1f350e; margin:2em; padding:1em; border-radius:1em;}
-        article .gallery img {max-width:256px; border-radius:0.5em;}
-        article p {margin:0;}
-        article p+p {margin-top: 0.25em;}
-        article .desc p {
-            text-shadow: 2px 2px 1px black;
-            font-weight: bold;
-            background-color: #316769;
-            display: inline-block;
-            padding: 0.5em;
-            border-radius: 0.25em;
-            line-height: 0.75em;
-            box-shadow:2px 2px 1px black;}
-        article ul {display: inline-block;
-            background-color: #163038;
-            padding: 1em;
-            border-radius: 0.5em;
-            box-shadow:2px 2px 1px black;}
-        article .desc {margin:2em 0;}
         a {color:#f3c92f;}
         a:hover {color:white;}
-        ul li {list-style:none;}
-        footer {margin-top:2em;}
+      img {image-rendering:pixelated;}
+      .logo img {width:512px;}
+      .intro {
+        margin:0 auto;
+        width: 640px;
+        height: 360px;
+        background: url('bg.gif');
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.5em;
+      }
+      
+      .enter {text-align:center; margin:2em;}
+      /* Logo Animation */
+      .intro h1 {
+        position: absolute;
+        top: -100px; /* Start above the view */
+        left: 70px;
+        opacity: 0;
+        animation: fadeInDrop 2s ease forwards; /* Add fade-in and drop */
+      }
+
+      /* Ship Animation */
+      .ship {
+        position: absolute;
+        top: 30px;
+        left: 219px;
+        animation: waveMotion 3s ease-in-out infinite; /* Add wave motion */
+      }
+
+      /* Keyframes for logo fade-in and drop */
+      @keyframes fadeInDrop {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(64px);
+        }
+      }
+
+      /* Keyframes for ship wave motion */
+      @keyframes waveMotion {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px); /* Move the ship up slightly */
+        }
+      }
     </style>
-</head>
-<body>
-    <article>
-        <h1 class="logo"><img src="forgotten-isles.gif"></h1>
-        <div class="desc">
-            <p>Logic 2D game in VGA graphics, with PC Speaker sounds.</p>
-            <p>Explore the islands. Find all gold and bring it to the chest.</p>
-            <p>Use rocks to build bridges on shallow water. Avoid wildlife. <img src="snake.png" alt="Snake from Forgotten Isles game." /></p>
-        </div>
-        <img src="guy.gif" style="float:left;">
-        <ul><img src="floppy.gif">
-            <li><a href="game10_floppy.img"><strong>Download floppy image</strong> (1.44MB)</a>
-            <li><a href="game10.com">MS-DOS game10.com (4kb)</a>
-            <li><a href="game10.html">Play in browser (jsdos emulator)</a>
-        </ul>
-        <div class="gallery">
-            <a href="screen1.jpg"><img src="screen1.jpg" alt="Screenshot 1 of Forgotten Isles game." class="screenshot" /></a>    
-            <a href="screen2.jpg"><img src="screen2.jpg" alt="Screenshot 2 of Forgotten Isles game." class="screenshot" /></a>
-        </div>
-    </article>
-    <footer>&copy; November 2024 <a href="https://krzysztofjankowski.com">Krzysztof Krystian Jankowski</a></footer>
-</body>
+  </head>
+  <body>
+    <div class="intro">
+      <h1 class="logo"><img src="forgotten-isles.gif" alt="Mysteries of the Forgotten Isles"/></h1>
+      <div class="ship"><a href="main.html" title="Enter the website"><img src="ship.gif" alt="ship"/></a></div>
+    </div>
+    <div class="enter"><a href="main.html" title="Enter the website">Enter the website</a></div>
+  </body>
 </html>

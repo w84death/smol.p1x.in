@@ -8,7 +8,7 @@
             
         @font-face {
             font-family: 'DepartureMono';
-            src: url('DepartureMono-Regular.otf') format('opentype');
+            src: url('../../asmview/DepartureMono-Regular.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
         }
@@ -85,9 +85,9 @@
     <body>
         <div id="headerDescription">
                         <h1>GAME10 - Mysteries of the Forgotten Isles</h1>
-                        <h2>2048b VERSION, x86 BIOS, P1X BOOTLOADER in boot.asm</h2>
-                        <pre>Logic 2D game in VGA graphics, w PC Speaker sound.
-Size category: 2048 bytes / 2KB
+                        <h2>4096b VERSION, x86 BIOS, P1X BOOTLOADER in boot.asm</h2>
+                        <pre>Logic 2D game in VGA graphics, with PC Speaker sounds.
+Size category: 4096 bytes / 4KB
 Bootloader: 512 bytes
 Author: Krzysztof Krystian Jankowski
 Web: smol.p1x.in/assembly/#forgotten-isles
@@ -106,18 +106,24 @@ License: MIT</pre>
 <span class="line-number">   5</span>
 <span class="line-number">   8</span>
 <span class="line-number">   9</span>PaletteSets:
-<span class="line-number">  10</span>db 0x00, 0x34, 0x17, 0x1b   
+<span class="line-number">  10</span>db 0x00, 0x34, 0x16, 0x1a   
 <span class="line-number">  11</span>db 0x00, 0x06, 0x27, 0x43   
 <span class="line-number">  12</span>db 0x00, 0x7f, 0x13, 0x15   
-<span class="line-number">  13</span>db 0x35, 0x34, 0x19, 0x1a   
-<span class="line-number">  14</span>db 0x00, 0x06, 0x42, 0x43   
-<span class="line-number">  15</span>db 0x00, 0x46, 0x5a, 0x5c   
-<span class="line-number">  16</span>db 0x47, 0x46, 0x45, 0x54   
-<span class="line-number">  17</span>db 0x00, 0x06, 0x77, 0x2e   
+<span class="line-number">  13</span>db 0x35, 0x34, 0x00, 0x00   
+<span class="line-number">  14</span>db 0x00, 0xd1, 0x73, 0x06   
+<span class="line-number">  15</span>db 0x00, 0x4a, 0x45, 0x47   
+<span class="line-number">  16</span>db 0x4a, 0x2f, 0x47, 0x45   
+<span class="line-number">  17</span>db 0x00, 0x74, 0x02, 0x2e   
 <span class="line-number">  18</span>db 0x00, 0x27, 0x2a, 0x2b   
 <span class="line-number">  19</span>db 0x00, 0x2b, 0x2c, 0x5b   
-<span class="line-number">  20</span>db 0x00, 0x15, 0x19, 0x1a   
-<span class="line-number">  21</span>
+<span class="line-number">  20</span>db 0x00, 0x16, 0x17, 0x19   
+<span class="line-number">  21</span>db 0x00, 0x1b, 0x1d, 0x1e   
+<span class="line-number">  22</span>db 0x00, 0x14, 0x16, 0x1f   
+<span class="line-number">  23</span>db 0x00, 0x1c, 0x1e, 0x1f   
+<span class="line-number">  24</span>db 0x35, 0x4e, 0xff, 0xff   
+<span class="line-number">  25</span>db 0x00, 0x04, 0x0c, 0x1f   
+<span class="line-number">  26</span>db 0x00, 0x71, 0x06, 0x2a   
+<span class="line-number">  27</span>
 </div>
                                                 <div class="comment-column">
 
@@ -133,10 +139,16 @@ License: MIT</pre>
 ; 0x4 Chest
 ; 0x5 Terrain 1 - shore
 ; 0x6 Terrain 2 - in  land
-; 0x7 Palm
+; 0x7 Palm &amp; Bush
 ; 0x8 Snake
 ; 0x9 Gold Coin
 ; 0xa Rock
+; 0xb Sail
+; 0xc Spider
+; 0xd Web
+; 0xe Ocean
+; 0x0f Crab
+; 0x10 Chest
 
 </div>
                                             </div>
@@ -148,21 +160,27 @@ License: MIT</pre>
 Data: offset to brush data, Y shift
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">  25</span>
-<span class="line-number">  26</span>BrushRefs:
-<span class="line-number">  27</span>dw IndieTopBrush, -320*6
-<span class="line-number">  28</span>dw PalmBrush, -320*10
-<span class="line-number">  29</span>dw SnakeBrush, -320*2
-<span class="line-number">  30</span>dw RockBrush, 0
-<span class="line-number">  31</span>dw SkullBrush, 0
-<span class="line-number">  32</span>dw BridgeBrush, 0
-<span class="line-number">  33</span>dw ChestBrush, 0
-<span class="line-number">  34</span>dw Gold2Brush, 320
-<span class="line-number">  35</span>dw GoldBrush, 320
-<span class="line-number">  36</span>dw IndieTop2Brush, -320*5
-<span class="line-number">  37</span>
+                                                <div class="code-column"><span class="line-number">  31</span>
+<span class="line-number">  32</span>BrushRefs:
+<span class="line-number">  33</span>dw IndieTopBrush, -320*6
+<span class="line-number">  34</span>dw PalmBrush, -320*10
+<span class="line-number">  35</span>dw SnakeBrush, -320*2
+<span class="line-number">  36</span>dw RockBrush, 0
+<span class="line-number">  37</span>dw SkullBrush, 0
+<span class="line-number">  38</span>dw BridgeBrush, 0
+<span class="line-number">  39</span>dw ChestBrush, 0
+<span class="line-number">  40</span>dw Gold2Brush, 320
+<span class="line-number">  41</span>dw GoldBrush, 320
+<span class="line-number">  42</span>dw IndieTop2Brush, -320*5
+<span class="line-number">  43</span>dw SpiderBrush, -320*3
+<span class="line-number">  44</span>dw CrabBrush, 0
+<span class="line-number">  45</span>dw BushBrush, -320
+<span class="line-number">  46</span>
 </div>
                                                 <div class="comment-column">
+
+
+
 
 
 
@@ -185,148 +203,358 @@ Data: offset to brush data, Y shift
 Data: number of lines, palettDefaulte id, lines (8 pixels) of palette color id
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">  41</span>
-<span class="line-number">  42</span>IndieTopBrush:
-<span class="line-number">  43</span>db 0x7, 0x1
-<span class="line-number">  44</span>dw 0000000101010000b
-<span class="line-number">  45</span>dw 0000010101010100b
-<span class="line-number">  46</span>dw 0000001111110000b
-<span class="line-number">  47</span>dw 0000000011110000b
-<span class="line-number">  48</span>dw 0000001010000000b
-<span class="line-number">  49</span>dw 0000001010100000b
-<span class="line-number">  50</span>dw 0000001101010000b
-<span class="line-number">  51</span>
-<span class="line-number">  52</span>IndieTop2Brush:
-<span class="line-number">  53</span>db 0x7, 0x1
-<span class="line-number">  54</span>dw 0001000101000100b
-<span class="line-number">  55</span>dw 0011010101011100b
-<span class="line-number">  56</span>dw 0011001111111100b
-<span class="line-number">  57</span>dw 0011000011110000b
-<span class="line-number">  58</span>dw 0000111010000000b
-<span class="line-number">  59</span>dw 0000001010100000b
-<span class="line-number">  60</span>dw 0000001111110000b
-<span class="line-number">  61</span>dw 0000000101010000b
-<span class="line-number">  62</span>
-<span class="line-number">  63</span>IndieBottomBrush:
-<span class="line-number">  64</span>db 0x4, 0x2
-<span class="line-number">  65</span>dw 0000000101010000b
-<span class="line-number">  66</span>dw 0000000100010000b
-<span class="line-number">  67</span>dw 0000001000100000b
-<span class="line-number">  68</span>dw 0000001000100000b
-<span class="line-number">  69</span>
-<span class="line-number">  70</span>SnakeBrush:
-<span class="line-number">  71</span>db 0x8, 0x8
-<span class="line-number">  72</span>dw 0000000011011101b
-<span class="line-number">  73</span>dw 0000001111111111b
-<span class="line-number">  74</span>dw 0000001110001011b
-<span class="line-number">  75</span>dw 0000001010110001b
-<span class="line-number">  76</span>dw 0011000010101100b
-<span class="line-number">  77</span>dw 0000100001101000b
-<span class="line-number">  78</span>dw 0000010001010100b
-<span class="line-number">  79</span>dw 0000110101010000b
-<span class="line-number">  80</span>
-<span class="line-number">  81</span>ChestBrush:
-<span class="line-number">  82</span>db 0x8, 0x4
-<span class="line-number">  83</span>dw 0011111111111100b
-<span class="line-number">  84</span>dw 1111101010101111b
-<span class="line-number">  85</span>dw 1110101010101011b
-<span class="line-number">  86</span>dw 1110101010101011b
-<span class="line-number">  87</span>dw 0111111111111101b
-<span class="line-number">  88</span>dw 0101010101010101b
-<span class="line-number">  89</span>dw 0101011111010101b
-<span class="line-number">  90</span>dw 0001010101010100b
-<span class="line-number">  91</span>
-<span class="line-number">  92</span>PalmBrush:
-<span class="line-number">  93</span>db 0x10, 0x7
-<span class="line-number">  94</span>dw 0010100000101010b
-<span class="line-number">  95</span>dw 1011111010111110b
-<span class="line-number">  96</span>dw 1011101011101011b
-<span class="line-number">  97</span>dw 1010111110111011b
-<span class="line-number">  98</span>dw 1011111010111110b
-<span class="line-number">  99</span>dw 1011101010101110b
-<span class="line-number"> 100</span>dw 1110111001101110b
-<span class="line-number"> 101</span>dw 0011000101111011b
-<span class="line-number"> 102</span>dw 0000000001000000b
-<span class="line-number"> 103</span>dw 0000000001000000b
-<span class="line-number"> 104</span>dw 0000000100001000b
-<span class="line-number"> 105</span>dw 1011000100101100b
-<span class="line-number"> 106</span>dw 1110110111101110b
-<span class="line-number"> 107</span>dw 0010110101111011b
-<span class="line-number"> 108</span>dw 1011101101101100b
-<span class="line-number"> 109</span>dw 0011101011101100b
-<span class="line-number"> 110</span>
-<span class="line-number"> 111</span>BridgeBrush:
-<span class="line-number"> 112</span>db 0x8, 0x3             
-<span class="line-number"> 113</span>dw 0101000001010000b
-<span class="line-number"> 114</span>dw 0000000000000000b
-<span class="line-number"> 115</span>dw 0000010101010000b
-<span class="line-number"> 116</span>dw 0101000000000101b
-<span class="line-number"> 117</span>dw 0101000000000101b
-<span class="line-number"> 118</span>dw 0000010101010000b
-<span class="line-number"> 119</span>dw 0000000000000000b
-<span class="line-number"> 120</span>dw 0000010100000101b
-<span class="line-number"> 121</span>
-<span class="line-number"> 122</span>RockBrush:
-<span class="line-number"> 123</span>db 0x8, 0xa
-<span class="line-number"> 124</span>dw 0000111111110000b
-<span class="line-number"> 125</span>dw 0011111110101100b
-<span class="line-number"> 126</span>dw 1111101111111111b
-<span class="line-number"> 127</span>dw 1110111110101111b
-<span class="line-number"> 128</span>dw 1011111010111001b
-<span class="line-number"> 129</span>dw 0111111011111101b
-<span class="line-number"> 130</span>dw 0101111110110101b
-<span class="line-number"> 131</span>dw 0001010101010100b
-<span class="line-number"> 132</span>
-<span class="line-number"> 133</span>GoldBrush:
-<span class="line-number"> 134</span>db 0x6, 0x9
-<span class="line-number"> 135</span>dw 0000111111110000b
-<span class="line-number"> 136</span>dw 0011101111101100b
-<span class="line-number"> 137</span>dw 1110111010111011b
-<span class="line-number"> 138</span>dw 1010111010101010b
-<span class="line-number"> 139</span>dw 0001101110100100b
-<span class="line-number"> 140</span>dw 0000010101010000b
-<span class="line-number"> 141</span>
-<span class="line-number"> 142</span>Gold2Brush:
-<span class="line-number"> 143</span>db 0x6, 0x9
-<span class="line-number"> 144</span>dw 0000001100000000b
-<span class="line-number"> 145</span>dw 0000001100000000b
-<span class="line-number"> 146</span>dw 0000001000000000b
-<span class="line-number"> 147</span>dw 0000001000000000b
-<span class="line-number"> 148</span>dw 0000000100000000b
-<span class="line-number"> 149</span>dw 0000000100000000b
+                                                <div class="code-column"><span class="line-number">  50</span>
+<span class="line-number">  51</span>IndieTopBrush:
+<span class="line-number">  52</span>db 0x7, 0x1
+<span class="line-number">  53</span>dw 0000000101010000b
+<span class="line-number">  54</span>dw 0000010101010100b
+<span class="line-number">  55</span>dw 0000001111110000b
+<span class="line-number">  56</span>dw 0000000011110000b
+<span class="line-number">  57</span>dw 0000001010000000b
+<span class="line-number">  58</span>dw 0000001010100000b
+<span class="line-number">  59</span>dw 0000001101010000b
+<span class="line-number">  60</span>
+<span class="line-number">  61</span>IndieTop2Brush:
+<span class="line-number">  62</span>db 0x7, 0x1
+<span class="line-number">  63</span>dw 0001000101000100b
+<span class="line-number">  64</span>dw 0011010101011100b
+<span class="line-number">  65</span>dw 0011001111111100b
+<span class="line-number">  66</span>dw 0011000011110000b
+<span class="line-number">  67</span>dw 0000111010000000b
+<span class="line-number">  68</span>dw 0000001010100000b
+<span class="line-number">  69</span>dw 0000001111110000b
+<span class="line-number">  70</span>dw 0000000101010000b
+<span class="line-number">  71</span>
+<span class="line-number">  72</span>IndieBottomBrush:
+<span class="line-number">  73</span>db 0x4, 0x2
+<span class="line-number">  74</span>dw 0000000101010000b
+<span class="line-number">  75</span>dw 0000000100010000b
+<span class="line-number">  76</span>dw 0000001000100000b
+<span class="line-number">  77</span>dw 0000001000100000b
+<span class="line-number">  78</span>
+<span class="line-number">  79</span>SnakeBrush:
+<span class="line-number">  80</span>db 0x8, 0x8
+<span class="line-number">  81</span>dw 0000000011011101b
+<span class="line-number">  82</span>dw 0000001111111111b
+<span class="line-number">  83</span>dw 0000001110001011b
+<span class="line-number">  84</span>dw 0000001010110001b
+<span class="line-number">  85</span>dw 0011000010101100b
+<span class="line-number">  86</span>dw 0000100001101000b
+<span class="line-number">  87</span>dw 0000010001010100b
+<span class="line-number">  88</span>dw 0000110101010000b
+<span class="line-number">  89</span>
+<span class="line-number">  90</span>
+<span class="line-number">  91</span>SpiderBrush:
+<span class="line-number">  92</span>db 0xa, 0xc
+<span class="line-number">  93</span>dw 0010101000000000b
+<span class="line-number">  94</span>dw 1001010101000000b
+<span class="line-number">  95</span>dw 0101011010100100b
+<span class="line-number">  96</span>dw 0101110101011101b
+<span class="line-number">  97</span>dw 1001101101111001b
+<span class="line-number">  98</span>dw 0001010110010100b
+<span class="line-number">  99</span>dw 0010100101011000b
+<span class="line-number"> 100</span>dw 0100010001000100b
+<span class="line-number"> 101</span>dw 1000100001000010b
+<span class="line-number"> 102</span>dw 0100010010000001b
+<span class="line-number"> 103</span>
+<span class="line-number"> 104</span>WebBrush:
+<span class="line-number"> 105</span>db 0x8, 0xd
+<span class="line-number"> 106</span>dw 0000001100000000b
+<span class="line-number"> 107</span>dw 0100111011000100b
+<span class="line-number"> 108</span>dw 0010001000100000b
+<span class="line-number"> 109</span>dw 1100011101001000b
+<span class="line-number"> 110</span>dw 0101110010010110b
+<span class="line-number"> 111</span>dw 1000011001001100b
+<span class="line-number"> 112</span>dw 0010000100100000b
+<span class="line-number"> 113</span>dw 0100110110000100b
+<span class="line-number"> 114</span>
+<span class="line-number"> 115</span>ChestBrush:
+<span class="line-number"> 116</span>db 0xa, 0x10
+<span class="line-number"> 117</span>dw 0001010000010100b
+<span class="line-number"> 118</span>dw 1011110101111101b
+<span class="line-number"> 119</span>dw 1001011010010111b
+<span class="line-number"> 120</span>dw 1101010101010111b
+<span class="line-number"> 121</span>dw 1101010101010111b
+<span class="line-number"> 122</span>dw 1011110101111110b
+<span class="line-number"> 123</span>dw 1001011111010110b
+<span class="line-number"> 124</span>dw 1001010101010110b
+<span class="line-number"> 125</span>dw 0110101010101001b
+<span class="line-number"> 126</span>dw 0001010101010100b
+<span class="line-number"> 127</span>
+<span class="line-number"> 128</span>ChestCloseBrush:
+<span class="line-number"> 129</span>db 0x8, 0x10
+<span class="line-number"> 130</span>dw 0000101010100000b
+<span class="line-number"> 131</span>dw 0010111111111000b
+<span class="line-number"> 132</span>dw 1011111111111110b
+<span class="line-number"> 133</span>dw 1110111111111011b
+<span class="line-number"> 134</span>dw 1011010101011110b
+<span class="line-number"> 135</span>dw 1101101010100111b
+<span class="line-number"> 136</span>dw 0111111111111101b
+<span class="line-number"> 137</span>dw 1001011111010110b
+<span class="line-number"> 138</span>
+<span class="line-number"> 139</span>ChestTopBrush:
+<span class="line-number"> 140</span>db 0x9, 0x10
+<span class="line-number"> 141</span>dw 0000011111000000b
+<span class="line-number"> 142</span>dw 0001111010111000b
+<span class="line-number"> 143</span>dw 0001111001101011b
+<span class="line-number"> 144</span>dw 0001111001010110b
+<span class="line-number"> 145</span>dw 0001111001010101b
+<span class="line-number"> 146</span>dw 0001011110010101b
+<span class="line-number"> 147</span>dw 0000100101111001b
+<span class="line-number"> 148</span>dw 0000001010010111b
+<span class="line-number"> 149</span>dw 0000000000101001b
 <span class="line-number"> 150</span>
-<span class="line-number"> 151</span>SlotBrush:
-<span class="line-number"> 152</span>db 0x7, 0xa
-<span class="line-number"> 153</span>dw 1001010000010110b
-<span class="line-number"> 154</span>dw 0100000000000001b
-<span class="line-number"> 155</span>dw 0000000000000000b
-<span class="line-number"> 156</span>dw 0000000000000000b
-<span class="line-number"> 157</span>dw 0000000000000000b
-<span class="line-number"> 158</span>dw 0100000000000001b
-<span class="line-number"> 159</span>dw 1001010000010110b
-<span class="line-number"> 160</span>
-<span class="line-number"> 161</span>ArrowBrush:
-<span class="line-number"> 162</span>db 0x7, 0x1
-<span class="line-number"> 163</span>dw 0000001110000000b
-<span class="line-number"> 164</span>dw 0000001110000000b
-<span class="line-number"> 165</span>dw 0000001110000000b
-<span class="line-number"> 166</span>dw 0011111110100100b
-<span class="line-number"> 167</span>dw 0010111110100100b
-<span class="line-number"> 168</span>dw 0000101110010000b
-<span class="line-number"> 169</span>dw 0000001001000000b
+<span class="line-number"> 151</span>
+<span class="line-number"> 152</span>PalmBrush:
+<span class="line-number"> 153</span>db 0x10, 0x7
+<span class="line-number"> 154</span>dw 0010100000101010b
+<span class="line-number"> 155</span>dw 1011111010111110b
+<span class="line-number"> 156</span>dw 1011101011101011b
+<span class="line-number"> 157</span>dw 1010111110111011b
+<span class="line-number"> 158</span>dw 1011111010111110b
+<span class="line-number"> 159</span>dw 1011101010101110b
+<span class="line-number"> 160</span>dw 1110111001101110b
+<span class="line-number"> 161</span>dw 0011000101111011b
+<span class="line-number"> 162</span>dw 0000000001000000b
+<span class="line-number"> 163</span>dw 0000000001000000b
+<span class="line-number"> 164</span>dw 0000000100001000b
+<span class="line-number"> 165</span>dw 1011000100101100b
+<span class="line-number"> 166</span>dw 1110110111101110b
+<span class="line-number"> 167</span>dw 0010110101111011b
+<span class="line-number"> 168</span>dw 1011101101101100b
+<span class="line-number"> 169</span>dw 0011101011101100b
 <span class="line-number"> 170</span>
-<span class="line-number"> 171</span>SkullBrush:
-<span class="line-number"> 172</span>db 0x7, 0x0a
-<span class="line-number"> 173</span>dw 0000010101010000b
-<span class="line-number"> 174</span>dw 0001010101010100b
-<span class="line-number"> 175</span>dw 0001110111010100b
-<span class="line-number"> 176</span>dw 0001010101010100b
-<span class="line-number"> 177</span>dw 0100010101010001b
-<span class="line-number"> 178</span>dw 0001010101010100b
-<span class="line-number"> 179</span>dw 0100000101000001b
-<span class="line-number"> 180</span>
+<span class="line-number"> 171</span>BushBrush:
+<span class="line-number"> 172</span>db 0x8, 0x7
+<span class="line-number"> 173</span>dw 0000001000000000b
+<span class="line-number"> 174</span>dw 0000101110000000b
+<span class="line-number"> 175</span>dw 1100101011100011b
+<span class="line-number"> 176</span>dw 1011111011101110b
+<span class="line-number"> 177</span>dw 1110111110111011b
+<span class="line-number"> 178</span>dw 0111101110111101b
+<span class="line-number"> 179</span>dw 1110011011011011b
+<span class="line-number"> 180</span>dw 0011100101101100b
+<span class="line-number"> 181</span>
+<span class="line-number"> 182</span>BridgeBrush:
+<span class="line-number"> 183</span>db 0x8, 0x3             
+<span class="line-number"> 184</span>dw 0101000001010000b
+<span class="line-number"> 185</span>dw 0000000000000000b
+<span class="line-number"> 186</span>dw 0000010101010000b
+<span class="line-number"> 187</span>dw 0101000000000101b
+<span class="line-number"> 188</span>dw 0101000000000101b
+<span class="line-number"> 189</span>dw 0000010101010000b
+<span class="line-number"> 190</span>dw 0000000000000000b
+<span class="line-number"> 191</span>dw 0000010100000101b
+<span class="line-number"> 192</span>
+<span class="line-number"> 193</span>RockBrush:
+<span class="line-number"> 194</span>db 0x8, 0xa
+<span class="line-number"> 195</span>dw 0000101111100000b
+<span class="line-number"> 196</span>dw 0010111111111000b
+<span class="line-number"> 197</span>dw 0010111110101110b
+<span class="line-number"> 198</span>dw 1011101010011010b
+<span class="line-number"> 199</span>dw 1010100101010110b
+<span class="line-number"> 200</span>dw 1010010101010110b
+<span class="line-number"> 201</span>dw 0110100101011001b
+<span class="line-number"> 202</span>dw 0001101010100100b
+<span class="line-number"> 203</span>
+<span class="line-number"> 204</span>GoldBrush:
+<span class="line-number"> 205</span>db 0x6, 0x9
+<span class="line-number"> 206</span>dw 0000111111110000b
+<span class="line-number"> 207</span>dw 0011101111101100b
+<span class="line-number"> 208</span>dw 1110111010111011b
+<span class="line-number"> 209</span>dw 1010111010101010b
+<span class="line-number"> 210</span>dw 0001101110100100b
+<span class="line-number"> 211</span>dw 0000010101010000b
+<span class="line-number"> 212</span>
+<span class="line-number"> 213</span>Gold2Brush:
+<span class="line-number"> 214</span>db 0x6, 0x9
+<span class="line-number"> 215</span>dw 0000001100000000b
+<span class="line-number"> 216</span>dw 0000001100000000b
+<span class="line-number"> 217</span>dw 0000001000000000b
+<span class="line-number"> 218</span>dw 0000001000000000b
+<span class="line-number"> 219</span>dw 0000000100000000b
+<span class="line-number"> 220</span>dw 0000000100000000b
+<span class="line-number"> 221</span>
+<span class="line-number"> 222</span>SlotBrush:
+<span class="line-number"> 223</span>db 0x7, 0xa
+<span class="line-number"> 224</span>dw 1001010000010110b
+<span class="line-number"> 225</span>dw 0100000000000001b
+<span class="line-number"> 226</span>dw 0000000000000000b
+<span class="line-number"> 227</span>dw 0000000000000000b
+<span class="line-number"> 228</span>dw 0000000000000000b
+<span class="line-number"> 229</span>dw 0100000000000001b
+<span class="line-number"> 230</span>dw 1001010000010110b
+<span class="line-number"> 231</span>
+<span class="line-number"> 232</span>ArrowBrush:
+<span class="line-number"> 233</span>db 0x7, 0x1
+<span class="line-number"> 234</span>dw 0000001110000000b
+<span class="line-number"> 235</span>dw 0000001110000000b
+<span class="line-number"> 236</span>dw 0000001110000000b
+<span class="line-number"> 237</span>dw 0011111110100100b
+<span class="line-number"> 238</span>dw 0010111110100100b
+<span class="line-number"> 239</span>dw 0000101110010000b
+<span class="line-number"> 240</span>dw 0000001001000000b
+<span class="line-number"> 241</span>
+<span class="line-number"> 242</span>SkullBrush:
+<span class="line-number"> 243</span>db 0x7, 0x0a
+<span class="line-number"> 244</span>dw 0000010101010000b
+<span class="line-number"> 245</span>dw 0001010101010100b
+<span class="line-number"> 246</span>dw 0001110111010100b
+<span class="line-number"> 247</span>dw 0001010101010100b
+<span class="line-number"> 248</span>dw 0100010101010001b
+<span class="line-number"> 249</span>dw 0001010101010100b
+<span class="line-number"> 250</span>dw 0100000101000001b
+<span class="line-number"> 251</span>
+<span class="line-number"> 252</span>ShipBackBrush:
+<span class="line-number"> 253</span>db 0xc, 0x4
+<span class="line-number"> 254</span>dw 0000011111110000b
+<span class="line-number"> 255</span>dw 0111110101011100b
+<span class="line-number"> 256</span>dw 1101010101011101b
+<span class="line-number"> 257</span>dw 0111110101011011b
+<span class="line-number"> 258</span>dw 1001011111101011b
+<span class="line-number"> 259</span>dw 0110100110110110b
+<span class="line-number"> 260</span>dw 0101101001111010b
+<span class="line-number"> 261</span>dw 0001011010101101b
+<span class="line-number"> 262</span>dw 0110100110101110b
+<span class="line-number"> 263</span>dw 0001101001010101b
+<span class="line-number"> 264</span>dw 0000010110100110b
+<span class="line-number"> 265</span>dw 0000000001010101b
+<span class="line-number"> 266</span>
+<span class="line-number"> 267</span>ShipMiddleBrush:
+<span class="line-number"> 268</span>db 0x8, 0x4
+<span class="line-number"> 269</span>dw 0000000010110000b
+<span class="line-number"> 270</span>dw 1111111110111111b
+<span class="line-number"> 271</span>dw 0110010110110101b
+<span class="line-number"> 272</span>dw 1001010101010110b
+<span class="line-number"> 273</span>dw 1111111010111011b
+<span class="line-number"> 274</span>dw 0101010101010101b
+<span class="line-number"> 275</span>dw 0111100101111001b
+<span class="line-number"> 276</span>dw 0101010101010101b
+<span class="line-number"> 277</span>
+<span class="line-number"> 278</span>ShipFrontBrush:
+<span class="line-number"> 279</span>db 0x8, 0x4
+<span class="line-number"> 280</span>dw 0001111111110100b
+<span class="line-number"> 281</span>dw 1111100101011111b
+<span class="line-number"> 282</span>dw 1010011111111010b
+<span class="line-number"> 283</span>dw 0111110101100100b
+<span class="line-number"> 284</span>dw 1101011010010000b
+<span class="line-number"> 285</span>dw 0110101001000000b
+<span class="line-number"> 286</span>dw 1010100100000000b
+<span class="line-number"> 287</span>dw 0101000000000000b
+<span class="line-number"> 288</span>
+<span class="line-number"> 289</span>ShipSailBrush:
+<span class="line-number"> 290</span>db 0x8, 0xb
+<span class="line-number"> 291</span>dw 0000000011101100b
+<span class="line-number"> 292</span>dw 0000111010111111b
+<span class="line-number"> 293</span>dw 1110111011111010b
+<span class="line-number"> 294</span>dw 1010111111101001b
+<span class="line-number"> 295</span>dw 0111101010010100b
+<span class="line-number"> 296</span>dw 0111100101000000b
+<span class="line-number"> 297</span>dw 1010010000000000b
+<span class="line-number"> 298</span>dw 0101000000000000b
+<span class="line-number"> 299</span>
+<span class="line-number"> 300</span>WioslaBrush:
+<span class="line-number"> 301</span>db 0x4, 0x4
+<span class="line-number"> 302</span>dw 1100110011000000b
+<span class="line-number"> 303</span>dw 1000100010000000b
+<span class="line-number"> 304</span>dw 0010001000100000b
+<span class="line-number"> 305</span>dw 0001000100010000b
+<span class="line-number"> 306</span>
+<span class="line-number"> 307</span>Ocean1Brush:
+<span class="line-number"> 308</span>db 0x3, 0xe
+<span class="line-number"> 309</span>dw 0000010101000000b
+<span class="line-number"> 310</span>dw 0101000000010100b
+<span class="line-number"> 311</span>dw 0000000000000101b
+<span class="line-number"> 312</span>
+<span class="line-number"> 313</span>Ocean2Brush:
+<span class="line-number"> 314</span>db 0x2, 0xe
+<span class="line-number"> 315</span>dw 0101000000010100b
+<span class="line-number"> 316</span>dw 0000010101000000b
+<span class="line-number"> 317</span>
+<span class="line-number"> 318</span>CrabBrush:
+<span class="line-number"> 319</span>db 0x8, 0x0f
+<span class="line-number"> 320</span>dw 0000000000101110b
+<span class="line-number"> 321</span>dw 0000101110000100b
+<span class="line-number"> 322</span>dw 0000000100000100b
+<span class="line-number"> 323</span>dw 0000010000010000b
+<span class="line-number"> 324</span>dw 0010011010011000b
+<span class="line-number"> 325</span>dw 1010100101101001b
+<span class="line-number"> 326</span>dw 1001010101010110b
+<span class="line-number"> 327</span>dw 0100010000010000b
+<span class="line-number"> 328</span>
+<span class="line-number"> 329</span>CrabClawBrush:
+<span class="line-number"> 330</span>db 0x6, 0x0f
+<span class="line-number"> 331</span>dw 0000100100000000b
+<span class="line-number"> 332</span>dw 0010010000100000b
+<span class="line-number"> 333</span>dw 0001010110100000b
+<span class="line-number"> 334</span>dw 0001011010100000b
+<span class="line-number"> 335</span>dw 0001010101000000b
+<span class="line-number"> 336</span>dw 0101000000000000b
+<span class="line-number"> 337</span>
 </div>
                                                 <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -466,6 +694,92 @@ Data: number of lines, palettDefaulte id, lines (8 pixels) of palette color id
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
                                             </div>
                                         </div>
@@ -476,88 +790,88 @@ Data: number of lines, palettDefaulte id, lines (8 pixels) of palette color id
 Data: number of lines, palettDefaulte id, lines (8 pixels) of palette color id
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 184</span>
-<span class="line-number"> 185</span>TerrainTiles:
-<span class="line-number"> 186</span>db 0x8, 0x05          
-<span class="line-number"> 187</span>dw 0010111101010101b
-<span class="line-number"> 188</span>dw 0010111111010101b
-<span class="line-number"> 189</span>dw 0010101111010101b
-<span class="line-number"> 190</span>dw 0000101111010101b
-<span class="line-number"> 191</span>dw 0000101111010101b
-<span class="line-number"> 192</span>dw 0010101111010101b
-<span class="line-number"> 193</span>dw 0010111101010101b
-<span class="line-number"> 194</span>dw 0010111111010101b
-<span class="line-number"> 195</span>
-<span class="line-number"> 196</span>db 0x8, 0x05          
-<span class="line-number"> 197</span>dw 0000000000000000b
-<span class="line-number"> 198</span>dw 1010100000101010b
-<span class="line-number"> 199</span>dw 1111101010101111b
-<span class="line-number"> 200</span>dw 1111111111111111b
-<span class="line-number"> 201</span>dw 0111111111111101b
-<span class="line-number"> 202</span>dw 0101010101010101b
-<span class="line-number"> 203</span>dw 0101010101010101b
-<span class="line-number"> 204</span>dw 0101010101010101b
-<span class="line-number"> 205</span>
-<span class="line-number"> 206</span>db 0x8, 0x5          
-<span class="line-number"> 207</span>dw 0000101010101010b
-<span class="line-number"> 208</span>dw 0010101111111110b
-<span class="line-number"> 209</span>dw 1010111111111111b
-<span class="line-number"> 210</span>dw 1011111111111111b
-<span class="line-number"> 211</span>dw 1011111101010111b
-<span class="line-number"> 212</span>dw 1011110101010101b
-<span class="line-number"> 213</span>dw 1011110101010101b
-<span class="line-number"> 214</span>dw 1011110101010101b
-<span class="line-number"> 215</span>
-<span class="line-number"> 216</span>db 0x8, 0x5          
-<span class="line-number"> 217</span>dw 1010111101010101b
-<span class="line-number"> 218</span>dw 1011110101010101b
-<span class="line-number"> 219</span>dw 1111010101010101b
-<span class="line-number"> 220</span>dw 1101010101010101b
-<span class="line-number"> 221</span>dw 0101010101010101b
-<span class="line-number"> 222</span>dw 0101010101010101b
-<span class="line-number"> 223</span>dw 0101010101010101b
-<span class="line-number"> 224</span>dw 0101010101010101b
-<span class="line-number"> 225</span>
-<span class="line-number"> 226</span>db 0x8, 0x6          
-<span class="line-number"> 227</span>dw 0110010101011001b
-<span class="line-number"> 228</span>dw 1001011001010110b
-<span class="line-number"> 229</span>dw 0101100101101001b
-<span class="line-number"> 230</span>dw 0101010101010110b
-<span class="line-number"> 231</span>dw 1001010110100101b
-<span class="line-number"> 232</span>dw 0110100101010101b
-<span class="line-number"> 233</span>dw 1001010110100110b
-<span class="line-number"> 234</span>dw 0110010101011001b
-<span class="line-number"> 235</span>
-<span class="line-number"> 236</span>db 0x8, 0x6           
-<span class="line-number"> 237</span>dw 0110001001001001b
-<span class="line-number"> 238</span>dw 1001010100100001b
-<span class="line-number"> 239</span>dw 0100100101000110b
-<span class="line-number"> 240</span>dw 0101010001101001b
-<span class="line-number"> 241</span>dw 0101001000010101b
-<span class="line-number"> 242</span>dw 1001010001100100b
-<span class="line-number"> 243</span>dw 0101100101010110b
-<span class="line-number"> 244</span>dw 0101010101010010b
-<span class="line-number"> 245</span>
-<span class="line-number"> 246</span>db 0x8, 0x6           
-<span class="line-number"> 247</span>dw 1011001001001001b
-<span class="line-number"> 248</span>dw 1110110100110001b
-<span class="line-number"> 249</span>dw 0011000101000111b
-<span class="line-number"> 250</span>dw 0101101110101001b
-<span class="line-number"> 251</span>dw 0101111011101101b
-<span class="line-number"> 252</span>dw 1001001100111011b
-<span class="line-number"> 253</span>dw 0111100101001100b
-<span class="line-number"> 254</span>dw 1001011001010101b
-<span class="line-number"> 255</span>
-<span class="line-number"> 256</span>db 0x8, 0x0           
-<span class="line-number"> 257</span>dw 0001010000000000b
-<span class="line-number"> 258</span>dw 0000000000010100b
-<span class="line-number"> 259</span>dw 0000111111100000b
-<span class="line-number"> 260</span>dw 0011111110101000b
-<span class="line-number"> 261</span>dw 1111101010101011b
-<span class="line-number"> 262</span>dw 0111101010111101b
-<span class="line-number"> 263</span>dw 0001010101010100b
-<span class="line-number"> 264</span>dw 0000000000000000b
-<span class="line-number"> 265</span>
+                                                <div class="code-column"><span class="line-number"> 341</span>
+<span class="line-number"> 342</span>TerrainTiles:
+<span class="line-number"> 343</span>db 0x8, 0x05          
+<span class="line-number"> 344</span>dw 0101011010111111b
+<span class="line-number"> 345</span>dw 0001010110111111b
+<span class="line-number"> 346</span>dw 0000010110101111b
+<span class="line-number"> 347</span>dw 0000010110101111b
+<span class="line-number"> 348</span>dw 0000010110101111b
+<span class="line-number"> 349</span>dw 0000010110101111b
+<span class="line-number"> 350</span>dw 0001010110111111b
+<span class="line-number"> 351</span>dw 0101011010111111b
+<span class="line-number"> 352</span>
+<span class="line-number"> 353</span>db 0x8, 0x05          
+<span class="line-number"> 354</span>dw 0100000000000001b
+<span class="line-number"> 355</span>dw 0101000000000101b
+<span class="line-number"> 356</span>dw 0101010101010101b
+<span class="line-number"> 357</span>dw 1001010101010110b
+<span class="line-number"> 358</span>dw 1010101010101010b
+<span class="line-number"> 359</span>dw 1111101010101111b
+<span class="line-number"> 360</span>dw 1111111111111111b
+<span class="line-number"> 361</span>dw 1111111111111111b
+<span class="line-number"> 362</span>
+<span class="line-number"> 363</span>db 0x8, 0x5          
+<span class="line-number"> 364</span>dw 0000000001010101b
+<span class="line-number"> 365</span>dw 0000010101010101b
+<span class="line-number"> 366</span>dw 0001010101101001b
+<span class="line-number"> 367</span>dw 0001011010101010b
+<span class="line-number"> 368</span>dw 0101011010101010b
+<span class="line-number"> 369</span>dw 0101101010101111b
+<span class="line-number"> 370</span>dw 0101101010111111b
+<span class="line-number"> 371</span>dw 0101011010111111b
+<span class="line-number"> 372</span>
+<span class="line-number"> 373</span>db 0x8, 0x5          
+<span class="line-number"> 374</span>dw 0101011010111111b
+<span class="line-number"> 375</span>dw 0101011011111111b
+<span class="line-number"> 376</span>dw 0101101011111111b
+<span class="line-number"> 377</span>dw 1010101111111111b
+<span class="line-number"> 378</span>dw 1011111111111111b
+<span class="line-number"> 379</span>dw 1111111111111111b
+<span class="line-number"> 380</span>dw 1111111111111111b
+<span class="line-number"> 381</span>dw 1111111111111111b
+<span class="line-number"> 382</span>
+<span class="line-number"> 383</span>db 0x8, 0x6          
+<span class="line-number"> 384</span>dw 1010101010101010b
+<span class="line-number"> 385</span>dw 1010101010011010b
+<span class="line-number"> 386</span>dw 1010011010111010b
+<span class="line-number"> 387</span>dw 1010111010101010b
+<span class="line-number"> 388</span>dw 1010101010101010b
+<span class="line-number"> 389</span>dw 1010101001101010b
+<span class="line-number"> 390</span>dw 1010101011101010b
+<span class="line-number"> 391</span>dw 1010101010101010b
+<span class="line-number"> 392</span>
+<span class="line-number"> 393</span>db 0x8, 0x6           
+<span class="line-number"> 394</span>dw 1010101010101010b
+<span class="line-number"> 395</span>dw 1010101010011010b
+<span class="line-number"> 396</span>dw 1010011010011010b
+<span class="line-number"> 397</span>dw 0110011010111010b
+<span class="line-number"> 398</span>dw 0110111001101010b
+<span class="line-number"> 399</span>dw 1101101001101010b
+<span class="line-number"> 400</span>dw 1011101011100110b
+<span class="line-number"> 401</span>dw 1010101010101110b
+<span class="line-number"> 402</span>
+<span class="line-number"> 403</span>db 0x8, 0x6           
+<span class="line-number"> 404</span>dw 1010101010101010b
+<span class="line-number"> 405</span>dw 0110100110001010b
+<span class="line-number"> 406</span>dw 0110101110011010b
+<span class="line-number"> 407</span>dw 1110001010011010b
+<span class="line-number"> 408</span>dw 1010011000111000b
+<span class="line-number"> 409</span>dw 1010111001101001b
+<span class="line-number"> 410</span>dw 1001101011101001b
+<span class="line-number"> 411</span>dw 1011101010101011b
+<span class="line-number"> 412</span>
+<span class="line-number"> 413</span>db 0x8, 0x0           
+<span class="line-number"> 414</span>dw 0001010000000000b
+<span class="line-number"> 415</span>dw 0000000000010100b
+<span class="line-number"> 416</span>dw 0000111111100000b
+<span class="line-number"> 417</span>dw 0011111110101000b
+<span class="line-number"> 418</span>dw 1111101010101011b
+<span class="line-number"> 419</span>dw 0111101010111101b
+<span class="line-number"> 420</span>dw 0001010101010100b
+<span class="line-number"> 421</span>dw 0000000000000000b
+<span class="line-number"> 422</span>
 </div>
                                                 <div class="comment-column">
 
@@ -649,22 +963,26 @@ Data: number of lines, palettDefaulte id, lines (8 pixels) of palette color id
                                             <h3>META-TILES DECLARATION</h3>
                                             <div class="sectionDescription">4x4 meta-tiles for level
 Data: 4x4 tiles id
+free slot
+free slot
+free slot
+free slot
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 269</span>
-<span class="line-number"> 270</span>MetaTiles:
-<span class="line-number"> 271</span>db 00000000b, 00000000b, 00000000b, 00000000b
-<span class="line-number"> 272</span>db 00000010b, 00000010b, 00000101b, 00000101b
-<span class="line-number"> 273</span>db 00000001b, 00000101b, 00000001b, 00000101b
-<span class="line-number"> 274</span>db 00000011b, 00000010b, 00000001b, 00110110b
-<span class="line-number"> 275</span>db 00000101b, 00000110b, 00010110b, 00000101b
-<span class="line-number"> 276</span>db 00000110b, 00000111b, 00000111b, 00000111b
-<span class="line-number"> 277</span>db 00000100b, 00110101b, 00100101b, 00000111b
-<span class="line-number"> 278</span>db 00000100b, 00100110b, 00010111b, 00110100b
-<span class="line-number"> 279</span>db 00001000b, 00001000b, 00001000b, 00001000b
-<span class="line-number"> 280</span>db 00000100b, 00010100b, 00000110b, 00000111b
-<span class="line-number"> 281</span>db 00000100b, 00000111b, 00100100b, 00010111b
-<span class="line-number"> 282</span>
+                                                <div class="code-column"><span class="line-number"> 426</span>
+<span class="line-number"> 427</span>MetaTiles:
+<span class="line-number"> 428</span>db 00000000b, 00000000b, 00000000b, 00000000b
+<span class="line-number"> 429</span>db 00000010b, 00000010b, 00000101b, 00000101b
+<span class="line-number"> 430</span>db 00000001b, 00000101b, 00000001b, 00000101b
+<span class="line-number"> 431</span>db 00000011b, 00000010b, 00000001b, 00110110b
+<span class="line-number"> 432</span>db 00000101b, 00000110b, 00010110b, 00000101b
+<span class="line-number"> 433</span>db 00000110b, 00000111b, 00000111b, 00000111b
+<span class="line-number"> 434</span>db 00000100b, 00110101b, 00100101b, 00000111b
+<span class="line-number"> 435</span>db 00000100b, 00100110b, 00010111b, 00110100b
+<span class="line-number"> 436</span>db 00001000b, 00001000b, 00001000b, 00001000b
+<span class="line-number"> 437</span>db 00000100b, 00010100b, 00000110b, 00000111b
+<span class="line-number"> 438</span>db 00000100b, 00000111b, 00100100b, 00010111b
+<span class="line-number"> 443</span>
 </div>
                                                 <div class="comment-column">
 
@@ -691,117 +1009,154 @@ Data: 4x4 meta-tiles id
 Nibble is meta-tile id, 2 bits ar nibbles XY mirroring, 1 bit movable
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 287</span>
-<span class="line-number"> 288</span>LevelData:
-<span class="line-number"> 289</span>db 01000011b, 01000001b, 01010011b, 00000000b
-<span class="line-number"> 290</span>db 00000000b, 01000011b, 01000001b, 01010011b
-<span class="line-number"> 291</span>db 00000000b, 00000000b, 00000000b, 00000000b
-<span class="line-number"> 292</span>db 01001000b, 01001000b, 01000011b, 01010011b
-<span class="line-number"> 293</span>db 01000010b, 01100101b, 01010010b, 01001000b
-<span class="line-number"> 294</span>db 01000011b, 01000110b, 01110110b, 01110011b
-<span class="line-number"> 295</span>db 01001000b, 01000011b, 01010011b, 00000000b
-<span class="line-number"> 296</span>db 00000000b, 01000011b, 01000111b, 01110011b
-<span class="line-number"> 297</span>db 01100011b, 01100001b, 01110011b, 00000000b
-<span class="line-number"> 298</span>db 01100011b, 01101001b, 01110011b, 00000000b
-<span class="line-number"> 299</span>db 00000000b, 01100011b, 01010111b, 01010011b
-<span class="line-number"> 300</span>db 00000000b, 01100011b, 01110011b, 01001000b
-<span class="line-number"> 301</span>db 00000000b, 00000000b, 00000000b, 00000000b
-<span class="line-number"> 302</span>db 01000011b, 01001001b, 01010011b, 01000011b
-<span class="line-number"> 303</span>db 01010011b, 00000000b, 01100011b, 01010111b
-<span class="line-number"> 304</span>db 01010011b, 00000000b, 01001000b, 00000000b
-<span class="line-number"> 305</span>db 01000011b, 01010011b, 01001000b, 00000000b
-<span class="line-number"> 306</span>db 01100011b, 01100110b, 01011010b, 01100001b
-<span class="line-number"> 307</span>db 01110011b, 00000000b, 00000000b, 01100011b
-<span class="line-number"> 308</span>db 01010111b, 01010011b, 01000011b, 01010011b
-<span class="line-number"> 309</span>db 01000010b, 01010110b, 01010011b, 00000000b
-<span class="line-number"> 310</span>db 00000000b, 01100011b, 01110011b, 00000000b
-<span class="line-number"> 311</span>db 00000000b, 01000011b, 01010011b, 01001000b
-<span class="line-number"> 312</span>db 01000010b, 01010110b, 01000110b, 01010010b
-<span class="line-number"> 313</span>db 01100011b, 01100001b, 01010111b, 01000001b
-<span class="line-number"> 314</span>db 01010011b, 00000000b, 00000000b, 01000011b
-<span class="line-number"> 315</span>db 01000001b, 01000110b, 01010010b, 00000000b
-<span class="line-number"> 316</span>db 01100011b, 01100001b, 01100110b, 01010010b
-<span class="line-number"> 317</span>db 01001000b, 01001000b, 01100011b, 01100001b
-<span class="line-number"> 318</span>db 01110011b, 01001000b, 01001000b, 01100011b
-<span class="line-number"> 319</span>db 01100001b, 01100001b, 01110011b, 00000000b
-<span class="line-number"> 320</span>db 00000000b, 01001000b, 01100011b, 01110011b
-<span class="line-number"> 321</span>
-<span class="line-number"> 322</span>EntityData:
-<span class="line-number"> 323</span>db 1, 1
-<span class="line-number"> 324</span>dw 0x0301
-<span class="line-number"> 325</span>db 2, 28
-<span class="line-number"> 326</span>dw 0x0103
-<span class="line-number"> 327</span>dw 0x020a
-<span class="line-number"> 328</span>dw 0x030a
-<span class="line-number"> 329</span>dw 0x040a
-<span class="line-number"> 330</span>dw 0x0509
-<span class="line-number"> 331</span>dw 0x050d
-<span class="line-number"> 332</span>dw 0x051a
-<span class="line-number"> 333</span>dw 0x051b
-<span class="line-number"> 334</span>dw 0x060a
-<span class="line-number"> 335</span>dw 0x060c
-<span class="line-number"> 336</span>dw 0x070d
-<span class="line-number"> 337</span>dw 0x080e
-<span class="line-number"> 338</span>dw 0x081a
-<span class="line-number"> 339</span>dw 0x0910
-<span class="line-number"> 340</span>dw 0x0916
-<span class="line-number"> 341</span>dw 0x091a
-<span class="line-number"> 342</span>dw 0x0a0d
-<span class="line-number"> 343</span>dw 0x0a14
-<span class="line-number"> 344</span>dw 0x0a15
-<span class="line-number"> 345</span>dw 0x0a1b
-<span class="line-number"> 346</span>dw 0x0b0c
-<span class="line-number"> 347</span>dw 0x0c01
-<span class="line-number"> 348</span>dw 0x0c0f
-<span class="line-number"> 349</span>dw 0x0d02
-<span class="line-number"> 350</span>dw 0x0d08
-<span class="line-number"> 351</span>dw 0x0d0e
-<span class="line-number"> 352</span>dw 0x0e06
-<span class="line-number"> 353</span>dw 0x0f07
-<span class="line-number"> 354</span>db 3, 5
-<span class="line-number"> 355</span>dw 0x000c
-<span class="line-number"> 356</span>dw 0x081e
-<span class="line-number"> 357</span>dw 0x0c04
-<span class="line-number"> 358</span>dw 0x0e07
-<span class="line-number"> 359</span>dw 0x0e11
-<span class="line-number"> 360</span>db 4, 8
-<span class="line-number"> 361</span>dw 0x021b
-<span class="line-number"> 362</span>dw 0x031a
-<span class="line-number"> 363</span>dw 0x031e
-<span class="line-number"> 364</span>dw 0x0404
-<span class="line-number"> 365</span>dw 0x060b
-<span class="line-number"> 366</span>dw 0x0616
-<span class="line-number"> 367</span>dw 0x090e
-<span class="line-number"> 368</span>dw 0x0c1e
-<span class="line-number"> 369</span>db 6, 16
-<span class="line-number"> 370</span>dw 0x0207
-<span class="line-number"> 371</span>dw 0x0210
-<span class="line-number"> 372</span>dw 0x0211
-<span class="line-number"> 373</span>dw 0x0307
-<span class="line-number"> 374</span>dw 0x0310
-<span class="line-number"> 375</span>dw 0x061c
-<span class="line-number"> 376</span>dw 0x061d
-<span class="line-number"> 377</span>dw 0x071c
-<span class="line-number"> 378</span>dw 0x071d
-<span class="line-number"> 379</span>dw 0x0b16
-<span class="line-number"> 380</span>dw 0x0b17
-<span class="line-number"> 381</span>dw 0x0e0a
-<span class="line-number"> 382</span>dw 0x0e0b
-<span class="line-number"> 383</span>dw 0x0e0d
-<span class="line-number"> 384</span>dw 0x0f0a
-<span class="line-number"> 385</span>dw 0x0f0d
-<span class="line-number"> 386</span>db 7, 1
-<span class="line-number"> 387</span>dw 0x0300
-<span class="line-number"> 388</span>db 8, 5
-<span class="line-number"> 389</span>dw 0x0104
-<span class="line-number"> 390</span>dw 0x010b
-<span class="line-number"> 391</span>dw 0x0710
-<span class="line-number"> 392</span>dw 0x0a01
-<span class="line-number"> 393</span>dw 0x0d12
-<span class="line-number"> 394</span>db 0x0 
-<span class="line-number"> 395</span>
+                                                <div class="code-column"><span class="line-number"> 448</span>
+<span class="line-number"> 449</span>LevelData:
+<span class="line-number"> 450</span>db 01000011b, 01000001b, 01010011b, 00000000b
+<span class="line-number"> 451</span>db 00000000b, 01000011b, 01000001b, 01010011b
+<span class="line-number"> 452</span>db 00000000b, 00000000b, 00000000b, 00000000b
+<span class="line-number"> 453</span>db 01001000b, 01001000b, 01000011b, 01010011b
+<span class="line-number"> 454</span>db 01000010b, 01100101b, 01010010b, 01001000b
+<span class="line-number"> 455</span>db 01000011b, 01000110b, 01110110b, 01110011b
+<span class="line-number"> 456</span>db 01001000b, 01000011b, 01010011b, 00000000b
+<span class="line-number"> 457</span>db 00000000b, 01000011b, 01000111b, 01110011b
+<span class="line-number"> 458</span>db 01100011b, 01100001b, 01110011b, 00000000b
+<span class="line-number"> 459</span>db 01100011b, 01101001b, 01110011b, 00000000b
+<span class="line-number"> 460</span>db 00000000b, 01100011b, 01010111b, 01010011b
+<span class="line-number"> 461</span>db 00000000b, 01100011b, 01110011b, 01001000b
+<span class="line-number"> 462</span>db 00000000b, 00000000b, 00000000b, 00000000b
+<span class="line-number"> 463</span>db 01000011b, 01001001b, 01010011b, 01000011b
+<span class="line-number"> 464</span>db 01010011b, 00000000b, 01100011b, 01010111b
+<span class="line-number"> 465</span>db 01010011b, 00000000b, 01001000b, 00000000b
+<span class="line-number"> 466</span>db 01000011b, 01010011b, 01001000b, 00000000b
+<span class="line-number"> 467</span>db 01100011b, 01100110b, 01011010b, 01100001b
+<span class="line-number"> 468</span>db 01110011b, 00000000b, 00000000b, 01100011b
+<span class="line-number"> 469</span>db 01010111b, 01010011b, 01000011b, 01010011b
+<span class="line-number"> 470</span>db 01000010b, 01010110b, 01010011b, 00000000b
+<span class="line-number"> 471</span>db 00000000b, 01100011b, 01110011b, 00000000b
+<span class="line-number"> 472</span>db 00000000b, 01000011b, 01010011b, 01001000b
+<span class="line-number"> 473</span>db 01000010b, 01010110b, 01000110b, 01010010b
+<span class="line-number"> 474</span>db 01100011b, 01100001b, 01010111b, 01000001b
+<span class="line-number"> 475</span>db 01010011b, 00000000b, 00000000b, 01000011b
+<span class="line-number"> 476</span>db 01000001b, 01000110b, 01010010b, 00000000b
+<span class="line-number"> 477</span>db 01100011b, 01100001b, 01100110b, 01010010b
+<span class="line-number"> 478</span>db 01001000b, 01001000b, 01100011b, 01100001b
+<span class="line-number"> 479</span>db 01110011b, 01001000b, 01001000b, 01100011b
+<span class="line-number"> 480</span>db 01100001b, 01100001b, 01110011b, 00000000b
+<span class="line-number"> 481</span>db 00000000b, 01001000b, 01100011b, 01110011b
+<span class="line-number"> 482</span>
+<span class="line-number"> 483</span>EntityData:
+<span class="line-number"> 484</span>db 1, 1
+<span class="line-number"> 485</span>dw 0x0002
+<span class="line-number"> 486</span>db 2, 14
+<span class="line-number"> 487</span>dw 0x0103
+<span class="line-number"> 488</span>dw 0x020a
+<span class="line-number"> 489</span>dw 0x030a
+<span class="line-number"> 490</span>dw 0x040a
+<span class="line-number"> 491</span>dw 0x0509
+<span class="line-number"> 492</span>dw 0x050d
+<span class="line-number"> 493</span>dw 0x051a
+<span class="line-number"> 494</span>dw 0x051b
+<span class="line-number"> 495</span>dw 0x060a
+<span class="line-number"> 496</span>dw 0x060c
+<span class="line-number"> 497</span>dw 0x070d
+<span class="line-number"> 498</span>dw 0x080e
+<span class="line-number"> 499</span>dw 0x081a
+<span class="line-number"> 500</span>dw 0x0910
+<span class="line-number"> 501</span>db 13, 14
+<span class="line-number"> 502</span>dw 0x0916
+<span class="line-number"> 503</span>dw 0x091a
+<span class="line-number"> 504</span>dw 0x0a0d
+<span class="line-number"> 505</span>dw 0x0a14
+<span class="line-number"> 506</span>dw 0x0a15
+<span class="line-number"> 507</span>dw 0x0a1b
+<span class="line-number"> 508</span>dw 0x0b0c
+<span class="line-number"> 509</span>dw 0x0c01
+<span class="line-number"> 510</span>dw 0x0c0f
+<span class="line-number"> 511</span>dw 0x0d02
+<span class="line-number"> 512</span>dw 0x0d08
+<span class="line-number"> 513</span>dw 0x0d0e
+<span class="line-number"> 514</span>dw 0x0e06
+<span class="line-number"> 515</span>dw 0x0f07
+<span class="line-number"> 516</span>db 3, 2
+<span class="line-number"> 517</span>dw 0x081e
+<span class="line-number"> 518</span>dw 0x0c04
+<span class="line-number"> 519</span>db 11, 2
+<span class="line-number"> 520</span>dw 0x000c
+<span class="line-number"> 521</span>dw 0x0e07
+<span class="line-number"> 522</span>db 12, 1
+<span class="line-number"> 523</span>dw 0x0e11
+<span class="line-number"> 524</span>db 4, 8
+<span class="line-number"> 525</span>dw 0x021b
+<span class="line-number"> 526</span>dw 0x031a
+<span class="line-number"> 527</span>dw 0x031e
+<span class="line-number"> 528</span>dw 0x0404
+<span class="line-number"> 529</span>dw 0x060b
+<span class="line-number"> 530</span>dw 0x0616
+<span class="line-number"> 531</span>dw 0x090e
+<span class="line-number"> 532</span>dw 0x0c1e
+<span class="line-number"> 533</span>db 6, 16
+<span class="line-number"> 534</span>dw 0x0207
+<span class="line-number"> 535</span>dw 0x0210
+<span class="line-number"> 536</span>dw 0x0211
+<span class="line-number"> 537</span>dw 0x0307
+<span class="line-number"> 538</span>dw 0x0310
+<span class="line-number"> 539</span>dw 0x061c
+<span class="line-number"> 540</span>dw 0x061d
+<span class="line-number"> 541</span>dw 0x071c
+<span class="line-number"> 542</span>dw 0x071d
+<span class="line-number"> 543</span>dw 0x0b16
+<span class="line-number"> 544</span>dw 0x0b17
+<span class="line-number"> 545</span>dw 0x0e0a
+<span class="line-number"> 546</span>dw 0x0e0b
+<span class="line-number"> 547</span>dw 0x0e0d
+<span class="line-number"> 548</span>dw 0x0f0a
+<span class="line-number"> 549</span>dw 0x0f0d
+<span class="line-number"> 550</span>db 7, 1
+<span class="line-number"> 551</span>dw 0x0001
+<span class="line-number"> 552</span>db 8, 5
+<span class="line-number"> 553</span>dw 0x0104
+<span class="line-number"> 554</span>dw 0x010b
+<span class="line-number"> 555</span>dw 0x0710
+<span class="line-number"> 556</span>dw 0x0a01
+<span class="line-number"> 557</span>dw 0x0d12
+<span class="line-number"> 558</span>db 0x0 
+<span class="line-number"> 559</span>
+<span class="line-number"> 560</span>tune_intro:
+<span class="line-number"> 561</span>db 5   ,7   ,8   ,7  ,5   ,8   ,10  ,8  ,7   ,5   ,7   ,8  ,7   ,5   ,3   ,5
+<span class="line-number"> 562</span>db 8   ,10  ,12  ,10 ,8   ,7   ,8   ,10 ,12  ,10  ,8   ,7  ,8   ,5   ,3   ,5
+<span class="line-number"> 563</span>db 10  ,12  ,14  ,12 ,10  ,8   ,10  ,12 ,14  ,12  ,10  ,8  ,7   ,5   ,7   ,8
+<span class="line-number"> 564</span>db 12  ,14  ,15  ,14 ,12  ,10  ,12  ,14 ,15  ,14  ,12  ,10 ,8   ,7   ,8   ,10
+<span class="line-number"> 565</span>db 5   ,7   ,8   ,7  ,5   ,8   ,10  ,8  ,7   ,5   ,7   ,8  ,7   ,5   ,3   ,5
+<span class="line-number"> 566</span>db 8   ,10  ,12  ,10 ,8   ,7   ,8   ,10 ,12  ,10  ,8   ,7  ,8   ,5   ,3   ,5
+<span class="line-number"> 567</span>db 10  ,12  ,14  ,12 ,10  ,8   ,10  ,12 ,14  ,12  ,10  ,8  ,7   ,5   ,7   ,8
+<span class="line-number"> 568</span>db 12  ,14  ,15  ,14 ,12  ,10  ,12  ,14 ,15  ,14  ,12  ,10 ,8   ,7   ,8   ,10
+<span class="line-number"> 569</span>db 0
+<span class="line-number"> 570</span>
+<span class="line-number"> 571</span>tune_end:
+<span class="line-number"> 572</span>db 12, 10, 8,  10, 7,  6 , 5,  6
+<span class="line-number"> 573</span>db 8 , 7 , 5,  4 , 3,  5 , 6,  4
+<span class="line-number"> 574</span>db 6 , 5 , 4,  3 , 2,  3 , 5,  2
+<span class="line-number"> 575</span>db 5 , 4 , 3,  2 , 1,  2 , 1,  1
+<span class="line-number"> 576</span>db 12, 10, 8,  10, 7,  6 , 5,  6
+<span class="line-number"> 577</span>db 8 , 7 , 5,  4 , 3,  5 , 6,  4
+<span class="line-number"> 578</span>db 0
+<span class="line-number"> 579</span>
+<span class="line-number"> 580</span>tune_win:
+<span class="line-number"> 581</span>db 13, 15, 17, 15, 13, 12, 10,  12
+<span class="line-number"> 582</span>db 13, 15, 17, 15, 13, 19, 17,  15
+<span class="line-number"> 583</span>db 12, 14, 16, 14, 12, 15, 13,  12
+<span class="line-number"> 584</span>db 10, 12, 14, 12, 10, 9 , 8 ,  10
+<span class="line-number"> 585</span>db 13, 15, 17, 15, 13, 12, 10,  12
+<span class="line-number"> 586</span>db 13, 15, 17, 15, 13, 19, 17,  15
+<span class="line-number"> 587</span>db 12, 14, 16, 14, 12, 15, 13,  12
+<span class="line-number"> 588</span>db 10, 12, 14, 12, 10, 9 , 8 ,  10
+<span class="line-number"> 589</span>db 0
+<span class="line-number"> 590</span>
 </div>
                                                 <div class="comment-column">
+
+
+
 
 
 
@@ -910,6 +1265,37 @@ Nibble is meta-tile id, 2 bits ar nibbles XY mirroring, 1 bit movable
 
 ; End of entities
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
                                             </div>
                                         </div>
@@ -918,27 +1304,33 @@ Nibble is meta-tile id, 2 bits ar nibbles XY mirroring, 1 bit movable
                                             <h3>MEMORY ADDRESSES</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 397</span>
-<span class="line-number"> 398</span>_ENTITIES_ equ 0x1000         
-<span class="line-number"> 399</span>_PLAYER_ENTITY_ID_ equ 0x1800 
-<span class="line-number"> 400</span>_REQUEST_POSITION_ equ 0x1802 
-<span class="line-number"> 401</span>_HOLDING_ID_ equ 0x1804       
-<span class="line-number"> 402</span>_SCORE_ equ 0x1805            
-<span class="line-number"> 403</span>_SCORE_TARGET_ equ 0x1806     
-<span class="line-number"> 404</span>_GAME_TICK_ equ 0x1807        
-<span class="line-number"> 405</span>_GAME_STATE_ equ 0x1809       
-<span class="line-number"> 406</span>
-<span class="line-number"> 407</span>_LAST_TICK_ equ 0x180a
-<span class="line-number"> 408</span>
-<span class="line-number"> 409</span>_DBUFFER_MEMORY_ equ 0x2000   
-<span class="line-number"> 410</span>_VGA_MEMORY_ equ 0xA000       
-<span class="line-number"> 411</span>_TICK_ equ 1Ah                
-<span class="line-number"> 412</span>
-<span class="line-number"> 413</span>_ID_ equ 0      
-<span class="line-number"> 414</span>_POS_ equ 1     
-<span class="line-number"> 415</span>_MIRROR_ equ 3  
-<span class="line-number"> 416</span>_STATE_ equ 4   
-<span class="line-number"> 417</span>
+                                                <div class="code-column"><span class="line-number"> 592</span>
+<span class="line-number"> 593</span>_ENTITIES_ equ 0x1000         
+<span class="line-number"> 594</span>_PLAYER_ENTITY_ID_ equ 0x1800 
+<span class="line-number"> 595</span>_REQUEST_POSITION_ equ 0x1802 
+<span class="line-number"> 596</span>_HOLDING_ID_ equ 0x1804       
+<span class="line-number"> 597</span>_SCORE_ equ 0x1805            
+<span class="line-number"> 598</span>_SCORE_TARGET_ equ 0x1806     
+<span class="line-number"> 599</span>_GAME_TICK_ equ 0x1807        
+<span class="line-number"> 600</span>_GAME_STATE_ equ 0x1809       
+<span class="line-number"> 601</span>_WEB_LOCKED_ equ 0x180a       
+<span class="line-number"> 602</span>_LAST_TICK_ equ 0x180b        
+<span class="line-number"> 603</span>_CURRENT_TUNE_ equ 0x180d     
+<span class="line-number"> 604</span>_NEXT_TUNE_ equ 0x180f        
+<span class="line-number"> 605</span>_NOTE_TIMER_ equ 0x1811       
+<span class="line-number"> 606</span>_NOTE_TEMPO_ equ 0x1812       
+<span class="line-number"> 607</span>
+<span class="line-number"> 608</span>_DBUFFER_MEMORY_ equ 0x2000   
+<span class="line-number"> 609</span>_VGA_MEMORY_ equ 0xA000       
+<span class="line-number"> 610</span>_TICK_ equ 1Ah                
+<span class="line-number"> 611</span>
+<span class="line-number"> 612</span>_ID_ equ 0      
+<span class="line-number"> 613</span>_POS_ equ 1     
+<span class="line-number"> 614</span>_SCREEN_POS equ 3 
+<span class="line-number"> 615</span>_MIRROR_ equ 5  
+<span class="line-number"> 616</span>_STATE_ equ 6   
+<span class="line-number"> 617</span>_DIR_ equ 7     
+<span class="line-number"> 618</span>
 </div>
                                                 <div class="comment-column">
 ; 5 bytes per entity, 64 entites cap, 320 bytes
@@ -949,17 +1341,23 @@ Nibble is meta-tile id, 2 bits ar nibbles XY mirroring, 1 bit movable
 ; 1 byte
 ; 2 bytes
 ; 1 byte
-
-
+; 1 byte
+; 2 bytes
+; 2 bytes
+; 2 bytes
+; 1 byte
+; 1 byte
 
 ; 64k bytes
 ; 64k bytes
 ; BIOS tick
 
 ; 1 byte
-; 2 bytes - word
+; 2 bytes
+; 2 bytes
 ; 1 byte
 ; 1 bytes
+; 1 byte
 
 </div>
                                             </div>
@@ -969,39 +1367,65 @@ Nibble is meta-tile id, 2 bits ar nibbles XY mirroring, 1 bit movable
                                             <h3>MAGIC NUMBERS</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 419</span>
-<span class="line-number"> 420</span>ENTITY_SIZE  equ 8
-<span class="line-number"> 421</span>MAX_ENTITIES equ 64
-<span class="line-number"> 422</span>LEVEL_START_POSITION equ 320*68+32
-<span class="line-number"> 423</span>COLOR_SKY equ 0x3b3b
-<span class="line-number"> 424</span>COLOR_WATER equ 0x3535
-<span class="line-number"> 425</span>
-<span class="line-number"> 426</span>ID_PLAYER equ 0
-<span class="line-number"> 427</span>ID_PALM equ 1
-<span class="line-number"> 428</span>ID_SNAKE equ 2
-<span class="line-number"> 429</span>ID_ROCK equ 3
-<span class="line-number"> 430</span>ID_SKULL equ 4
-<span class="line-number"> 431</span>ID_BRIDGE equ 5
-<span class="line-number"> 432</span>ID_CHEST equ 6
-<span class="line-number"> 433</span>ID_GOLD equ 7
-<span class="line-number"> 434</span>
-<span class="line-number"> 435</span>STATE_DEACTIVATED equ 0
-<span class="line-number"> 436</span>STATE_FOLLOW equ 2
-<span class="line-number"> 437</span>STATE_STATIC equ 4
-<span class="line-number"> 438</span>STATE_EXPLORING equ 8
-<span class="line-number"> 439</span>STATE_INTERACTIVE equ 16
-<span class="line-number"> 440</span>
-<span class="line-number"> 441</span>GSTATE_INTRO equ 0
-<span class="line-number"> 442</span>GSTATE_GAME equ 2
-<span class="line-number"> 443</span>GSTATE_END equ 4
-<span class="line-number"> 444</span>GSTATE_WIN equ 8
-<span class="line-number"> 445</span>
-<span class="line-number"> 446</span>BEEP_BITE equ 250
-<span class="line-number"> 447</span>BEEP_PICK equ 15
-<span class="line-number"> 448</span>BEEP_PUT equ 90
-<span class="line-number"> 449</span>
+                                                <div class="code-column"><span class="line-number"> 620</span>
+<span class="line-number"> 621</span>ENTITY_SIZE  equ 10
+<span class="line-number"> 622</span>MAX_ENTITIES equ 64
+<span class="line-number"> 623</span>LEVEL_START_POSITION equ 320*68+32
+<span class="line-number"> 624</span>COLOR_SKY equ 0x3b3b
+<span class="line-number"> 625</span>COLOR_WATER equ 0x3535
+<span class="line-number"> 626</span>SCORE_POSITION equ 320*24+32
+<span class="line-number"> 627</span>INTRO_TIME equ 240
+<span class="line-number"> 628</span>PRE_GAME_TIME equ 64
+<span class="line-number"> 629</span>POST_GAME_TIME equ 32
+<span class="line-number"> 630</span>
+<span class="line-number"> 631</span>ID_PLAYER equ 0
+<span class="line-number"> 632</span>ID_PALM equ 1
+<span class="line-number"> 633</span>ID_SNAKE equ 2
+<span class="line-number"> 634</span>ID_ROCK equ 3
+<span class="line-number"> 635</span>ID_SKULL equ 4
+<span class="line-number"> 636</span>ID_BRIDGE equ 5
+<span class="line-number"> 637</span>ID_CHEST equ 6
+<span class="line-number"> 638</span>ID_GOLD equ 7
+<span class="line-number"> 639</span>ID_SPIDER equ 10
+<span class="line-number"> 640</span>ID_CRAB equ 11
+<span class="line-number"> 641</span>ID_BUSH equ 12
+<span class="line-number"> 642</span>
+<span class="line-number"> 643</span>STATE_DEACTIVATED equ 0
+<span class="line-number"> 644</span>STATE_FOLLOW equ 2
+<span class="line-number"> 645</span>STATE_STATIC equ 4
+<span class="line-number"> 646</span>STATE_EXPLORING equ 8
+<span class="line-number"> 647</span>STATE_INTERACTIVE equ 16
+<span class="line-number"> 648</span>
+<span class="line-number"> 649</span>GSTATE_INTRO equ 2
+<span class="line-number"> 650</span>GSTATE_PREGAME equ 4
+<span class="line-number"> 651</span>GSTATE_GAME equ 8
+<span class="line-number"> 652</span>GSTATE_POSTGAME equ 16
+<span class="line-number"> 653</span>GSTATE_END equ 32
+<span class="line-number"> 654</span>GSTATE_WIN equ 64
+<span class="line-number"> 655</span>GSTATE_OUTRO equ 128
+<span class="line-number"> 656</span>
+<span class="line-number"> 657</span>WEB_LOCK equ 2
+<span class="line-number"> 658</span>
+<span class="line-number"> 659</span>BEEP_BITE equ 3
+<span class="line-number"> 660</span>BEEP_PICK equ 15
+<span class="line-number"> 661</span>BEEP_PUT equ 20
+<span class="line-number"> 662</span>BEEP_GOLD equ 5
+<span class="line-number"> 663</span>
 </div>
                                                 <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1038,20 +1462,34 @@ Nibble is meta-tile id, 2 bits ar nibbles XY mirroring, 1 bit movable
                                     
                                         <div class="asmSection">
                                             <h3>INITIALIZATION</h3>
-                                            <div class="sectionDescription">set_keyboard_rate:
-xor ax, ax
-xor bx, bx
-mov ah, 03h         ; BIOS function to set typematic rate and delay
-</div>
+                                            <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 451</span>
-<span class="line-number"> 452</span>start:
-<span class="line-number"> 453</span>    mov ax,0x13                             
-<span class="line-number"> 454</span>    int 0x10                                
-<span class="line-number"> 455</span>
-<span class="line-number"> 456</span>    push _DBUFFER_MEMORY_                 
-<span class="line-number"> 457</span>    pop es                                  
-<span class="line-number"> 458</span>
+                                                <div class="code-column"><span class="line-number"> 665</span>
+<span class="line-number"> 666</span>start:
+<span class="line-number"> 667</span>    mov ax,0x13                             
+<span class="line-number"> 668</span>    int 0x10                                
+<span class="line-number"> 669</span>
+<span class="line-number"> 670</span>    push _DBUFFER_MEMORY_                 
+<span class="line-number"> 671</span>    pop es                                  
+<span class="line-number"> 672</span>
+<span class="line-number"> 673</span>  set_keyboard_rate:
+<span class="line-number"> 674</span>    xor ax, ax
+<span class="line-number"> 675</span>    xor bx, bx
+<span class="line-number"> 676</span>    mov ah, 03h         
+<span class="line-number"> 677</span>    mov bl, 1Fh         
+<span class="line-number"> 678</span>    int 16h
+<span class="line-number"> 679</span>
+<span class="line-number"> 680</span>restart_game:
+<span class="line-number"> 681</span>  mov word [_GAME_TICK_], 0x0
+<span class="line-number"> 682</span>  mov byte [_GAME_STATE_], GSTATE_INTRO
+<span class="line-number"> 683</span>  mov byte [_SCORE_], 0x0
+<span class="line-number"> 684</span>  mov byte [_HOLDING_ID_], 0x0
+<span class="line-number"> 685</span>  mov byte [_WEB_LOCKED_], 0x0
+<span class="line-number"> 686</span>  mov word [_CURRENT_TUNE_], tune_intro
+<span class="line-number"> 687</span>  mov word [_NEXT_TUNE_], tune_intro           
+<span class="line-number"> 688</span>  mov byte [_NOTE_TIMER_], 0x0
+<span class="line-number"> 689</span>
+<span class="line-number"> 690</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1061,27 +1499,21 @@ mov ah, 03h         ; BIOS function to set typematic rate and delay
 ; Set doublebuffer memory
 ; as target
 
-</div>
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="asmSection">
-                                            <h3>mov bl, 1Fh         ; BL  31 (0x1F) for maximum repeat rate (30 Hz)</h3>
-                                            <div class="sectionDescription">int 16h
-</div>
-                                            <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 465</span>
-<span class="line-number"> 466</span>restart_game:
-<span class="line-number"> 467</span>
-<span class="line-number"> 468</span>mov byte [_GAME_STATE_], GSTATE_GAME
-<span class="line-number"> 469</span>mov byte [_SCORE_], 0x0
-<span class="line-number"> 470</span>mov byte [_HOLDING_ID_], 0x0
-<span class="line-number"> 471</span>
-</div>
-                                                <div class="comment-column">
 
 
 
+; BIOS function to set typematic rate and delay
+; BL = 31 (0x1F) for maximum repeat rate (30 Hz)
+
+
+
+
+
+
+
+
+
+; loop intro tune
 
 
 
@@ -1095,67 +1527,80 @@ mov ah, 03h         ; BIOS function to set typematic rate and delay
 Returns: entities in memory array
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 475</span>
-<span class="line-number"> 476</span>spawn_entities:
-<span class="line-number"> 477</span>  mov si, EntityData
-<span class="line-number"> 478</span>  mov di, _ENTITIES_
-<span class="line-number"> 479</span>
-<span class="line-number"> 480</span>  .next_entitie:
-<span class="line-number"> 481</span>    mov bl, [si]
-<span class="line-number"> 482</span>    cmp bl, 0x0
-<span class="line-number"> 483</span>    jz .done
-<span class="line-number"> 484</span>    
-<span class="line-number"> 485</span>    dec bl             
-<span class="line-number"> 486</span>
-<span class="line-number"> 487</span>    inc si
-<span class="line-number"> 488</span>    mov al, [si]
-<span class="line-number"> 489</span>    inc si
-<span class="line-number"> 490</span>    mov cl, al
-<span class="line-number"> 491</span>
-<span class="line-number"> 492</span>    cmp bl, ID_GOLD
-<span class="line-number"> 493</span>    jnz .not_gold
-<span class="line-number"> 494</span>    mov [_SCORE_TARGET_], cl
-<span class="line-number"> 495</span>    .not_gold:
-<span class="line-number"> 496</span>    .next_in_group:
-<span class="line-number"> 497</span>      mov byte [di], bl           
-<span class="line-number"> 498</span>      mov ax, [si]          
-<span class="line-number"> 499</span>      mov [di+_POS_], ax          
-<span class="line-number"> 500</span>      mov byte [di+_MIRROR_], 0x0 
-<span class="line-number"> 501</span>      mov byte [di+_STATE_], STATE_STATIC 
-<span class="line-number"> 502</span>      
-<span class="line-number"> 503</span>      cmp bl, ID_SNAKE
-<span class="line-number"> 504</span>      jnz .skip_snake
-<span class="line-number"> 505</span>        mov byte [di+_STATE_], STATE_EXPLORING 
-<span class="line-number"> 506</span>      .skip_snake:
-<span class="line-number"> 507</span>
-<span class="line-number"> 508</span>      cmp bl, ID_PALM
-<span class="line-number"> 509</span>      jnz .skip_palm
-<span class="line-number"> 510</span>        xor al, ah
-<span class="line-number"> 511</span>        and al, 0x01
-<span class="line-number"> 512</span>        mov byte [di+_MIRROR_], al 
-<span class="line-number"> 513</span>      .skip_palm: 
-<span class="line-number"> 514</span>
-<span class="line-number"> 515</span>      cmp bl, ID_BRIDGE
-<span class="line-number"> 516</span>      jz .set_interactive
-<span class="line-number"> 517</span>      cmp bl, ID_GOLD
-<span class="line-number"> 518</span>      jz .set_interactive
-<span class="line-number"> 519</span>      cmp bl, ID_ROCK
-<span class="line-number"> 520</span>      jz .set_interactive
-<span class="line-number"> 521</span>      cmp bl, ID_CHEST
-<span class="line-number"> 522</span>      jz .set_interactive
-<span class="line-number"> 523</span>      jmp .skip_interactive
-<span class="line-number"> 524</span>      .set_interactive:
-<span class="line-number"> 525</span>        mov byte [di+_STATE_], STATE_INTERACTIVE
-<span class="line-number"> 526</span>      .skip_interactive:
-<span class="line-number"> 527</span>      
-<span class="line-number"> 528</span>      add si, 0x02                  
-<span class="line-number"> 529</span>      add di, ENTITY_SIZE           
-<span class="line-number"> 530</span>    loop .next_in_group
-<span class="line-number"> 531</span>  jmp .next_entitie
-<span class="line-number"> 532</span>  .done:
-<span class="line-number"> 533</span>
-<span class="line-number"> 534</span>mov word [_PLAYER_ENTITY_ID_], _ENTITIES_ 
-<span class="line-number"> 535</span>
+                                                <div class="code-column"><span class="line-number"> 694</span>
+<span class="line-number"> 695</span>spawn_entities:
+<span class="line-number"> 696</span>  mov si, EntityData
+<span class="line-number"> 697</span>  mov di, _ENTITIES_
+<span class="line-number"> 698</span>
+<span class="line-number"> 699</span>  .next_entitie:
+<span class="line-number"> 700</span>    mov bl, [si]       
+<span class="line-number"> 701</span>    cmp bl, 0x0        
+<span class="line-number"> 702</span>    jz .done
+<span class="line-number"> 703</span>
+<span class="line-number"> 704</span>    dec bl             
+<span class="line-number"> 705</span>
+<span class="line-number"> 706</span>    inc si
+<span class="line-number"> 707</span>    mov al, [si]       
+<span class="line-number"> 708</span>    inc si             
+<span class="line-number"> 709</span>    mov cl, al         
+<span class="line-number"> 710</span>
+<span class="line-number"> 711</span>    cmp bl, ID_GOLD    
+<span class="line-number"> 712</span>    jnz .not_gold
+<span class="line-number"> 713</span>    mov [_SCORE_TARGET_], cl 
+<span class="line-number"> 714</span>    .not_gold:
+<span class="line-number"> 715</span>
+<span class="line-number"> 716</span>    .next_in_group:
+<span class="line-number"> 717</span>      mov byte [di], bl           
+<span class="line-number"> 718</span>      mov ax, [si]          
+<span class="line-number"> 719</span>      mov [di+_POS_], ax          
+<span class="line-number"> 720</span>      mov byte [di+_MIRROR_], 0x0 
+<span class="line-number"> 721</span>      mov byte [di+_STATE_], STATE_STATIC 
+<span class="line-number"> 722</span>      mov byte [di+_DIR_], 0x0 
+<span class="line-number"> 723</span>
+<span class="line-number"> 724</span>
+<span class="line-number"> 725</span>      cmp bl, ID_SNAKE
+<span class="line-number"> 726</span>      jz .set_explore
+<span class="line-number"> 727</span>      cmp bl, ID_CRAB
+<span class="line-number"> 728</span>      jz .set_explore
+<span class="line-number"> 729</span>      cmp bl, ID_SPIDER
+<span class="line-number"> 730</span>      jz .set_explore
+<span class="line-number"> 731</span>      jmp .skip_explore
+<span class="line-number"> 732</span>      .set_explore:   
+<span class="line-number"> 733</span>        mov byte [di+_STATE_], STATE_EXPLORING
+<span class="line-number"> 734</span>      .skip_explore:
+<span class="line-number"> 735</span>
+<span class="line-number"> 736</span>      cmp bl, ID_PALM
+<span class="line-number"> 737</span>      jz .set_rand_mirror
+<span class="line-number"> 738</span>      cmp bl, ID_BUSH
+<span class="line-number"> 739</span>      jz .set_rand_mirror
+<span class="line-number"> 740</span>      jnz .skip_mirror
+<span class="line-number"> 741</span>      .set_rand_mirror:  
+<span class="line-number"> 742</span>        xor al, ah
+<span class="line-number"> 743</span>        and al, 0x01
+<span class="line-number"> 744</span>        mov byte [di+_MIRROR_], al
+<span class="line-number"> 745</span>      .skip_mirror:
+<span class="line-number"> 746</span>
+<span class="line-number"> 747</span>      cmp bl, ID_BRIDGE
+<span class="line-number"> 748</span>      jz .set_interactive
+<span class="line-number"> 749</span>      cmp bl, ID_GOLD
+<span class="line-number"> 750</span>      jz .set_interactive
+<span class="line-number"> 751</span>      cmp bl, ID_ROCK
+<span class="line-number"> 752</span>      jz .set_interactive
+<span class="line-number"> 753</span>      cmp bl, ID_CHEST
+<span class="line-number"> 754</span>      jz .set_interactive
+<span class="line-number"> 755</span>      jmp .skip_interactive
+<span class="line-number"> 756</span>      .set_interactive:  
+<span class="line-number"> 757</span>        mov byte [di+_STATE_], STATE_INTERACTIVE
+<span class="line-number"> 758</span>      .skip_interactive:
+<span class="line-number"> 759</span>
+<span class="line-number"> 760</span>      add si, 0x02                  
+<span class="line-number"> 761</span>      add di, ENTITY_SIZE           
+<span class="line-number"> 762</span>    loop .next_in_group
+<span class="line-number"> 763</span>  jmp .next_entitie
+<span class="line-number"> 764</span>  .done:
+<span class="line-number"> 765</span>
+<span class="line-number"> 766</span>mov word [_PLAYER_ENTITY_ID_], _ENTITIES_ 
+<span class="line-number"> 767</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1163,19 +1608,20 @@ Returns: entities in memory array
 
 
 
-
-
+; Get first word (ID)
+; Check for last entity marker
 
 
 ; Conv level id to game id
 
 
+; Get amount in group
+; mov to the next word (first entitie in group)
+; Set loop
 
+; Check if gold coin
 
-
-
-
-
+; Count each gold as score target
 
 
 
@@ -1184,16 +1630,6 @@ Returns: entities in memory array
 ; Save position
 ; Save mirror (none)
 ; Save basic state
-
-
-
-; Save basic state
-
-
-
-
-
-
 ; Save basic state
 
 
@@ -1204,9 +1640,31 @@ Returns: entities in memory array
 
 
 
+; Set explore state to alive entities
 
 
 
+
+
+
+
+
+; Random X mirror, for foliage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; Set interactive entities
 
 
 
@@ -1226,11 +1684,11 @@ Returns: entities in memory array
                                             <h3>GAME LOGIC</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 537</span>
-<span class="line-number"> 538</span>game_loop:
-<span class="line-number"> 539</span>  xor di, di
-<span class="line-number"> 540</span>  xor si, si
-<span class="line-number"> 541</span>
+                                                <div class="code-column"><span class="line-number"> 769</span>
+<span class="line-number"> 770</span>game_loop:
+<span class="line-number"> 771</span>  xor di, di
+<span class="line-number"> 772</span>  xor si, si
+<span class="line-number"> 773</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1243,28 +1701,62 @@ Returns: entities in memory array
                                     
                                         <div class="asmSection">
                                             <h3>DRAW BACKGROUND</h3>
-                                            <div class="sectionDescription"></div>
+                                            <div class="sectionDescription">jmp skip_more_ocean
+</div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 543</span>
-<span class="line-number"> 544</span>draw_bg:
-<span class="line-number"> 545</span>  mov ax, COLOR_SKY               
-<span class="line-number"> 546</span>  mov dl, 0xa                  
-<span class="line-number"> 547</span>  .draw_sky:
-<span class="line-number"> 548</span>    mov cx, 320*3           
-<span class="line-number"> 549</span>    rep stosw               
-<span class="line-number"> 550</span>    inc ax                  
-<span class="line-number"> 551</span>    xchg al, ah             
-<span class="line-number"> 552</span>    dec dl
-<span class="line-number"> 553</span>    jnz .draw_sky
-<span class="line-number"> 554</span>
-<span class="line-number"> 555</span>draw_ocean:
-<span class="line-number"> 556</span>  mov ax, COLOR_WATER
-<span class="line-number"> 557</span>  mov cx, 320*70              
-<span class="line-number"> 558</span>  rep stosw
-<span class="line-number"> 559</span>
-<span class="line-number"> 560</span>test byte [_GAME_STATE_], GSTATE_GAME
-<span class="line-number"> 561</span>jz skip_game_state_game
-<span class="line-number"> 562</span>
+                                                <div class="code-column"><span class="line-number"> 775</span>
+<span class="line-number"> 776</span>draw_bg:
+<span class="line-number"> 777</span>  mov ax, COLOR_SKY               
+<span class="line-number"> 778</span>  mov dl, 0xa                  
+<span class="line-number"> 779</span>  .draw_sky:
+<span class="line-number"> 780</span>    mov cx, 320*3           
+<span class="line-number"> 781</span>    rep stosw               
+<span class="line-number"> 782</span>    inc ax                  
+<span class="line-number"> 783</span>    xchg al, ah             
+<span class="line-number"> 784</span>    dec dl
+<span class="line-number"> 785</span>    jnz .draw_sky
+<span class="line-number"> 786</span>
+<span class="line-number"> 787</span>draw_ocean:
+<span class="line-number"> 788</span>  mov ax, COLOR_WATER
+<span class="line-number"> 789</span>  mov cx, 320*70              
+<span class="line-number"> 790</span>  rep stosw
+<span class="line-number"> 791</span>
+<span class="line-number"> 793</span>draw_more_ocean:
+<span class="line-number"> 794</span>  mov si, Ocean1Brush
+<span class="line-number"> 795</span>  mov di, 320*62
+<span class="line-number"> 796</span>  mov ax, [_GAME_TICK_]
+<span class="line-number"> 797</span>  shr ax, 2
+<span class="line-number"> 798</span>  mov cx, 16
+<span class="line-number"> 799</span>  .draw_line:
+<span class="line-number"> 800</span>    push cx
+<span class="line-number"> 801</span>
+<span class="line-number"> 802</span>    mov cx, 40
+<span class="line-number"> 803</span>    .draw_next_tile:
+<span class="line-number"> 804</span>
+<span class="line-number"> 805</span>      test ax, 0x4
+<span class="line-number"> 806</span>      jz .skip_tile
+<span class="line-number"> 807</span>
+<span class="line-number"> 808</span>      mov si, Ocean1Brush
+<span class="line-number"> 809</span>      test cx, 0x2
+<span class="line-number"> 810</span>      jz .skip_brush_swap
+<span class="line-number"> 811</span>        mov si, Ocean2Brush
+<span class="line-number"> 812</span>      .skip_brush_swap:
+<span class="line-number"> 813</span>
+<span class="line-number"> 814</span>      call draw_sprite
+<span class="line-number"> 815</span>
+<span class="line-number"> 816</span>      .skip_tile:
+<span class="line-number"> 817</span>      add di, 8
+<span class="line-number"> 818</span>      add ax, 0x2
+<span class="line-number"> 819</span>      .skip_new_line:
+<span class="line-number"> 820</span>
+<span class="line-number"> 821</span>    loop .draw_next_tile
+<span class="line-number"> 822</span>    add di, 320*8
+<span class="line-number"> 823</span>    inc ax
+<span class="line-number"> 824</span>    pop cx
+<span class="line-number"> 825</span>  loop .draw_line
+<span class="line-number"> 826</span>skip_more_ocean:
+<span class="line-number"> 827</span>
+<span class="line-number"> 828</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1286,6 +1778,232 @@ Returns: entities in memory array
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>INTRO</h3>
+                                            <div class="sectionDescription">ship moving
+</div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number"> 830</span>
+<span class="line-number"> 831</span>test byte [_GAME_STATE_], GSTATE_INTRO
+<span class="line-number"> 832</span>jz skip_game_state_intro
+<span class="line-number"> 833</span>
+<span class="line-number"> 834</span>  mov byte [_NOTE_TEMPO_], 2
+<span class="line-number"> 835</span>  call play_tune
+<span class="line-number"> 836</span>
+<span class="line-number"> 838</span>
+<span class="line-number"> 839</span>  mov di, 320*120
+<span class="line-number"> 840</span>  mov ax, [_GAME_TICK_]
+<span class="line-number"> 841</span>  shr ax, 1
+<span class="line-number"> 842</span>  add di, ax
+<span class="line-number"> 843</span>  cmp ax, INTRO_TIME
+<span class="line-number"> 844</span>  jg .start_game
+<span class="line-number"> 845</span>  mov bx, 0x1
+<span class="line-number"> 846</span>  call draw_ship
+<span class="line-number"> 847</span>
+<span class="line-number"> 848</span>  mov ah, 01h         
+<span class="line-number"> 849</span>  int 16h             
+<span class="line-number"> 850</span>  jz .no_key_press
+<span class="line-number"> 851</span>  .start_game:
+<span class="line-number"> 852</span>
+<span class="line-number"> 853</span>  mov byte [_GAME_STATE_], GSTATE_PREGAME
+<span class="line-number"> 854</span>  add byte [_GAME_STATE_], GSTATE_GAME
+<span class="line-number"> 855</span>  mov word [_GAME_TICK_], 0x0
+<span class="line-number"> 856</span>  .no_key_press:
+<span class="line-number"> 857</span>
+<span class="line-number"> 858</span>skip_game_state_intro:
+<span class="line-number"> 859</span>
+<span class="line-number"> 860</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; BIOS keyboard status function
+; Call BIOS interrupt
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>PRE-GAME</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number"> 862</span>
+<span class="line-number"> 863</span>test byte [_GAME_STATE_], GSTATE_PREGAME
+<span class="line-number"> 864</span>jz skip_game_state_pregame
+<span class="line-number"> 865</span>
+<span class="line-number"> 866</span>pre_game:
+<span class="line-number"> 867</span>    call play_tune
+<span class="line-number"> 868</span>
+<span class="line-number"> 869</span>    mov di, 320*52
+<span class="line-number"> 870</span>    mov ax, [_GAME_TICK_]
+<span class="line-number"> 871</span>    cmp ax, PRE_GAME_TIME
+<span class="line-number"> 872</span>    jg .start_game
+<span class="line-number"> 873</span>    shr ax, 1
+<span class="line-number"> 874</span>    add di, ax
+<span class="line-number"> 875</span>    mov bx, 0x1
+<span class="line-number"> 876</span>    call draw_ship
+<span class="line-number"> 877</span>    jmp skip_game_state_pregame
+<span class="line-number"> 878</span>
+<span class="line-number"> 879</span>  .start_game:
+<span class="line-number"> 880</span>    mov byte [_GAME_STATE_], GSTATE_GAME
+<span class="line-number"> 881</span>    mov word [_GAME_TICK_], 0x0
+<span class="line-number"> 882</span>
+<span class="line-number"> 883</span>  .clear_kb_buffer:
+<span class="line-number"> 884</span>    mov ah, 0x01
+<span class="line-number"> 885</span>    int 0x16
+<span class="line-number"> 886</span>    jz .cleared
+<span class="line-number"> 887</span>      mov ah, 0x00
+<span class="line-number"> 888</span>      int 0x16
+<span class="line-number"> 889</span>      jmp .clear_kb_buffer
+<span class="line-number"> 890</span>
+<span class="line-number"> 891</span>   .cleared:
+<span class="line-number"> 892</span>
+<span class="line-number"> 893</span>skip_game_state_pregame:
+<span class="line-number"> 894</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>GAME</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number"> 896</span>
+<span class="line-number"> 897</span>test byte [_GAME_STATE_], GSTATE_GAME
+<span class="line-number"> 898</span>jz skip_game_state_game
+<span class="line-number"> 899</span>
+<span class="line-number"> 900</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>STOP SOUND</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number"> 902</span>stop_game_sound:
+<span class="line-number"> 903</span>  test byte [_GAME_STATE_], GSTATE_PREGAME
+<span class="line-number"> 904</span>  jnz .skip_stop_sound
+<span class="line-number"> 905</span>  test byte [_GAME_STATE_], GSTATE_POSTGAME
+<span class="line-number"> 906</span>  jnz .skip_stop_sound
+<span class="line-number"> 907</span>    in al, 0x61    
+<span class="line-number"> 908</span>    and al, 0x0FC  
+<span class="line-number"> 909</span>    out 0x61, al   
+<span class="line-number"> 910</span>  .skip_stop_sound:
+<span class="line-number"> 911</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+; Read the PIC chip
+; Clear bit 0 to disable the speaker
+; Write the updated value back to the PIC chip
+
+
 </div>
                                             </div>
                                         </div>
@@ -1294,99 +2012,106 @@ Returns: entities in memory array
                                             <h3>DRAWING LEVEL</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 564</span>
-<span class="line-number"> 565</span>draw_level:
-<span class="line-number"> 566</span>  mov si, LevelData
-<span class="line-number"> 567</span>  mov di, LEVEL_START_POSITION
-<span class="line-number"> 568</span>  xor cx, cx
-<span class="line-number"> 569</span>  .next_meta_tile:
-<span class="line-number"> 570</span>    push cx
-<span class="line-number"> 571</span>    push si
-<span class="line-number"> 572</span>
-<span class="line-number"> 573</span>    mov byte al, [si]     
-<span class="line-number"> 574</span>    mov bl, al            
-<span class="line-number"> 575</span>    shr bl, 0x4           
-<span class="line-number"> 576</span>    and bl, 0x3           
-<span class="line-number"> 577</span>
-<span class="line-number"> 578</span>    and ax, 0xf           
-<span class="line-number"> 579</span>    jnz .not_empty
-<span class="line-number"> 580</span>      add di, 16
-<span class="line-number"> 581</span>      jmp .skip_meta_tile
-<span class="line-number"> 582</span>    .not_empty:
-<span class="line-number"> 583</span>
-<span class="line-number"> 584</span>    mov si, MetaTiles
-<span class="line-number"> 585</span>    shl ax, 0x2           
-<span class="line-number"> 586</span>    add si, ax            
-<span class="line-number"> 587</span>
-<span class="line-number"> 588</span>    mov     dx, 0x0123       
-<span class="line-number"> 589</span>    .check_y:
-<span class="line-number"> 590</span>      test    bl, 2
-<span class="line-number"> 591</span>      jz      .check_x
-<span class="line-number"> 592</span>      xchg    dh, dl           
-<span class="line-number"> 593</span>    .check_x:
-<span class="line-number"> 594</span>      test    bl, 1
-<span class="line-number"> 595</span>      jz      .push_tiles
-<span class="line-number"> 596</span>      ror     dh, 4            
-<span class="line-number"> 597</span>      ror     dl, 4            
-<span class="line-number"> 598</span>
-<span class="line-number"> 599</span>    .push_tiles:
-<span class="line-number"> 600</span>        mov     cx, 4            
-<span class="line-number"> 601</span>    .next_tile_push:
-<span class="line-number"> 602</span>        push    dx               
-<span class="line-number"> 603</span>        ror     dx, 4            
-<span class="line-number"> 604</span>        loop    .next_tile_push
-<span class="line-number"> 605</span>
-<span class="line-number"> 606</span>    mov cx, 0x4           
-<span class="line-number"> 607</span>    .next_tile:
-<span class="line-number"> 608</span>      pop dx              
-<span class="line-number"> 609</span>      and dx, 0x7
-<span class="line-number"> 610</span>      push si
-<span class="line-number"> 611</span>      add si, dx
-<span class="line-number"> 612</span>      mov byte al, [si]   
-<span class="line-number"> 613</span>      pop si
-<span class="line-number"> 614</span>      mov bh, al
-<span class="line-number"> 615</span>      shr bh, 4            
-<span class="line-number"> 616</span>      and bh, 3            
-<span class="line-number"> 617</span>
-<span class="line-number"> 618</span>      xor bh, bl          
-<span class="line-number"> 619</span>      mov dl, bh          
-<span class="line-number"> 620</span>
-<span class="line-number"> 621</span>      and ax, 0xf         
-<span class="line-number"> 622</span>      dec ax              
-<span class="line-number"> 623</span>     imul ax, 18          
-<span class="line-number"> 624</span>
-<span class="line-number"> 625</span>      push si
-<span class="line-number"> 626</span>      mov si, TerrainTiles
-<span class="line-number"> 627</span>      add si, ax
-<span class="line-number"> 628</span>      call draw_sprite
-<span class="line-number"> 629</span>      pop si
-<span class="line-number"> 630</span>
-<span class="line-number"> 631</span>      add di, 8
-<span class="line-number"> 632</span>
-<span class="line-number"> 633</span>      cmp cx, 0x3
-<span class="line-number"> 634</span>      jnz .skip_set_new_line
-<span class="line-number"> 635</span>        add di, 320*8-16  
-<span class="line-number"> 636</span>      .skip_set_new_line:
-<span class="line-number"> 637</span>
-<span class="line-number"> 638</span>    loop .next_tile
-<span class="line-number"> 639</span>    sub di, 320*8
-<span class="line-number"> 640</span>    .skip_meta_tile:
-<span class="line-number"> 641</span>
-<span class="line-number"> 642</span>    pop si
-<span class="line-number"> 643</span>    inc si
-<span class="line-number"> 644</span>    pop cx
-<span class="line-number"> 645</span>    inc cx
-<span class="line-number"> 646</span>    test cx, 0xf
-<span class="line-number"> 647</span>    jnz .no_new_line
-<span class="line-number"> 648</span>      add di, 320*16-(16*16)  
-<span class="line-number"> 649</span>    .no_new_line:
-<span class="line-number"> 650</span>
-<span class="line-number"> 651</span>    cmp cx, 0x80           
-<span class="line-number"> 652</span>  jl .next_meta_tile
-<span class="line-number"> 653</span>
-<span class="line-number"> 654</span>
+                                                <div class="code-column"><span class="line-number"> 913</span>
+<span class="line-number"> 914</span>
+<span class="line-number"> 915</span>draw_level:
+<span class="line-number"> 916</span>  mov si, LevelData
+<span class="line-number"> 917</span>  mov di, LEVEL_START_POSITION
+<span class="line-number"> 918</span>  xor cx, cx
+<span class="line-number"> 919</span>  .next_meta_tile:
+<span class="line-number"> 920</span>    push cx
+<span class="line-number"> 921</span>    push si
+<span class="line-number"> 922</span>
+<span class="line-number"> 923</span>    mov byte al, [si]     
+<span class="line-number"> 924</span>    mov bl, al            
+<span class="line-number"> 925</span>    shr bl, 0x4           
+<span class="line-number"> 926</span>    and bl, 0x3           
+<span class="line-number"> 927</span>
+<span class="line-number"> 928</span>    and ax, 0xf           
+<span class="line-number"> 929</span>    jnz .not_empty
+<span class="line-number"> 930</span>      add di, 16
+<span class="line-number"> 931</span>      jmp .skip_meta_tile
+<span class="line-number"> 932</span>    .not_empty:
+<span class="line-number"> 933</span>
+<span class="line-number"> 934</span>    mov si, MetaTiles
+<span class="line-number"> 935</span>    shl ax, 0x2           
+<span class="line-number"> 936</span>    add si, ax            
+<span class="line-number"> 937</span>
+<span class="line-number"> 938</span>    mov     dx, 0x0123       
+<span class="line-number"> 939</span>    .check_y:
+<span class="line-number"> 940</span>      test    bl, 2
+<span class="line-number"> 941</span>      jz      .check_x
+<span class="line-number"> 942</span>      xchg    dh, dl           
+<span class="line-number"> 943</span>    .check_x:
+<span class="line-number"> 944</span>      test    bl, 1
+<span class="line-number"> 945</span>      jz      .push_tiles
+<span class="line-number"> 946</span>      ror     dh, 4            
+<span class="line-number"> 947</span>      ror     dl, 4            
+<span class="line-number"> 948</span>
+<span class="line-number"> 949</span>    .push_tiles:
+<span class="line-number"> 950</span>        mov     cx, 4            
+<span class="line-number"> 951</span>    .next_tile_push:
+<span class="line-number"> 952</span>        push    dx               
+<span class="line-number"> 953</span>        ror     dx, 4            
+<span class="line-number"> 954</span>        loop    .next_tile_push
+<span class="line-number"> 955</span>
+<span class="line-number"> 956</span>    mov cx, 0x4           
+<span class="line-number"> 957</span>    .next_tile:
+<span class="line-number"> 958</span>      pop dx              
+<span class="line-number"> 959</span>      and dx, 0x7
+<span class="line-number"> 960</span>      push si
+<span class="line-number"> 961</span>      add si, dx
+<span class="line-number"> 962</span>      mov byte al, [si]   
+<span class="line-number"> 963</span>      pop si
+<span class="line-number"> 964</span>      mov bh, al
+<span class="line-number"> 965</span>      shr bh, 4            
+<span class="line-number"> 966</span>      and bh, 3            
+<span class="line-number"> 967</span>
+<span class="line-number"> 968</span>      xor bh, bl          
+<span class="line-number"> 969</span>      mov dl, bh          
+<span class="line-number"> 970</span>
+<span class="line-number"> 971</span>      and ax, 0xf         
+<span class="line-number"> 972</span>      dec ax              
+<span class="line-number"> 973</span>     imul ax, 18          
+<span class="line-number"> 974</span>
+<span class="line-number"> 975</span>      push si
+<span class="line-number"> 976</span>      mov si, TerrainTiles
+<span class="line-number"> 977</span>      add si, ax
+<span class="line-number"> 978</span>      call draw_sprite
+<span class="line-number"> 979</span>      pop si
+<span class="line-number"> 980</span>
+<span class="line-number"> 981</span>      add di, 8
+<span class="line-number"> 982</span>
+<span class="line-number"> 983</span>      cmp cx, 0x3
+<span class="line-number"> 984</span>      jnz .skip_set_new_line
+<span class="line-number"> 985</span>        add di, 320*8-16  
+<span class="line-number"> 986</span>      .skip_set_new_line:
+<span class="line-number"> 987</span>
+<span class="line-number"> 988</span>    loop .next_tile
+<span class="line-number"> 989</span>    sub di, 320*8
+<span class="line-number"> 990</span>    .skip_meta_tile:
+<span class="line-number"> 991</span>
+<span class="line-number"> 992</span>    pop si
+<span class="line-number"> 993</span>    inc si
+<span class="line-number"> 994</span>    pop cx
+<span class="line-number"> 995</span>    inc cx
+<span class="line-number"> 996</span>    test cx, 0xf
+<span class="line-number"> 997</span>    jnz .no_new_line
+<span class="line-number"> 998</span>      add di, 320*16-(16*16)  
+<span class="line-number"> 999</span>    .no_new_line:
+<span class="line-number">1000</span>
+<span class="line-number">1001</span>    cmp cx, 0x80           
+<span class="line-number">1002</span>  jl .next_meta_tile
+<span class="line-number">1003</span>
+<span class="line-number">1004</span>
+<span class="line-number">1005</span>test byte [_GAME_STATE_], GSTATE_PREGAME
+<span class="line-number">1006</span>jnz skip_keyboard
+<span class="line-number">1007</span>test byte [_GAME_STATE_], GSTATE_POSTGAME
+<span class="line-number">1008</span>jnz skip_keyboard
+<span class="line-number">1009</span>
 </div>
                                                 <div class="comment-column">
+
 
 
 
@@ -1477,6 +2202,32 @@ Returns: entities in memory array
 
 
 
+
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>DRAW SHIP</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number">1011</span>
+<span class="line-number">1012</span>draw_ship_in_game:
+<span class="line-number">1013</span>  mov di, 320*52+32
+<span class="line-number">1014</span>  xor bx, bx
+<span class="line-number">1015</span>  call draw_ship
+<span class="line-number">1016</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+
 </div>
                                             </div>
                                         </div>
@@ -1488,68 +2239,79 @@ jz .invalid_move
 jmp .check_move
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 656</span>
-<span class="line-number"> 657</span>check_keyboard:
-<span class="line-number"> 658</span>  mov ah, 01h         
-<span class="line-number"> 659</span>  int 16h             
-<span class="line-number"> 660</span>  jz .no_key_press           
-<span class="line-number"> 661</span>
-<span class="line-number"> 662</span>  mov si, [_PLAYER_ENTITY_ID_]
-<span class="line-number"> 663</span>  mov cx, [si+_POS_]   
-<span class="line-number"> 664</span>
-<span class="line-number"> 665</span>  mov ah, 00h         
-<span class="line-number"> 666</span>  int 16h             
-<span class="line-number"> 667</span>
-<span class="line-number"> 668</span>  .check_spacebar:
-<span class="line-number"> 669</span>  cmp ah, 39h         
-<span class="line-number"> 670</span>  jne .check_up
-<span class="line-number"> 671</span>    mov byte [_HOLDING_ID_], 0x0
-<span class="line-number"> 672</span>    jmp .no_key_press
-<span class="line-number"> 673</span>
-<span class="line-number"> 674</span>  .check_up:
-<span class="line-number"> 675</span>  cmp ah, 48h         
-<span class="line-number"> 676</span>  jne .check_down
-<span class="line-number"> 677</span>    cmp ch, 0x0
-<span class="line-number"> 678</span>    jz .invalid_move
-<span class="line-number"> 679</span>    dec ch
-<span class="line-number"> 680</span>    jmp .check_move
-<span class="line-number"> 681</span>
-<span class="line-number"> 682</span>  .check_down:
-<span class="line-number"> 683</span>  cmp ah, 50h         
-<span class="line-number"> 684</span>  jne .check_left
-<span class="line-number"> 685</span>    inc ch
-<span class="line-number"> 686</span>    jmp .check_move
-<span class="line-number"> 687</span>
-<span class="line-number"> 688</span>  .check_left:
-<span class="line-number"> 689</span>  cmp ah, 4Bh         
-<span class="line-number"> 690</span>  jne .check_right
-<span class="line-number"> 693</span>    dec cl
-<span class="line-number"> 694</span>    mov byte [si+_MIRROR_], 0x1
-<span class="line-number"> 695</span>    jmp .check_move
-<span class="line-number"> 696</span>
-<span class="line-number"> 697</span>  .check_right:
-<span class="line-number"> 698</span>  cmp ah, 4Dh         
-<span class="line-number"> 699</span>  jne .no_key_press
-<span class="line-number"> 700</span>    inc cl
-<span class="line-number"> 701</span>    mov byte [si+_MIRROR_], 0x0
-<span class="line-number"> 703</span>
-<span class="line-number"> 704</span>  .check_move:
-<span class="line-number"> 705</span>    call check_friends
-<span class="line-number"> 706</span>    jz .no_move
-<span class="line-number"> 707</span>    call check_water_tile
-<span class="line-number"> 708</span>    jz .no_move
-<span class="line-number"> 709</span>    call check_bounds
-<span class="line-number"> 710</span>   jz .no_move
-<span class="line-number"> 711</span>
-<span class="line-number"> 712</span>    .move:
-<span class="line-number"> 713</span>    mov word [si+_POS_], cx      
-<span class="line-number"> 714</span>    .no_move:
-<span class="line-number"> 715</span>    mov word [_REQUEST_POSITION_], cx
-<span class="line-number"> 716</span>
-<span class="line-number"> 717</span>  .no_key_press:
-<span class="line-number"> 718</span>  .invalid_move:
-<span class="line-number"> 719</span>
-<span class="line-number"> 720</span>
+                                                <div class="code-column"><span class="line-number">1018</span>
+<span class="line-number">1019</span>check_keyboard:
+<span class="line-number">1020</span>  mov ah, 01h         
+<span class="line-number">1021</span>  int 16h             
+<span class="line-number">1022</span>  jz .no_key_press           
+<span class="line-number">1023</span>
+<span class="line-number">1024</span>  mov si, [_PLAYER_ENTITY_ID_]
+<span class="line-number">1025</span>  mov cx, [si+_POS_]   
+<span class="line-number">1026</span>
+<span class="line-number">1027</span>  mov ah, 00h         
+<span class="line-number">1028</span>  int 16h             
+<span class="line-number">1029</span>
+<span class="line-number">1030</span>  .check_spacebar:
+<span class="line-number">1031</span>  cmp ah, 39h         
+<span class="line-number">1032</span>  jne .check_up
+<span class="line-number">1033</span>    cmp byte [_HOLDING_ID_], 0x0
+<span class="line-number">1034</span>    jz .set_request_position_to_player
+<span class="line-number">1035</span>    mov byte [_HOLDING_ID_], 0x0
+<span class="line-number">1036</span>    jmp .no_key_press
+<span class="line-number">1037</span>    .set_request_position_to_player:
+<span class="line-number">1038</span>      mov word [_REQUEST_POSITION_], cx
+<span class="line-number">1039</span>    jmp .no_key_press
+<span class="line-number">1040</span>  .check_up:
+<span class="line-number">1041</span>  cmp ah, 48h         
+<span class="line-number">1042</span>  jne .check_down
+<span class="line-number">1043</span>    cmp ch, 0x0
+<span class="line-number">1044</span>    jz .invalid_move
+<span class="line-number">1045</span>    dec ch
+<span class="line-number">1046</span>    jmp .check_move
+<span class="line-number">1047</span>
+<span class="line-number">1048</span>  .check_down:
+<span class="line-number">1049</span>  cmp ah, 50h         
+<span class="line-number">1050</span>  jne .check_left
+<span class="line-number">1051</span>    inc ch
+<span class="line-number">1052</span>    jmp .check_move
+<span class="line-number">1053</span>
+<span class="line-number">1054</span>  .check_left:
+<span class="line-number">1055</span>  cmp ah, 4Bh         
+<span class="line-number">1056</span>  jne .check_right
+<span class="line-number">1059</span>    dec cl
+<span class="line-number">1060</span>    mov byte [si+_MIRROR_], 0x1
+<span class="line-number">1061</span>    jmp .check_move
+<span class="line-number">1062</span>
+<span class="line-number">1063</span>
+<span class="line-number">1064</span>  .check_right:
+<span class="line-number">1065</span>  cmp ah, 4Dh         
+<span class="line-number">1066</span>  jne .no_key_press
+<span class="line-number">1067</span>    inc cl
+<span class="line-number">1068</span>    mov byte [si+_MIRROR_], 0x0
+<span class="line-number">1070</span>
+<span class="line-number">1071</span>  .check_move:
+<span class="line-number">1072</span>    call check_friends
+<span class="line-number">1073</span>    jz .no_move
+<span class="line-number">1074</span>    call check_water_tile
+<span class="line-number">1075</span>    jz .no_move
+<span class="line-number">1076</span>    call check_bounds
+<span class="line-number">1077</span>   jz .no_move
+<span class="line-number">1078</span>
+<span class="line-number">1079</span>    .move:
+<span class="line-number">1080</span>    cmp byte [_WEB_LOCKED_], 0
+<span class="line-number">1081</span>    jz .skip_web_check
+<span class="line-number">1082</span>      dec byte [_WEB_LOCKED_]
+<span class="line-number">1083</span>      jmp .no_move
+<span class="line-number">1084</span>    .skip_web_check:
+<span class="line-number">1085</span>    mov word [si+_POS_], cx
+<span class="line-number">1086</span>    .no_move:
+<span class="line-number">1087</span>    mov word [_REQUEST_POSITION_], cx
+<span class="line-number">1088</span>
+<span class="line-number">1089</span>  .no_key_press:
+<span class="line-number">1090</span>  .invalid_move:
+<span class="line-number">1091</span>
+<span class="line-number">1092</span>skip_keyboard:
+<span class="line-number">1093</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1565,6 +2327,10 @@ jmp .check_move
 
 
 ; Compare scan code with spacebar
+
+
+
+
 
 
 
@@ -1591,7 +2357,14 @@ jmp .check_move
 
 
 
+
 ; Compare scan code with right arrow
+
+
+
+
+
+
 
 
 
@@ -1621,116 +2394,188 @@ jmp .check_move
                                             <h3>AI ENITIES</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 722</span>
-<span class="line-number"> 723</span>ai_entities:
-<span class="line-number"> 724</span>  mov si, _ENTITIES_
-<span class="line-number"> 725</span>  mov cl, MAX_ENTITIES
-<span class="line-number"> 726</span>  .next_entity:
-<span class="line-number"> 727</span>    push cx
-<span class="line-number"> 728</span>
-<span class="line-number"> 729</span>    cmp byte [si+_STATE_], STATE_EXPLORING
-<span class="line-number"> 730</span>    jnz .skip_explore
-<span class="line-number"> 731</span>      mov ax, [_GAME_TICK_]
-<span class="line-number"> 732</span>      add ax, cx
-<span class="line-number"> 733</span>      test ax, 0x4
-<span class="line-number"> 734</span>      jz .skip_explore
-<span class="line-number"> 735</span>
-<span class="line-number"> 736</span>      .explore:
-<span class="line-number"> 737</span>        mov cx, [si+_POS_]
-<span class="line-number"> 738</span>        call random_move
-<span class="line-number"> 739</span>          mov byte [si+_MIRROR_], 0x0
-<span class="line-number"> 740</span>          cmp byte cl, [si+_POS_]
-<span class="line-number"> 741</span>          jg .skip_mirror_x
-<span class="line-number"> 742</span>          mov byte [si+_MIRROR_], 0x1
-<span class="line-number"> 743</span>          .skip_mirror_x:
-<span class="line-number"> 744</span>
-<span class="line-number"> 745</span>        call check_bounds
-<span class="line-number"> 746</span>        jz .can_not_move
-<span class="line-number"> 747</span>
-<span class="line-number"> 748</span>        call check_friends
-<span class="line-number"> 749</span>        jz .can_not_move
-<span class="line-number"> 750</span>
-<span class="line-number"> 751</span>        call check_water_tile
-<span class="line-number"> 752</span>        jz .can_not_move
-<span class="line-number"> 753</span>        .move_to_new_pos:
-<span class="line-number"> 754</span>          mov word [si+_POS_], cx
-<span class="line-number"> 755</span>        .can_not_move:
-<span class="line-number"> 756</span>        .check_if_player:
-<span class="line-number"> 757</span>          cmp cx, [_REQUEST_POSITION_]
-<span class="line-number"> 758</span>          jnz .no_bite
-<span class="line-number"> 759</span>            cmp byte [_HOLDING_ID_], 0x0
-<span class="line-number"> 760</span>            jnz .continue_game
-<span class="line-number"> 761</span>              mov bl, BEEP_BITE
-<span class="line-number"> 762</span>              call beep
-<span class="line-number"> 763</span>              mov byte [_GAME_STATE_], GSTATE_END
-<span class="line-number"> 764</span>            .continue_game:
-<span class="line-number"> 765</span>            jz .no_bite
-<span class="line-number"> 766</span>              mov byte [_HOLDING_ID_], 0x00
-<span class="line-number"> 767</span>              jmp .skip_item
-<span class="line-number"> 768</span>          .no_bite:
-<span class="line-number"> 769</span>    .skip_explore:
-<span class="line-number"> 770</span>
-<span class="line-number"> 771</span>    cmp byte [si+_STATE_], STATE_INTERACTIVE
-<span class="line-number"> 772</span>    jnz .skip_item
-<span class="line-number"> 773</span>      mov cx, [si+_POS_]
-<span class="line-number"> 774</span>      cmp cx, [_REQUEST_POSITION_]
-<span class="line-number"> 775</span>      jnz .skip_item
-<span class="line-number"> 776</span>        
-<span class="line-number"> 777</span>      cmp byte [si+_ID_], ID_BRIDGE
-<span class="line-number"> 778</span>      jz .check_bridge
-<span class="line-number"> 779</span>      cmp byte [si+_ID_], ID_CHEST
-<span class="line-number"> 780</span>      jnz .skip_check_interactions
-<span class="line-number"> 781</span>      
-<span class="line-number"> 782</span>      .check_interactions:
-<span class="line-number"> 783</span>        cmp byte [_HOLDING_ID_], ID_GOLD
-<span class="line-number"> 784</span>        jnz .skip_item
-<span class="line-number"> 785</span>        inc byte [_SCORE_]
-<span class="line-number"> 786</span>        jmp .clear_item
-<span class="line-number"> 787</span>      .check_bridge:
-<span class="line-number"> 788</span>        cmp byte [_HOLDING_ID_], ID_ROCK
-<span class="line-number"> 789</span>        jnz .skip_item
-<span class="line-number"> 790</span>        mov byte [si+_STATE_], STATE_DEACTIVATED
-<span class="line-number"> 791</span>      .clear_item:          
-<span class="line-number"> 792</span>          mov byte [_HOLDING_ID_], 0xff
-<span class="line-number"> 793</span>          jmp .skip_item
-<span class="line-number"> 794</span>      .skip_check_interactions:
-<span class="line-number"> 795</span>
-<span class="line-number"> 796</span>      cmp byte [_HOLDING_ID_], 0x0  
-<span class="line-number"> 797</span>      jnz .skip_item
-<span class="line-number"> 798</span>      .pick_item:
-<span class="line-number"> 799</span>        mov byte [si+_STATE_], STATE_FOLLOW
-<span class="line-number"> 800</span>        mov word [_REQUEST_POSITION_], 0x0
-<span class="line-number"> 801</span>        mov byte cl, [si+_ID_]
-<span class="line-number"> 802</span>        mov byte [_HOLDING_ID_], cl  
-<span class="line-number"> 803</span>        mov bl, BEEP_PICK  
-<span class="line-number"> 804</span>        call beep
-<span class="line-number"> 805</span>    .skip_item:
-<span class="line-number"> 806</span>
-<span class="line-number"> 807</span>    .put_item_back:
-<span class="line-number"> 808</span>    cmp byte [si+_STATE_], STATE_FOLLOW
-<span class="line-number"> 809</span>    jnz .no_follow
-<span class="line-number"> 810</span>      
-<span class="line-number"> 811</span>      cmp byte [_HOLDING_ID_], 0x0 
-<span class="line-number"> 812</span>      jnz .check_kill
-<span class="line-number"> 813</span>        mov byte [si+_STATE_], STATE_INTERACTIVE
-<span class="line-number"> 814</span>        mov word [_REQUEST_POSITION_], 0x0
-<span class="line-number"> 815</span>        jmp .beep
-<span class="line-number"> 816</span>      .check_kill:
-<span class="line-number"> 817</span>      cmp byte [_HOLDING_ID_], 0xff
-<span class="line-number"> 818</span>      jnz .skip_kill
-<span class="line-number"> 819</span>        mov byte [si+_STATE_], STATE_DEACTIVATED
-<span class="line-number"> 820</span>        inc byte [_HOLDING_ID_] 
-<span class="line-number"> 821</span>      .beep:
-<span class="line-number"> 822</span>      mov bl, BEEP_PUT
-<span class="line-number"> 823</span>      call beep
-<span class="line-number"> 824</span>    .skip_kill:
-<span class="line-number"> 825</span>    .no_follow: 
-<span class="line-number"> 826</span>    
-<span class="line-number"> 827</span>    add si, ENTITY_SIZE
-<span class="line-number"> 828</span>    pop cx
-<span class="line-number"> 829</span>    dec cx
-<span class="line-number"> 830</span>  jnz .next_entity
-<span class="line-number"> 831</span>
+                                                <div class="code-column"><span class="line-number">1095</span>
+<span class="line-number">1096</span>ai_entities:
+<span class="line-number">1097</span>  mov si, _ENTITIES_
+<span class="line-number">1098</span>  mov cl, MAX_ENTITIES
+<span class="line-number">1099</span>  .next_entity:
+<span class="line-number">1100</span>    push cx
+<span class="line-number">1101</span>
+<span class="line-number">1102</span>    cmp byte [si+_STATE_], STATE_EXPLORING
+<span class="line-number">1103</span>    jnz .skip_explore
+<span class="line-number">1104</span>      mov ax, [_GAME_TICK_]
+<span class="line-number">1105</span>      add ax, cx
+<span class="line-number">1106</span>      test ax, 0x2
+<span class="line-number">1107</span>      jz .skip_explore
+<span class="line-number">1108</span>
+<span class="line-number">1109</span>      .explore:
+<span class="line-number">1110</span>        mov cx, [si+_POS_]
+<span class="line-number">1111</span>        mov al, [si+_DIR_]
+<span class="line-number">1112</span>
+<span class="line-number">1113</span>        .check_horizontal:
+<span class="line-number">1114</span>        cmp al, 0
+<span class="line-number">1115</span>        jnz .go_left
+<span class="line-number">1116</span>        .go_right:
+<span class="line-number">1117</span>           inc cl
+<span class="line-number">1118</span>           jmp .check_mirror
+<span class="line-number">1119</span>        .go_left:
+<span class="line-number">1120</span>         cmp al, 1
+<span class="line-number">1121</span>         jnz .check_vertical
+<span class="line-number">1122</span>           dec cl
+<span class="line-number">1123</span>           jmp .check_mirror
+<span class="line-number">1124</span>
+<span class="line-number">1125</span>        .check_vertical:
+<span class="line-number">1126</span>        cmp al, 2
+<span class="line-number">1127</span>        jnz .go_up
+<span class="line-number">1128</span>        .go_down:
+<span class="line-number">1129</span>          inc ch
+<span class="line-number">1130</span>          jmp .check_mirror
+<span class="line-number">1131</span>        .go_up:
+<span class="line-number">1132</span>         cmp al, 3
+<span class="line-number">1133</span>         jnz .check_mirror
+<span class="line-number">1134</span>           dec ch
+<span class="line-number">1135</span>
+<span class="line-number">1136</span>        .check_mirror:
+<span class="line-number">1137</span>          mov byte [si+_MIRROR_], 0x0
+<span class="line-number">1138</span>          cmp byte cl, [si+_POS_]
+<span class="line-number">1139</span>          jg .skip_mirror_x
+<span class="line-number">1140</span>          mov byte [si+_MIRROR_], 0x1
+<span class="line-number">1141</span>          .skip_mirror_x:
+<span class="line-number">1142</span>
+<span class="line-number">1143</span>        call check_bounds
+<span class="line-number">1144</span>        jz .can_not_move
+<span class="line-number">1145</span>
+<span class="line-number">1146</span>        call check_friends
+<span class="line-number">1147</span>        jz .can_not_move
+<span class="line-number">1148</span>
+<span class="line-number">1149</span>        call check_water_tile
+<span class="line-number">1150</span>        jz .can_not_move
+<span class="line-number">1151</span>
+<span class="line-number">1152</span>        .move_to_new_pos:
+<span class="line-number">1153</span>          mov word [si+_POS_], cx
+<span class="line-number">1154</span>          jmp .after_move
+<span class="line-number">1155</span>
+<span class="line-number">1156</span>        .can_not_move:
+<span class="line-number">1157</span>
+<span class="line-number">1158</span>        .check_if_crab:
+<span class="line-number">1159</span>        cmp byte [si+_ID_], ID_CRAB
+<span class="line-number">1160</span>        jnz .not_a_crab
+<span class="line-number">1161</span>          xor byte [si+_DIR_], 1
+<span class="line-number">1162</span>          jmp .skip_random_bounce
+<span class="line-number">1163</span>        .not_a_crab:
+<span class="line-number">1164</span>
+<span class="line-number">1165</span>        .random_bounce:
+<span class="line-number">1166</span>           in al, 0x40
+<span class="line-number">1167</span>           add ax, [_GAME_TICK_]
+<span class="line-number">1168</span>           and al, 0x3
+<span class="line-number">1169</span>           mov byte [si+_DIR_], al
+<span class="line-number">1170</span>
+<span class="line-number">1171</span>        .skip_random_bounce:
+<span class="line-number">1172</span>
+<span class="line-number">1173</span>        .check_if_player:
+<span class="line-number">1174</span>          cmp cx, [_REQUEST_POSITION_]
+<span class="line-number">1175</span>          jnz .no_bite
+<span class="line-number">1176</span>            cmp byte [_HOLDING_ID_], 0x0
+<span class="line-number">1177</span>            jnz .continue_game
+<span class="line-number">1178</span>              mov byte [_HOLDING_ID_], 0xff
+<span class="line-number">1179</span>              mov bl, BEEP_BITE
+<span class="line-number">1180</span>              call beep
+<span class="line-number">1181</span>
+<span class="line-number">1182</span>              cmp byte [si+_ID_], ID_SNAKE
+<span class="line-number">1183</span>              jz .snake_bite
+<span class="line-number">1184</span>              cmp byte [si+_ID_], ID_SPIDER
+<span class="line-number">1185</span>              jz .spider_web
+<span class="line-number">1186</span>              cmp byte [si+_ID_], ID_CRAB
+<span class="line-number">1187</span>              jz .crab_bite
+<span class="line-number">1188</span>              jmp .continue_game
+<span class="line-number">1189</span>
+<span class="line-number">1190</span>              .crab_bite:                 
+<span class="line-number">1191</span>              .snake_bite:                
+<span class="line-number">1192</span>              mov byte [_GAME_STATE_], GSTATE_END
+<span class="line-number">1193</span>              mov word [_CURRENT_TUNE_], tune_end
+<span class="line-number">1194</span>              mov word [_NEXT_TUNE_], tune_end
+<span class="line-number">1195</span>              mov byte [_NOTE_TIMER_], 0x0
+<span class="line-number">1196</span>              mov byte [_NOTE_TEMPO_], 0xa
+<span class="line-number">1197</span>              jmp .skip_item
+<span class="line-number">1198</span>
+<span class="line-number">1199</span>              .spider_web:                
+<span class="line-number">1200</span>                  mov byte [_WEB_LOCKED_] , WEB_LOCK
+<span class="line-number">1201</span>              jmp .continue_game
+<span class="line-number">1202</span>
+<span class="line-number">1203</span>            .continue_game:
+<span class="line-number">1204</span>              mov byte [_HOLDING_ID_], 0x00
+<span class="line-number">1205</span>              jmp .skip_item
+<span class="line-number">1206</span>          .no_bite:
+<span class="line-number">1207</span>          .after_move:
+<span class="line-number">1208</span>    .skip_explore:
+<span class="line-number">1209</span>
+<span class="line-number">1210</span>    cmp byte [si+_STATE_], STATE_INTERACTIVE
+<span class="line-number">1211</span>    jnz .skip_item
+<span class="line-number">1212</span>      mov cx, [si+_POS_]
+<span class="line-number">1213</span>      cmp cx, [_REQUEST_POSITION_]
+<span class="line-number">1214</span>      jnz .skip_item
+<span class="line-number">1215</span>
+<span class="line-number">1216</span>      cmp byte [si+_ID_], ID_BRIDGE
+<span class="line-number">1217</span>      jz .check_bridge
+<span class="line-number">1218</span>      cmp byte [si+_ID_], ID_CHEST
+<span class="line-number">1219</span>      jnz .skip_check_interactions
+<span class="line-number">1220</span>
+<span class="line-number">1221</span>      .check_interactions:
+<span class="line-number">1222</span>        cmp byte [_HOLDING_ID_], ID_GOLD
+<span class="line-number">1223</span>        jnz .skip_item
+<span class="line-number">1224</span>        inc byte [_SCORE_]
+<span class="line-number">1225</span>        mov bl, BEEP_GOLD
+<span class="line-number">1226</span>        call beep
+<span class="line-number">1227</span>        jmp .clear_item
+<span class="line-number">1228</span>
+<span class="line-number">1229</span>      .check_bridge:
+<span class="line-number">1230</span>        cmp byte [_HOLDING_ID_], ID_ROCK
+<span class="line-number">1231</span>        jnz .skip_item
+<span class="line-number">1232</span>        mov byte [si+_STATE_], STATE_DEACTIVATED
+<span class="line-number">1233</span>      .clear_item:
+<span class="line-number">1234</span>          mov byte [_HOLDING_ID_], 0xff
+<span class="line-number">1235</span>          jmp .skip_item
+<span class="line-number">1236</span>      .skip_check_interactions:
+<span class="line-number">1237</span>
+<span class="line-number">1238</span>      cmp byte [_HOLDING_ID_], 0x0  
+<span class="line-number">1239</span>      jnz .skip_item
+<span class="line-number">1240</span>      .pick_item:
+<span class="line-number">1241</span>        mov byte [si+_STATE_], STATE_FOLLOW
+<span class="line-number">1242</span>        mov word [_REQUEST_POSITION_], 0x0
+<span class="line-number">1243</span>        mov byte cl, [si+_ID_]
+<span class="line-number">1244</span>        mov byte [_HOLDING_ID_], cl
+<span class="line-number">1245</span>        mov bl, BEEP_PICK
+<span class="line-number">1246</span>        call beep
+<span class="line-number">1247</span>    .skip_item:
+<span class="line-number">1248</span>
+<span class="line-number">1249</span>    .put_item_back:
+<span class="line-number">1250</span>    cmp byte [si+_STATE_], STATE_FOLLOW
+<span class="line-number">1251</span>    jnz .no_follow
+<span class="line-number">1252</span>
+<span class="line-number">1253</span>      cmp byte [_HOLDING_ID_], 0x0
+<span class="line-number">1254</span>      jnz .check_kill
+<span class="line-number">1255</span>        mov byte [si+_STATE_], STATE_INTERACTIVE
+<span class="line-number">1256</span>        mov word [_REQUEST_POSITION_], 0x0
+<span class="line-number">1257</span>        jmp .beep
+<span class="line-number">1258</span>
+<span class="line-number">1259</span>      .check_kill:
+<span class="line-number">1260</span>      cmp byte [_HOLDING_ID_], 0xff
+<span class="line-number">1261</span>      jnz .skip_kill
+<span class="line-number">1262</span>        mov byte [si+_STATE_], STATE_DEACTIVATED
+<span class="line-number">1263</span>        mov byte [_HOLDING_ID_], 0x0
+<span class="line-number">1264</span>      .beep:
+<span class="line-number">1265</span>      mov bl, BEEP_PUT
+<span class="line-number">1266</span>      call beep
+<span class="line-number">1267</span>    .skip_kill:
+<span class="line-number">1268</span>    .no_follow:
+<span class="line-number">1269</span>
+<span class="line-number">1270</span>    add si, ENTITY_SIZE
+<span class="line-number">1271</span>    pop cx
+<span class="line-number">1272</span>    dec cx
+<span class="line-number">1273</span>  jnz .next_entity
+<span class="line-number">1274</span>
+<span class="line-number">1275</span>
+<span class="line-number">1276</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1768,6 +2613,75 @@ jmp .check_move
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+; Crab
+; Snake
+
+
+
+
+
+
+
+; Spider
 
 
 
@@ -1830,7 +2744,10 @@ jmp .check_move
 
 
 
-; , 0x0
+
+
+
+
 
 
 
@@ -1853,53 +2770,53 @@ Expects: entities array
 Returns: sorted entities array
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 836</span>
-<span class="line-number"> 837</span>sort_entities:
-<span class="line-number"> 838</span>  mov cl, MAX_ENTITIES-1  
-<span class="line-number"> 839</span>  .outer_loop:
-<span class="line-number"> 840</span>    push cx
-<span class="line-number"> 841</span>    mov si, _ENTITIES_
-<span class="line-number"> 842</span>
-<span class="line-number"> 843</span>    .inner_loop:
-<span class="line-number"> 844</span>      push cx
-<span class="line-number"> 845</span>      mov bx, [si+_POS_]  
-<span class="line-number"> 846</span>      mov dx, [si+ENTITY_SIZE+_POS_]  
-<span class="line-number"> 847</span>
-<span class="line-number"> 848</span>      cmp bh, dh      
-<span class="line-number"> 849</span>      jl .no_swap
-<span class="line-number"> 850</span>
-<span class="line-number"> 851</span>        mov di, si
-<span class="line-number"> 852</span>        add di, ENTITY_SIZE
-<span class="line-number"> 853</span>
-<span class="line-number"> 854</span>        mov ax, [_PLAYER_ENTITY_ID_]
-<span class="line-number"> 855</span>        cmp ax, si
-<span class="line-number"> 856</span>        jne .check_next_entity
-<span class="line-number"> 857</span>          mov [_PLAYER_ENTITY_ID_], di
-<span class="line-number"> 858</span>          jmp .swap_entities
-<span class="line-number"> 859</span>        .check_next_entity:
-<span class="line-number"> 860</span>        cmp ax, di
-<span class="line-number"> 861</span>        jne .swap_entities
-<span class="line-number"> 862</span>          mov [_PLAYER_ENTITY_ID_], si
-<span class="line-number"> 863</span>        .swap_entities:
-<span class="line-number"> 864</span>
-<span class="line-number"> 865</span>        mov cx, ENTITY_SIZE
-<span class="line-number"> 866</span>        .swap_loop:
-<span class="line-number"> 867</span>          mov al, [si]
-<span class="line-number"> 868</span>          xchg al, [di]
-<span class="line-number"> 869</span>          mov [si], al
-<span class="line-number"> 870</span>          inc si
-<span class="line-number"> 871</span>          inc di
-<span class="line-number"> 872</span>          loop .swap_loop
-<span class="line-number"> 873</span>        sub si, ENTITY_SIZE
-<span class="line-number"> 874</span>
-<span class="line-number"> 875</span>      .no_swap:
-<span class="line-number"> 876</span>      add si, ENTITY_SIZE
-<span class="line-number"> 877</span>      pop cx
-<span class="line-number"> 878</span>      loop .inner_loop
-<span class="line-number"> 879</span>
-<span class="line-number"> 880</span>    pop cx
-<span class="line-number"> 881</span>    loop .outer_loop
-<span class="line-number"> 882</span>
+                                                <div class="code-column"><span class="line-number">1281</span>
+<span class="line-number">1282</span>sort_entities:
+<span class="line-number">1283</span>  mov cl, MAX_ENTITIES-1  
+<span class="line-number">1284</span>  .outer_loop:
+<span class="line-number">1285</span>    push cx
+<span class="line-number">1286</span>    mov si, _ENTITIES_
+<span class="line-number">1287</span>
+<span class="line-number">1288</span>    .inner_loop:
+<span class="line-number">1289</span>      push cx
+<span class="line-number">1290</span>      mov bx, [si+_POS_]  
+<span class="line-number">1291</span>      mov dx, [si+ENTITY_SIZE+_POS_]  
+<span class="line-number">1292</span>
+<span class="line-number">1293</span>      cmp bh, dh      
+<span class="line-number">1294</span>      jle .no_swap
+<span class="line-number">1295</span>
+<span class="line-number">1296</span>        mov di, si
+<span class="line-number">1297</span>        add di, ENTITY_SIZE
+<span class="line-number">1298</span>
+<span class="line-number">1299</span>        mov ax, [_PLAYER_ENTITY_ID_]
+<span class="line-number">1300</span>        cmp ax, si
+<span class="line-number">1301</span>        jne .check_next_entity
+<span class="line-number">1302</span>          mov [_PLAYER_ENTITY_ID_], di
+<span class="line-number">1303</span>          jmp .swap_entities
+<span class="line-number">1304</span>        .check_next_entity:
+<span class="line-number">1305</span>        cmp ax, di
+<span class="line-number">1306</span>        jne .swap_entities
+<span class="line-number">1307</span>          mov [_PLAYER_ENTITY_ID_], si
+<span class="line-number">1308</span>        .swap_entities:
+<span class="line-number">1309</span>
+<span class="line-number">1310</span>        mov cx, ENTITY_SIZE
+<span class="line-number">1311</span>        .swap_loop:
+<span class="line-number">1312</span>          mov al, [si]
+<span class="line-number">1313</span>          xchg al, [di]
+<span class="line-number">1314</span>          mov [si], al
+<span class="line-number">1315</span>          inc si
+<span class="line-number">1316</span>          inc di
+<span class="line-number">1317</span>          loop .swap_loop
+<span class="line-number">1318</span>        sub si, ENTITY_SIZE
+<span class="line-number">1319</span>
+<span class="line-number">1320</span>      .no_swap:
+<span class="line-number">1321</span>      add si, ENTITY_SIZE
+<span class="line-number">1322</span>      pop cx
+<span class="line-number">1323</span>      loop .inner_loop
+<span class="line-number">1324</span>
+<span class="line-number">1325</span>    pop cx
+<span class="line-number">1326</span>    loop .outer_loop
+<span class="line-number">1327</span>
 </div>
                                                 <div class="comment-column">
 
@@ -1954,99 +2871,155 @@ Returns: sorted entities array
                                     
                                         <div class="asmSection">
                                             <h3>DRAW ENITIES</h3>
-                                            <div class="sectionDescription"></div>
+                                            <div class="sectionDescription">open chest
+</div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 884</span>
-<span class="line-number"> 885</span>draw_entities:
-<span class="line-number"> 886</span>  mov si, _ENTITIES_
-<span class="line-number"> 887</span>  mov cl, MAX_ENTITIES
-<span class="line-number"> 888</span>  .next:
-<span class="line-number"> 889</span>    push cx
-<span class="line-number"> 890</span>    push si
-<span class="line-number"> 891</span>
-<span class="line-number"> 892</span>    cmp byte [si+_STATE_], STATE_DEACTIVATED
-<span class="line-number"> 893</span>    jz .skip_entity
-<span class="line-number"> 894</span>
-<span class="line-number"> 895</span>    mov cx, [si+_POS_]
-<span class="line-number"> 896</span>    call conv_pos2mem       
-<span class="line-number"> 897</span>    
-<span class="line-number"> 898</span>    cmp byte [si+_STATE_], STATE_FOLLOW
-<span class="line-number"> 899</span>    jnz .skip_follow
-<span class="line-number"> 900</span>      push si
-<span class="line-number"> 901</span>      mov si, [_PLAYER_ENTITY_ID_]
-<span class="line-number"> 902</span>      mov cx, [si+_POS_]   
-<span class="line-number"> 903</span>      pop si
-<span class="line-number"> 904</span>      mov word [si+_POS_], cx 
-<span class="line-number"> 905</span>      call conv_pos2mem       
-<span class="line-number"> 906</span>      sub di, 320*12          
-<span class="line-number"> 907</span>    .skip_follow:
-<span class="line-number"> 908</span>
-<span class="line-number"> 909</span>    mov byte al, [si]       
-<span class="line-number"> 910</span>    mov ah, al              
-<span class="line-number"> 911</span>
-<span class="line-number"> 912</span>    cmp ah, ID_PLAYER
-<span class="line-number"> 913</span>    jnz .skip_player_check
-<span class="line-number"> 914</span>      cmp byte [_HOLDING_ID_], 0x0
-<span class="line-number"> 915</span>      jz .skip_player_check
-<span class="line-number"> 916</span>      mov al, 0x9
-<span class="line-number"> 917</span>    .skip_player_check:
-<span class="line-number"> 918</span>
-<span class="line-number"> 919</span>    shl al, 0x2
-<span class="line-number"> 920</span>    mov bx, BrushRefs       
-<span class="line-number"> 921</span>    add bl, al              
-<span class="line-number"> 922</span>    mov dx, [bx]            
-<span class="line-number"> 923</span>    push dx                 
-<span class="line-number"> 924</span>
-<span class="line-number"> 925</span>    add al, 0x2               
-<span class="line-number"> 926</span>    movzx bx, al              
-<span class="line-number"> 927</span>    add di, [BrushRefs + bx]  
-<span class="line-number"> 928</span>    mov dl, [si+_MIRROR_]     
-<span class="line-number"> 929</span>    
-<span class="line-number"> 930</span>    pop si                  
-<span class="line-number"> 931</span>    call draw_sprite
-<span class="line-number"> 932</span>
-<span class="line-number"> 933</span>    cmp ah, ID_PLAYER
-<span class="line-number"> 934</span>    jnz .skip_player_draw
-<span class="line-number"> 935</span>      mov si, IndieBottomBrush
-<span class="line-number"> 936</span>      add di, 320*7
-<span class="line-number"> 937</span>      call draw_sprite
-<span class="line-number"> 938</span>    .skip_player_draw:
-<span class="line-number"> 939</span>
-<span class="line-number"> 940</span>    cmp ah, ID_GOLD
-<span class="line-number"> 941</span>    jnz .skip_gold_draw
-<span class="line-number"> 942</span>      mov ax, [_GAME_TICK_]
-<span class="line-number"> 943</span>      add ax, cx
-<span class="line-number"> 944</span>      and ax, 0x4
-<span class="line-number"> 945</span>      cmp ax, 0x2
-<span class="line-number"> 946</span>      jl .skip_gold_draw
-<span class="line-number"> 947</span>      xor dl, dl 
-<span class="line-number"> 948</span>      mov si, GoldBrush
-<span class="line-number"> 949</span>      call draw_sprite
-<span class="line-number"> 950</span>    .skip_gold_draw:
-<span class="line-number"> 951</span>
-<span class="line-number"> 952</span>    cmp ah, ID_CHEST
-<span class="line-number"> 953</span>    jnz .skip_chest
-<span class="line-number"> 954</span>      cmp byte [_HOLDING_ID_], ID_GOLD
-<span class="line-number"> 955</span>      jnz .skip_chest
-<span class="line-number"> 956</span>        mov si, ArrowBrush
-<span class="line-number"> 957</span>        sub di, 320*6
-<span class="line-number"> 958</span>        mov ax, [_GAME_TICK_]
-<span class="line-number"> 959</span>        and ax, 0x1
-<span class="line-number"> 960</span>        imul ax, 320*2
-<span class="line-number"> 961</span>        add di, ax
-<span class="line-number"> 962</span>        call draw_sprite
-<span class="line-number"> 963</span>    .skip_chest:
-<span class="line-number"> 964</span>
-<span class="line-number"> 965</span>    .skip_entity:
-<span class="line-number"> 966</span>    pop si
-<span class="line-number"> 967</span>    add si, ENTITY_SIZE
-<span class="line-number"> 968</span>    pop cx
-<span class="line-number"> 969</span>    dec cx
-<span class="line-number"> 970</span>  jg .next
-<span class="line-number"> 971</span>
-<span class="line-number"> 972</span>
+                                                <div class="code-column"><span class="line-number">1329</span>
+<span class="line-number">1330</span>draw_entities:
+<span class="line-number">1331</span>  mov si, _ENTITIES_
+<span class="line-number">1332</span>  mov cl, MAX_ENTITIES
+<span class="line-number">1333</span>  .next:
+<span class="line-number">1334</span>    push cx
+<span class="line-number">1335</span>    push si
+<span class="line-number">1336</span>
+<span class="line-number">1337</span>    cmp byte [si+_STATE_], STATE_DEACTIVATED
+<span class="line-number">1338</span>    jz .skip_entity
+<span class="line-number">1339</span>
+<span class="line-number">1340</span>    .hire_player:
+<span class="line-number">1341</span>    test byte [_GAME_STATE_], GSTATE_PREGAME
+<span class="line-number">1342</span>    jnz .hide_player
+<span class="line-number">1343</span>    test byte [_GAME_STATE_], GSTATE_POSTGAME
+<span class="line-number">1344</span>    jnz .hide_player
+<span class="line-number">1345</span>    jmp .skip_hide_player
+<span class="line-number">1346</span>    .hide_player:
+<span class="line-number">1347</span>      cmp byte [si+_ID_], ID_PLAYER
+<span class="line-number">1348</span>      jz .skip_entity
+<span class="line-number">1349</span>      cmp byte [si+_ID_], ID_CHEST
+<span class="line-number">1350</span>      jz .skip_entity
+<span class="line-number">1351</span>    .skip_hide_player:
+<span class="line-number">1352</span>
+<span class="line-number">1353</span>    mov cx, [si+_POS_]
+<span class="line-number">1354</span>    call conv_pos2mem       
+<span class="line-number">1355</span>
+<span class="line-number">1356</span>    cmp byte [si+_STATE_], STATE_FOLLOW
+<span class="line-number">1357</span>    jnz .skip_follow
+<span class="line-number">1358</span>      push si
+<span class="line-number">1359</span>      mov si, [_PLAYER_ENTITY_ID_]
+<span class="line-number">1360</span>      mov cx, [si+_POS_]   
+<span class="line-number">1361</span>      pop si
+<span class="line-number">1362</span>      mov word [si+_POS_], cx 
+<span class="line-number">1363</span>      call conv_pos2mem       
+<span class="line-number">1364</span>      sub di, 320*12          
+<span class="line-number">1365</span>    .skip_follow:
+<span class="line-number">1366</span>
+<span class="line-number">1367</span>    mov byte al, [si]       
+<span class="line-number">1368</span>    mov ah, al              
+<span class="line-number">1369</span>
+<span class="line-number">1370</span>    cmp ah, ID_PLAYER
+<span class="line-number">1371</span>    jnz .skip_player_check
+<span class="line-number">1372</span>      cmp byte [_HOLDING_ID_], 0x0
+<span class="line-number">1373</span>      jz .skip_player_check
+<span class="line-number">1374</span>      mov al, 0x9
+<span class="line-number">1375</span>    .skip_player_check:
+<span class="line-number">1376</span>
+<span class="line-number">1377</span>    shl al, 0x2
+<span class="line-number">1378</span>    mov bx, BrushRefs       
+<span class="line-number">1379</span>    add bl, al              
+<span class="line-number">1380</span>    mov dx, [bx]            
+<span class="line-number">1381</span>    push dx                 
+<span class="line-number">1382</span>
+<span class="line-number">1383</span>    add al, 0x2               
+<span class="line-number">1384</span>    movzx bx, al              
+<span class="line-number">1385</span>    add di, [BrushRefs + bx]  
+<span class="line-number">1386</span>    mov dl, [si+_MIRROR_]     
+<span class="line-number">1387</span>
+<span class="line-number">1388</span>    pop si                  
+<span class="line-number">1389</span>    call draw_sprite
+<span class="line-number">1390</span>
+<span class="line-number">1391</span>    cmp ah, ID_PLAYER
+<span class="line-number">1392</span>    jnz .skip_player_draw
+<span class="line-number">1393</span>      mov si, IndieBottomBrush
+<span class="line-number">1394</span>      add di, 320*7
+<span class="line-number">1395</span>      call draw_sprite
+<span class="line-number">1396</span>      cmp byte [_WEB_LOCKED_], 0
+<span class="line-number">1397</span>      jz .skip_web_draw
+<span class="line-number">1398</span>        mov si, WebBrush
+<span class="line-number">1399</span>        sub di, 320*6
+<span class="line-number">1400</span>        call draw_sprite
+<span class="line-number">1401</span>      .skip_web_draw:
+<span class="line-number">1402</span>    .skip_player_draw:
+<span class="line-number">1403</span>
+<span class="line-number">1404</span>    cmp ah, ID_GOLD
+<span class="line-number">1405</span>    jnz .skip_gold_draw
+<span class="line-number">1406</span>      mov ax, [_GAME_TICK_]
+<span class="line-number">1407</span>      add ax, cx
+<span class="line-number">1408</span>      and ax, 0x4
+<span class="line-number">1409</span>      cmp ax, 0x2
+<span class="line-number">1410</span>      jl .skip_gold_draw
+<span class="line-number">1411</span>      xor dl, dl 
+<span class="line-number">1412</span>      mov si, GoldBrush
+<span class="line-number">1413</span>      call draw_sprite
+<span class="line-number">1414</span>    .skip_gold_draw:
+<span class="line-number">1415</span>
+<span class="line-number">1416</span>    cmp ah, ID_CRAB
+<span class="line-number">1417</span>    jnz .skip_crab
+<span class="line-number">1418</span>      mov dl, 0
+<span class="line-number">1419</span>      mov si, CrabClawBrush
+<span class="line-number">1420</span>      add di, 8
+<span class="line-number">1421</span>      call draw_sprite
+<span class="line-number">1422</span>      mov dl, 1
+<span class="line-number">1423</span>      sub di, 320+16
+<span class="line-number">1424</span>      call draw_sprite
+<span class="line-number">1425</span>    .skip_crab:
+<span class="line-number">1426</span>
+<span class="line-number">1427</span>    cmp ah, ID_CHEST
+<span class="line-number">1428</span>    jnz .skip_chest
+<span class="line-number">1429</span>      cmp byte [_HOLDING_ID_], ID_GOLD
+<span class="line-number">1430</span>      jnz .skip_open_chest
+<span class="line-number">1431</span>
+<span class="line-number">1433</span>
+<span class="line-number">1434</span>        mov si, ChestTopBrush
+<span class="line-number">1435</span>        sub di, 320*3+8
+<span class="line-number">1436</span>        call draw_sprite
+<span class="line-number">1437</span>
+<span class="line-number">1438</span>        mov si, ArrowBrush
+<span class="line-number">1439</span>        sub di, 320*8-8
+<span class="line-number">1440</span>        mov ax, [_GAME_TICK_]
+<span class="line-number">1441</span>        and ax, 0x1
+<span class="line-number">1442</span>        imul ax, 320*2
+<span class="line-number">1443</span>        add di, ax
+<span class="line-number">1444</span>        call draw_sprite
+<span class="line-number">1445</span>        jmp .skip_chest
+<span class="line-number">1446</span>        .skip_open_chest:
+<span class="line-number">1447</span>            mov si, ChestCloseBrush
+<span class="line-number">1448</span>            sub di, 320
+<span class="line-number">1449</span>            call draw_sprite
+<span class="line-number">1450</span>    .skip_chest:
+<span class="line-number">1451</span>
+<span class="line-number">1452</span>    .skip_entity:
+<span class="line-number">1453</span>    pop si
+<span class="line-number">1454</span>    add si, ENTITY_SIZE
+<span class="line-number">1455</span>    pop cx
+<span class="line-number">1456</span>    dec cx
+<span class="line-number">1457</span>  jg .next
+<span class="line-number">1458</span>
+<span class="line-number">1459</span>skip_draw_entities:
+<span class="line-number">1460</span>
 </div>
                                                 <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2109,6 +3082,12 @@ Returns: sorted entities array
 
 
 
+
+
+
+
+
+
 ; no mirror
 
 
@@ -2135,50 +3114,57 @@ Returns: sorted entities array
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
                                             </div>
                                         </div>
                                     
                                         <div class="asmSection">
-                                            <h3>DRAW UI</h3>
+                                            <h3>CHECK SCORE</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number"> 974</span>
-<span class="line-number"> 975</span>draw_score:
-<span class="line-number"> 976</span>  mov di, 320*8+32
-<span class="line-number"> 977</span>  mov al, [_SCORE_TARGET_]
-<span class="line-number"> 978</span>  mov ah, [_SCORE_]
-<span class="line-number"> 979</span>  cmp al, ah
-<span class="line-number"> 980</span>  jg .continue_game
-<span class="line-number"> 981</span>    mov byte [_GAME_STATE_], GSTATE_END+GSTATE_WIN
-<span class="line-number"> 982</span>  .continue_game:
-<span class="line-number"> 983</span>  xor cl, cl
-<span class="line-number"> 984</span>  .draw_spot:
-<span class="line-number"> 985</span>      mov si, SlotBrush
-<span class="line-number"> 986</span>      call draw_sprite
-<span class="line-number"> 987</span>      cmp cl, ah
-<span class="line-number"> 988</span>      jge .skip_gold_draw
-<span class="line-number"> 989</span>        mov si, GoldBrush
-<span class="line-number"> 990</span>        call draw_sprite 
-<span class="line-number"> 991</span>      .skip_gold_draw:
-<span class="line-number"> 992</span>    add di, 0xa
-<span class="line-number"> 993</span>    inc cl
-<span class="line-number"> 994</span>    cmp al, cl
-<span class="line-number"> 995</span>  jnz .draw_spot
-<span class="line-number"> 996</span>
-<span class="line-number"> 997</span>skip_game_state_game:
-<span class="line-number"> 998</span>
-<span class="line-number"> 999</span>test byte [_GAME_STATE_], GSTATE_END
-<span class="line-number">1000</span>jz skip_game_state_end
-<span class="line-number">1001</span>  mov di, 320*100+154
-<span class="line-number">1002</span>  mov si, SkullBrush
-<span class="line-number">1003</span>  test byte [_GAME_STATE_], GSTATE_WIN
-<span class="line-number">1004</span>  jz .draw_icon
-<span class="line-number">1005</span>  mov si, GoldBrush
-<span class="line-number">1006</span>  .draw_icon:
-<span class="line-number">1007</span>  call draw_sprite
-<span class="line-number">1008</span>skip_game_state_end:
-<span class="line-number">1009</span>
+                                                <div class="code-column"><span class="line-number">1462</span>
+<span class="line-number">1463</span>test byte [_GAME_STATE_], GSTATE_PREGAME
+<span class="line-number">1464</span>jnz skip_score
+<span class="line-number">1465</span>test byte [_GAME_STATE_], GSTATE_POSTGAME
+<span class="line-number">1466</span>jnz skip_score
+<span class="line-number">1467</span>
+<span class="line-number">1468</span>check_score:
+<span class="line-number">1469</span>  mov di, SCORE_POSITION
+<span class="line-number">1470</span>  mov al, [_SCORE_TARGET_]
+<span class="line-number">1471</span>  mov ah, [_SCORE_]
+<span class="line-number">1472</span>  cmp al, ah
+<span class="line-number">1473</span>  jg .continue_game
+<span class="line-number">1474</span>    add byte [_GAME_STATE_], GSTATE_POSTGAME
+<span class="line-number">1475</span>    mov word [_GAME_TICK_], 0x0
+<span class="line-number">1476</span>    mov word [_CURRENT_TUNE_], tune_win
+<span class="line-number">1477</span>    mov word [_NEXT_TUNE_], tune_win
+<span class="line-number">1478</span>    mov byte [_NOTE_TIMER_], 0x0
+<span class="line-number">1479</span>    mov byte [_NOTE_TEMPO_], 0x2
+<span class="line-number">1480</span>  .continue_game:
+<span class="line-number">1481</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2200,6 +3186,39 @@ Returns: sorted entities array
 
 
 
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>DRAW SCORE</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number">1483</span>
+<span class="line-number">1484</span>draw_score:
+<span class="line-number">1485</span>  xor cl, cl
+<span class="line-number">1486</span>  .draw_spot:
+<span class="line-number">1487</span>      mov si, SlotBrush
+<span class="line-number">1488</span>      call draw_sprite
+<span class="line-number">1489</span>      cmp cl, ah
+<span class="line-number">1490</span>      jge .skip_gold_draw
+<span class="line-number">1491</span>        mov si, GoldBrush
+<span class="line-number">1492</span>        call draw_sprite
+<span class="line-number">1493</span>      .skip_gold_draw:
+<span class="line-number">1494</span>    add di, 0xa
+<span class="line-number">1495</span>    inc cl
+<span class="line-number">1496</span>    cmp al, cl
+<span class="line-number">1497</span>  jnz .draw_spot
+<span class="line-number">1498</span>
+<span class="line-number">1499</span>skip_score:
+<span class="line-number">1500</span>skip_game_state_game:
+<span class="line-number">1501</span>
+<span class="line-number">1502</span>
+</div>
+                                                <div class="comment-column">
+
+
+
 
 
 
@@ -2221,27 +3240,111 @@ Returns: sorted entities array
                                         </div>
                                     
                                         <div class="asmSection">
+                                            <h3>POST GAME</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number">1504</span>
+<span class="line-number">1505</span>test byte [_GAME_STATE_], GSTATE_POSTGAME
+<span class="line-number">1506</span>jz skip_game_state_postgame
+<span class="line-number">1507</span>draw_post_game:
+<span class="line-number">1508</span>  mov ax, [_GAME_TICK_]
+<span class="line-number">1509</span>  shr ax, 1
+<span class="line-number">1510</span>  cmp ax, POST_GAME_TIME
+<span class="line-number">1511</span>  jnz .move_ship
+<span class="line-number">1512</span>    mov byte [_GAME_STATE_], GSTATE_END+GSTATE_WIN
+<span class="line-number">1513</span>  .move_ship:
+<span class="line-number">1514</span>  mov di, 320*52+32
+<span class="line-number">1515</span>  add di, ax
+<span class="line-number">1516</span>  mov bx, 0x1
+<span class="line-number">1517</span>  call draw_ship
+<span class="line-number">1518</span>  call play_tune
+<span class="line-number">1519</span>
+<span class="line-number">1520</span>
+<span class="line-number">1521</span>skip_game_state_postgame:
+<span class="line-number">1522</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>GAME END</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number">1524</span>
+<span class="line-number">1525</span>test byte [_GAME_STATE_], GSTATE_END
+<span class="line-number">1526</span>jz skip_game_state_end
+<span class="line-number">1527</span>  call play_tune
+<span class="line-number">1528</span>  mov di, 320*100+154
+<span class="line-number">1529</span>  mov si, SkullBrush
+<span class="line-number">1530</span>  test byte [_GAME_STATE_], GSTATE_WIN
+<span class="line-number">1531</span>  jz .draw_icon
+<span class="line-number">1532</span>  mov si, GoldBrush
+<span class="line-number">1533</span>  .draw_icon:
+<span class="line-number">1534</span>  call draw_sprite
+<span class="line-number">1535</span>skip_game_state_end:
+<span class="line-number">1536</span>
+<span class="line-number">1537</span>
+</div>
+                                                <div class="comment-column">
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
                                             <h3>VGA BLIT PROCEDURE</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1011</span>
-<span class="line-number">1012</span>vga_blit:
-<span class="line-number">1013</span>    push es
-<span class="line-number">1014</span>    push ds
-<span class="line-number">1015</span>
-<span class="line-number">1016</span>    push _VGA_MEMORY_                     
-<span class="line-number">1017</span>    pop es                                  
-<span class="line-number">1018</span>    push _DBUFFER_MEMORY_                 
-<span class="line-number">1019</span>    pop ds                                  
-<span class="line-number">1020</span>    mov cx,0x7D00                           
-<span class="line-number">1021</span>    xor si,si                               
-<span class="line-number">1022</span>    xor di,di                               
-<span class="line-number">1023</span>    rep movsw                               
-<span class="line-number">1024</span>
-<span class="line-number">1025</span>    pop ds
-<span class="line-number">1026</span>    pop es
-<span class="line-number">1027</span>
-<span class="line-number">1028</span>
+                                                <div class="code-column"><span class="line-number">1539</span>
+<span class="line-number">1540</span>vga_blit:
+<span class="line-number">1541</span>    push es
+<span class="line-number">1542</span>    push ds
+<span class="line-number">1543</span>
+<span class="line-number">1544</span>    push _VGA_MEMORY_                     
+<span class="line-number">1545</span>    pop es                                  
+<span class="line-number">1546</span>    push _DBUFFER_MEMORY_                 
+<span class="line-number">1547</span>    pop ds                                  
+<span class="line-number">1548</span>    mov cx,0x7D00                           
+<span class="line-number">1549</span>    xor si,si                               
+<span class="line-number">1550</span>    xor di,di                               
+<span class="line-number">1551</span>    rep movsw                               
+<span class="line-number">1552</span>
+<span class="line-number">1553</span>    pop ds
+<span class="line-number">1554</span>    pop es
+<span class="line-number">1555</span>
+<span class="line-number">1556</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2269,18 +3372,19 @@ Returns: sorted entities array
                                             <h3>GAME TICK</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1030</span>
-<span class="line-number">1031</span>wait_for_tick:
-<span class="line-number">1032</span>    xor ax, ax          
-<span class="line-number">1033</span>    int _TICK_          
-<span class="line-number">1034</span>    mov bx, dx          
-<span class="line-number">1035</span>.wait_loop:
-<span class="line-number">1036</span>    int _TICK_          
-<span class="line-number">1037</span>    cmp dx, bx
-<span class="line-number">1038</span>    je .wait_loop       
-<span class="line-number">1039</span>
-<span class="line-number">1040</span>inc word [_GAME_TICK_]  
-<span class="line-number">1041</span> 
+                                                <div class="code-column"><span class="line-number">1558</span>
+<span class="line-number">1559</span>wait_for_tick:
+<span class="line-number">1560</span>    xor ax, ax          
+<span class="line-number">1561</span>    int _TICK_          
+<span class="line-number">1562</span>    mov bx, dx          
+<span class="line-number">1563</span>.wait_loop:
+<span class="line-number">1564</span>    int _TICK_          
+<span class="line-number">1565</span>    cmp dx, bx
+<span class="line-number">1566</span>    je .wait_loop       
+<span class="line-number">1567</span>
+<span class="line-number">1568</span>inc word [_GAME_TICK_]  
+<span class="line-number">1569</span>
+<span class="line-number">1570</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2294,24 +3398,6 @@ Returns: sorted entities array
 
 ; Increment game tick
 
-</div>
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="asmSection">
-                                            <h3>BEEP STOP</h3>
-                                            <div class="sectionDescription"></div>
-                                            <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1043</span>
-<span class="line-number">1044</span>  in al, 0x61    
-<span class="line-number">1045</span>  and al, 0x0FC  
-<span class="line-number">1046</span>  out 0x61, al   
-<span class="line-number">1047</span>
-</div>
-                                                <div class="comment-column">
-; Read the PIC chip
-; Clear bit 0 to disable the speaker
-; Write the updated value back to the PIC chip
 
 </div>
                                             </div>
@@ -2321,11 +3407,11 @@ Returns: sorted entities array
                                             <h3>ESC OR LOOP</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1049</span>
-<span class="line-number">1050</span>  in al,0x60                  
-<span class="line-number">1051</span>  dec al                      
-<span class="line-number">1052</span>  jnz game_loop               
-<span class="line-number">1053</span>
+                                                <div class="code-column"><span class="line-number">1572</span>
+<span class="line-number">1573</span>  in al, 0x60                  
+<span class="line-number">1574</span>  dec al                      
+<span class="line-number">1575</span>  jnz game_loop               
+<span class="line-number">1576</span>
 </div>
                                                 <div class="comment-column">
 ; Read keyboard
@@ -2340,14 +3426,39 @@ Returns: sorted entities array
                                             <h3>TERMINATE PROGRAM</h3>
                                             <div class="sectionDescription"></div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1055</span>
-<span class="line-number">1056</span>  exit:
-<span class="line-number">1057</span>    ret                       
-<span class="line-number">1058</span>
+                                                <div class="code-column"><span class="line-number">1578</span>
+<span class="line-number">1579</span>  exit:
+<span class="line-number">1580</span>
 </div>
                                                 <div class="comment-column">
 
-; Return to BIOS
+
+</div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="asmSection">
+                                            <h3>BEEP STOP</h3>
+                                            <div class="sectionDescription"></div>
+                                            <div class="asmView">
+                                                <div class="code-column"><span class="line-number">1582</span>
+<span class="line-number">1583</span>  in al, 0x61    
+<span class="line-number">1584</span>  and al, 0x0FC  
+<span class="line-number">1585</span>  out 0x61, al   
+<span class="line-number">1586</span>
+<span class="line-number">1587</span>    mov ax, 0x4c00
+<span class="line-number">1588</span>    int 0x21
+<span class="line-number">1589</span>    ret                       
+<span class="line-number">1590</span>
+</div>
+                                                <div class="comment-column">
+; Read the PIC chip
+; Clear bit 0 to disable the speaker
+; Write the updated value back to the PIC chip
+
+
+
+; Return to BIOS/DOS
 
 </div>
                                             </div>
@@ -2359,22 +3470,21 @@ Returns: sorted entities array
 Expects: BX - frequency value
 Return: -
 xor bh, bh
-shl bx, 6
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1063</span>
-<span class="line-number">1064</span>beep:
-<span class="line-number">1067</span>  mov al, 0xB6  
-<span class="line-number">1068</span>  out 0x43, al   
-<span class="line-number">1069</span>  mov ah, bl    
-<span class="line-number">1070</span>  out 0x42, al   
-<span class="line-number">1071</span>  mov al, ah
-<span class="line-number">1072</span>  out 0x42, al   
-<span class="line-number">1073</span>  in al, 0x61    
-<span class="line-number">1074</span>  or al, 0x03    
-<span class="line-number">1075</span>  out 0x61, al   
-<span class="line-number">1076</span>ret
-<span class="line-number">1077</span>
+                                                <div class="code-column"><span class="line-number">1595</span>
+<span class="line-number">1596</span>beep:
+<span class="line-number">1598</span>  mov al, 0xB6  
+<span class="line-number">1599</span>  out 0x43, al   
+<span class="line-number">1600</span>  mov ah, bl    
+<span class="line-number">1601</span>  out 0x42, al   
+<span class="line-number">1602</span>  mov al, ah
+<span class="line-number">1603</span>  out 0x42, al   
+<span class="line-number">1604</span>  in al, 0x61    
+<span class="line-number">1605</span>  or al, 0x03    
+<span class="line-number">1606</span>  out 0x61, al   
+<span class="line-number">1607</span>ret
+<span class="line-number">1608</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2399,19 +3509,19 @@ shl bx, 6
 Return: DI memory position
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1081</span>
-<span class="line-number">1082</span>conv_pos2mem:
-<span class="line-number">1083</span>  mov di, LEVEL_START_POSITION
-<span class="line-number">1084</span>  xor ax, ax               
-<span class="line-number">1085</span>  mov al, ch               
-<span class="line-number">1086</span> imul ax, 320*8
-<span class="line-number">1087</span>  xor dh, dh               
-<span class="line-number">1088</span>  mov dl, cl               
-<span class="line-number">1089</span>  shl dx, 3                
-<span class="line-number">1090</span>  add ax, dx               
-<span class="line-number">1091</span>  add di, ax               
-<span class="line-number">1092</span>ret
-<span class="line-number">1093</span>
+                                                <div class="code-column"><span class="line-number">1612</span>
+<span class="line-number">1613</span>conv_pos2mem:
+<span class="line-number">1614</span>  mov di, LEVEL_START_POSITION
+<span class="line-number">1615</span>  xor ax, ax               
+<span class="line-number">1616</span>  mov al, ch               
+<span class="line-number">1617</span> imul ax, 320*8
+<span class="line-number">1618</span>  xor dh, dh               
+<span class="line-number">1619</span>  mov dl, cl               
+<span class="line-number">1620</span>  shl dx, 3                
+<span class="line-number">1621</span>  add ax, dx               
+<span class="line-number">1622</span>  add di, ax               
+<span class="line-number">1623</span>ret
+<span class="line-number">1624</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2431,68 +3541,23 @@ Return: DI memory position
                                         </div>
                                     
                                         <div class="asmSection">
-                                            <h3>RANDOM MOVE</h3>
-                                            <div class="sectionDescription">Expects: CX - position YY/XX
-Return: CX - updated pos
-</div>
-                                            <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1097</span>
-<span class="line-number">1098</span>random_move:
-<span class="line-number">1099</span>  in ax, 0x40       
-<span class="line-number">1100</span>  xor ax, 0xb00b    
-<span class="line-number">1101</span>  mov bx, ax        
-<span class="line-number">1102</span>  and ax, 0x2       
-<span class="line-number">1103</span>  dec ax            
-<span class="line-number">1104</span>
-<span class="line-number">1105</span>  test bx, 0x1      
-<span class="line-number">1106</span>  jz .move_x        
-<span class="line-number">1107</span>  add ch, al        
-<span class="line-number">1108</span>ret 
-<span class="line-number">1109</span>  .move_x:
-<span class="line-number">1110</span>  add cl, al        
-<span class="line-number">1111</span>  .done:
-<span class="line-number">1112</span>ret
-<span class="line-number">1113</span>
-</div>
-                                                <div class="comment-column">
-
-; Read the timer
-; XOR with magic number
-; Save a copy
-; Check if we should move X
-; Convert 2 to 1 and 0 to -1 = -1, 0, 1
-
-; Check if we should move Y
-; Jump if not
-; Move Y
-
-
-; Move X
-
-
-
-</div>
-                                            </div>
-                                        </div>
-                                    
-                                        <div class="asmSection">
                                             <h3>CHECK BOUNDS</h3>
                                             <div class="sectionDescription">Expects: CX - Position YY/XX (CH: Y coordinate, CL: X coordinate)
 Returns: AX - Zero if hit bound, 1 if no bounds at this location
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1117</span>
-<span class="line-number">1118</span>check_bounds:
-<span class="line-number">1119</span>  xor ax, ax             
-<span class="line-number">1120</span>  cmp ch, 0x0f
-<span class="line-number">1121</span>  ja .return
-<span class="line-number">1122</span>  cmp cl, 0x1f
-<span class="line-number">1123</span>  ja .return
-<span class="line-number">1124</span>  inc ax                 
-<span class="line-number">1125</span>.return:
-<span class="line-number">1126</span>  test ax, 1             
-<span class="line-number">1127</span>  ret
-<span class="line-number">1128</span>
+                                                <div class="code-column"><span class="line-number">1628</span>
+<span class="line-number">1629</span>check_bounds:
+<span class="line-number">1630</span>  xor ax, ax             
+<span class="line-number">1631</span>  cmp ch, 0x0f
+<span class="line-number">1632</span>  ja .return
+<span class="line-number">1633</span>  cmp cl, 0x1f
+<span class="line-number">1634</span>  ja .return
+<span class="line-number">1635</span>  inc ax                 
+<span class="line-number">1636</span>.return:
+<span class="line-number">1637</span>  test ax, 1             
+<span class="line-number">1638</span>  ret
+<span class="line-number">1639</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2516,33 +3581,35 @@ Returns: AX - Zero if hit bound, 1 if no bounds at this location
 Return: AX - Zero if hit entity, 1 if clear
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1132</span>
-<span class="line-number">1133</span>check_friends:
-<span class="line-number">1134</span>  push si
-<span class="line-number">1135</span>  push cx
-<span class="line-number">1136</span>  xor bx, bx
-<span class="line-number">1137</span>  mov ax, cx
-<span class="line-number">1138</span>
-<span class="line-number">1139</span>  mov cl, MAX_ENTITIES
-<span class="line-number">1140</span>  mov si, _ENTITIES_
-<span class="line-number">1141</span>  .next_entity:
-<span class="line-number">1142</span>    cmp byte [si+_STATE_], STATE_FOLLOW
-<span class="line-number">1143</span>    jle .skip_this_entity
-<span class="line-number">1144</span>    cmp word [si+_POS_], ax
-<span class="line-number">1145</span>    jnz .skip_this_entity
-<span class="line-number">1146</span>      inc bx
-<span class="line-number">1147</span>    .skip_this_entity:
-<span class="line-number">1148</span>    add si, ENTITY_SIZE
-<span class="line-number">1149</span>  loop .next_entity
-<span class="line-number">1150</span>
-<span class="line-number">1151</span>  .done:
-<span class="line-number">1152</span>  pop cx
-<span class="line-number">1153</span>  pop si
-<span class="line-number">1154</span>  cmp bx, 0x1
-<span class="line-number">1155</span>ret
-<span class="line-number">1156</span>
+                                                <div class="code-column"><span class="line-number">1643</span>
+<span class="line-number">1644</span>check_friends:
+<span class="line-number">1645</span>  push si
+<span class="line-number">1646</span>  push cx
+<span class="line-number">1647</span>  xor bx, bx
+<span class="line-number">1648</span>  mov ax, cx
+<span class="line-number">1649</span>
+<span class="line-number">1650</span>  mov cl, MAX_ENTITIES
+<span class="line-number">1651</span>  mov si, _ENTITIES_
+<span class="line-number">1652</span>  .next_entity:
+<span class="line-number">1653</span>    cmp byte [si+_STATE_], STATE_FOLLOW
+<span class="line-number">1654</span>    jle .skip_this_entity
+<span class="line-number">1655</span>    cmp word [si+_POS_], ax
+<span class="line-number">1656</span>    jnz .skip_this_entity
+<span class="line-number">1657</span>      inc bx
+<span class="line-number">1658</span>      jmp .done
+<span class="line-number">1659</span>    .skip_this_entity:
+<span class="line-number">1660</span>    add si, ENTITY_SIZE
+<span class="line-number">1661</span>  loop .next_entity
+<span class="line-number">1662</span>
+<span class="line-number">1663</span>  .done:
+<span class="line-number">1664</span>  pop cx
+<span class="line-number">1665</span>  pop si
+<span class="line-number">1666</span>  cmp bx, 0x1
+<span class="line-number">1667</span>ret
+<span class="line-number">1668</span>
 </div>
                                                 <div class="comment-column">
+
 
 
 
@@ -2575,21 +3642,103 @@ Return: AX - Zero if hit entity, 1 if clear
                                             <h3>CHECK WATER TILE</h3>
                                             <div class="sectionDescription">Expects: CX - Player position (CH: Y 0-15, CL: X 0-31)
 Returns: AL - 0 if water (0xF), 1 otherwise
+skip
+in: bx - wiosla
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1160</span>
-<span class="line-number">1161</span>check_water_tile:
-<span class="line-number">1162</span>  mov ax, cx      
-<span class="line-number">1163</span>  shr ah, 1       
-<span class="line-number">1164</span>  shr al, 1       
-<span class="line-number">1165</span>  movzx bx, ah
-<span class="line-number">1166</span>  shl bx, 4       
-<span class="line-number">1167</span>  add bl, al      
-<span class="line-number">1168</span>  add bx, LevelData
-<span class="line-number">1169</span>  mov al, [bx]    
-<span class="line-number">1170</span>  test al, 0x40   
-<span class="line-number">1171</span>ret
-<span class="line-number">1172</span>
+                                                <div class="code-column"><span class="line-number">1672</span>
+<span class="line-number">1673</span>check_water_tile:
+<span class="line-number">1674</span>  mov ax, cx      
+<span class="line-number">1675</span>  shr ah, 1       
+<span class="line-number">1676</span>  shr al, 1       
+<span class="line-number">1677</span>  movzx bx, ah
+<span class="line-number">1678</span>  shl bx, 4       
+<span class="line-number">1679</span>  add bl, al      
+<span class="line-number">1680</span>  add bx, LevelData
+<span class="line-number">1681</span>  mov al, [bx]    
+<span class="line-number">1682</span>  test al, 0x40   
+<span class="line-number">1683</span>ret
+<span class="line-number">1684</span>
+<span class="line-number">1685</span>play_tune:
+<span class="line-number">1686</span>  cmp byte [_NOTE_TIMER_], 0x0
+<span class="line-number">1687</span>  jz .new_note
+<span class="line-number">1688</span>    dec byte [_NOTE_TIMER_]
+<span class="line-number">1689</span>    jmp .done
+<span class="line-number">1690</span>  .new_note:
+<span class="line-number">1691</span>    inc word [_CURRENT_TUNE_]
+<span class="line-number">1692</span>    mov si, [_CURRENT_TUNE_]
+<span class="line-number">1693</span>    mov bl, [si]
+<span class="line-number">1694</span>    cmp bl, 0
+<span class="line-number">1695</span>    jnz .skip_loop
+<span class="line-number">1696</span>      mov ax, [_NEXT_TUNE_]
+<span class="line-number">1697</span>      mov word [_CURRENT_TUNE_], ax     
+<span class="line-number">1698</span>      mov si, ax
+<span class="line-number">1699</span>      mov bl, [si]
+<span class="line-number">1700</span>    .skip_loop:
+<span class="line-number">1701</span>    mov byte al, [_NOTE_TEMPO_]
+<span class="line-number">1702</span>    mov byte [_NOTE_TIMER_], al
+<span class="line-number">1703</span>    call beep
+<span class="line-number">1704</span>  .done:
+<span class="line-number">1705</span>ret
+<span class="line-number">1706</span>
+<span class="line-number">1707</span>
+<span class="line-number">1710</span>
+<span class="line-number">1711</span>draw_ship:
+<span class="line-number">1712</span>  xor dx, dx
+<span class="line-number">1713</span>
+<span class="line-number">1714</span>  mov ax, [_GAME_TICK_]
+<span class="line-number">1715</span>  and ax, 0xf
+<span class="line-number">1716</span>  cmp ax, 0x6
+<span class="line-number">1717</span>  jl .skip_wave
+<span class="line-number">1718</span>    sub di, 320
+<span class="line-number">1719</span>  .skip_wave:
+<span class="line-number">1720</span>  mov si, ShipBackBrush
+<span class="line-number">1721</span>  call draw_sprite
+<span class="line-number">1722</span>  add di, 8 + 320*4
+<span class="line-number">1723</span>  mov si, ShipMiddleBrush
+<span class="line-number">1724</span>  call draw_sprite
+<span class="line-number">1725</span>  add di, 8
+<span class="line-number">1726</span>  mov si, ShipMiddleBrush
+<span class="line-number">1727</span>  call draw_sprite
+<span class="line-number">1728</span>  add di, 8
+<span class="line-number">1729</span>  mov si, ShipFrontBrush
+<span class="line-number">1730</span>  call draw_sprite
+<span class="line-number">1731</span>
+<span class="line-number">1732</span>  mov si, ShipSailBrush
+<span class="line-number">1733</span>  sub di, 12 + 320*5
+<span class="line-number">1734</span>  call draw_sprite
+<span class="line-number">1735</span>  add di, 320*2 - 4
+<span class="line-number">1736</span>  call draw_sprite
+<span class="line-number">1737</span>  sub di, 320*7 - 3
+<span class="line-number">1738</span>  call draw_sprite
+<span class="line-number">1739</span>  add di, 320*2 - 4
+<span class="line-number">1740</span>  call draw_sprite
+<span class="line-number">1741</span>  sub di, 320*6 - 1
+<span class="line-number">1742</span>  call draw_sprite
+<span class="line-number">1743</span>
+<span class="line-number">1744</span>  add di, 320*10 + 10
+<span class="line-number">1745</span>  call draw_sprite
+<span class="line-number">1746</span>  sub di, 320*4 + 2
+<span class="line-number">1747</span>  call draw_sprite
+<span class="line-number">1748</span>
+<span class="line-number">1749</span>  cmp bx, 0x1
+<span class="line-number">1750</span>  jnz .skip_wiosla
+<span class="line-number">1751</span>  xor dx, dx
+<span class="line-number">1752</span>  mov ax, [_GAME_TICK_]
+<span class="line-number">1753</span>  shr ax, 3
+<span class="line-number">1754</span>  and ax, 0x1
+<span class="line-number">1755</span>  add dl, al
+<span class="line-number">1756</span>  sub di, ax
+<span class="line-number">1757</span>  sub di, ax
+<span class="line-number">1758</span>  sub di, ax
+<span class="line-number">1759</span>  mov si, WioslaBrush
+<span class="line-number">1760</span>  add di, 320*15-7
+<span class="line-number">1761</span>  call draw_sprite
+<span class="line-number">1762</span>  add di, 8
+<span class="line-number">1763</span>  call draw_sprite
+<span class="line-number">1764</span>  .skip_wiosla:
+<span class="line-number">1765</span>ret
+<span class="line-number">1766</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2604,6 +3753,86 @@ Returns: AL - 0 if water (0xF), 1 otherwise
 ; Check if movable (7th bit set)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+; Loop to begining of the tune
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
                                             </div>
                                         </div>
@@ -2616,89 +3845,89 @@ DL - settings: 0 normal, 1 mirrored x, 2 mirrored y, 3 mirrored x&amp;y
 Return: -
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1178</span>
-<span class="line-number">1179</span>draw_sprite:
-<span class="line-number">1180</span>  pusha
-<span class="line-number">1181</span>  xor cx, cx
-<span class="line-number">1182</span>  mov byte cl, [si]       
-<span class="line-number">1183</span>  inc si
-<span class="line-number">1184</span>
-<span class="line-number">1185</span>  xor ax, ax
-<span class="line-number">1186</span>  mov byte al, [si]       
-<span class="line-number">1187</span>  inc si
-<span class="line-number">1188</span>
-<span class="line-number">1189</span>  shl ax, 0x2              
-<span class="line-number">1190</span>  mov bp, ax
-<span class="line-number">1191</span>  add bp, PaletteSets
-<span class="line-number">1192</span>
-<span class="line-number">1193</span>  test dl, 0x1              
-<span class="line-number">1194</span>  jz .no_x_mirror
-<span class="line-number">1195</span>    add di, 0x7             
-<span class="line-number">1196</span>  .no_x_mirror:
-<span class="line-number">1197</span>
-<span class="line-number">1198</span>  test dl, 0x2              
-<span class="line-number">1199</span>  jz .no_y_mirror
-<span class="line-number">1200</span>    add si, cx
-<span class="line-number">1201</span>    add si, cx              
-<span class="line-number">1202</span>    sub si, 0x2             
-<span class="line-number">1203</span>  .no_y_mirror:
-<span class="line-number">1204</span>
-<span class="line-number">1205</span>  .plot_line:
-<span class="line-number">1206</span>      push cx           
-<span class="line-number">1207</span>      mov ax, [si]      
-<span class="line-number">1208</span>      xor bx, bx
-<span class="line-number">1209</span>      mov cl, 0x08      
-<span class="line-number">1210</span>      push si
-<span class="line-number">1211</span>      .draw_pixel:
-<span class="line-number">1212</span>          push cx
-<span class="line-number">1213</span>
-<span class="line-number">1214</span>          rol ax, 2
-<span class="line-number">1215</span>          mov bx, ax
-<span class="line-number">1216</span>          and bx, 0x3
-<span class="line-number">1217</span>          
-<span class="line-number">1218</span>          mov si, bp      
-<span class="line-number">1219</span>          add si, bx      
-<span class="line-number">1220</span>          mov byte bl, [si] 
-<span class="line-number">1221</span>
-<span class="line-number">1222</span>          cmp bl, 0x0        
-<span class="line-number">1223</span>          jz .skip_pixel
-<span class="line-number">1224</span>            mov byte [es:di], bl  
-<span class="line-number">1225</span>          .skip_pixel:     
-<span class="line-number">1226</span>
-<span class="line-number">1227</span>          inc di           
-<span class="line-number">1228</span>
-<span class="line-number">1229</span>          mov bl, dl
-<span class="line-number">1230</span>          and bl, 0x1
-<span class="line-number">1231</span>          jz .no_x_mirror2          
-<span class="line-number">1232</span>            dec di           
-<span class="line-number">1233</span>            dec di           
-<span class="line-number">1234</span>          .no_x_mirror2:
-<span class="line-number">1235</span>
-<span class="line-number">1236</span>          pop cx
-<span class="line-number">1237</span>          loop .draw_pixel
-<span class="line-number">1238</span>
-<span class="line-number">1239</span>      pop si
-<span class="line-number">1240</span>      add si, 0x2               
-<span class="line-number">1241</span>
-<span class="line-number">1242</span>      mov bl, dl
-<span class="line-number">1243</span>      and bl, 0x2
-<span class="line-number">1244</span>      jz .no_y_mirror2
-<span class="line-number">1245</span>        sub si, 0x4
-<span class="line-number">1246</span>      .no_y_mirror2:
-<span class="line-number">1247</span>
-<span class="line-number">1248</span>      add di, 312          
-<span class="line-number">1249</span>
-<span class="line-number">1250</span>      mov bl, dl
-<span class="line-number">1251</span>      and bl, 0x1
-<span class="line-number">1252</span>      jz .no_x_mirror3
-<span class="line-number">1253</span>        add di, 0x10           
-<span class="line-number">1254</span>      .no_x_mirror3:
-<span class="line-number">1255</span>
-<span class="line-number">1256</span>  pop cx                   
-<span class="line-number">1257</span>  loop .plot_line
-<span class="line-number">1258</span>  popa
-<span class="line-number">1259</span>ret
-<span class="line-number">1260</span>
+                                                <div class="code-column"><span class="line-number">1772</span>
+<span class="line-number">1773</span>draw_sprite:
+<span class="line-number">1774</span>  pusha
+<span class="line-number">1775</span>  xor cx, cx
+<span class="line-number">1776</span>  mov byte cl, [si]       
+<span class="line-number">1777</span>  inc si
+<span class="line-number">1778</span>
+<span class="line-number">1779</span>  xor ax, ax
+<span class="line-number">1780</span>  mov byte al, [si]       
+<span class="line-number">1781</span>  inc si
+<span class="line-number">1782</span>
+<span class="line-number">1783</span>  shl ax, 0x2              
+<span class="line-number">1784</span>  mov bp, ax
+<span class="line-number">1785</span>  add bp, PaletteSets
+<span class="line-number">1786</span>
+<span class="line-number">1787</span>  test dl, 0x1              
+<span class="line-number">1788</span>  jz .no_x_mirror
+<span class="line-number">1789</span>    add di, 0x7             
+<span class="line-number">1790</span>  .no_x_mirror:
+<span class="line-number">1791</span>
+<span class="line-number">1792</span>  test dl, 0x2              
+<span class="line-number">1793</span>  jz .no_y_mirror
+<span class="line-number">1794</span>    add si, cx
+<span class="line-number">1795</span>    add si, cx              
+<span class="line-number">1796</span>    sub si, 0x2             
+<span class="line-number">1797</span>  .no_y_mirror:
+<span class="line-number">1798</span>
+<span class="line-number">1799</span>  .plot_line:
+<span class="line-number">1800</span>      push cx           
+<span class="line-number">1801</span>      mov ax, [si]      
+<span class="line-number">1802</span>      xor bx, bx
+<span class="line-number">1803</span>      mov cl, 0x08      
+<span class="line-number">1804</span>      push si
+<span class="line-number">1805</span>      .draw_pixel:
+<span class="line-number">1806</span>          push cx
+<span class="line-number">1807</span>
+<span class="line-number">1808</span>          rol ax, 2
+<span class="line-number">1809</span>          mov bx, ax
+<span class="line-number">1810</span>          and bx, 0x3
+<span class="line-number">1811</span>
+<span class="line-number">1812</span>          mov si, bp      
+<span class="line-number">1813</span>          add si, bx      
+<span class="line-number">1814</span>          mov byte bl, [si] 
+<span class="line-number">1815</span>
+<span class="line-number">1816</span>          cmp bl, 0x0        
+<span class="line-number">1817</span>          jz .skip_pixel
+<span class="line-number">1818</span>            mov byte [es:di], bl  
+<span class="line-number">1819</span>          .skip_pixel:     
+<span class="line-number">1820</span>
+<span class="line-number">1821</span>          inc di           
+<span class="line-number">1822</span>
+<span class="line-number">1823</span>          mov bl, dl
+<span class="line-number">1824</span>          and bl, 0x1
+<span class="line-number">1825</span>          jz .no_x_mirror2          
+<span class="line-number">1826</span>            dec di           
+<span class="line-number">1827</span>            dec di           
+<span class="line-number">1828</span>          .no_x_mirror2:
+<span class="line-number">1829</span>
+<span class="line-number">1830</span>          pop cx
+<span class="line-number">1831</span>          loop .draw_pixel
+<span class="line-number">1832</span>
+<span class="line-number">1833</span>      pop si
+<span class="line-number">1834</span>      add si, 0x2               
+<span class="line-number">1835</span>
+<span class="line-number">1836</span>      mov bl, dl
+<span class="line-number">1837</span>      and bl, 0x2
+<span class="line-number">1838</span>      jz .no_y_mirror2
+<span class="line-number">1839</span>        sub si, 0x4
+<span class="line-number">1840</span>      .no_y_mirror2:
+<span class="line-number">1841</span>
+<span class="line-number">1842</span>      add di, 312          
+<span class="line-number">1843</span>
+<span class="line-number">1844</span>      mov bl, dl
+<span class="line-number">1845</span>      and bl, 0x1
+<span class="line-number">1846</span>      jz .no_x_mirror3
+<span class="line-number">1847</span>        add di, 0x10           
+<span class="line-number">1848</span>      .no_x_mirror3:
+<span class="line-number">1849</span>
+<span class="line-number">1850</span>  pop cx                   
+<span class="line-number">1851</span>  loop .plot_line
+<span class="line-number">1852</span>  popa
+<span class="line-number">1853</span>ret
+<span class="line-number">1854</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2792,8 +4021,8 @@ Return: -
                                             <div class="sectionDescription">times 0x7FD - ($ - $$) db 0x0   ; Pad to 2048 bytes
 </div>
                                             <div class="asmView">
-                                                <div class="code-column"><span class="line-number">1262</span>
-<span class="line-number">1264</span>
+                                                <div class="code-column"><span class="line-number">1856</span>
+<span class="line-number">1858</span>
 </div>
                                                 <div class="comment-column">
 
@@ -2807,9 +4036,9 @@ Return: -
 Visit http://smol.p1x.in for more.
 </div>
                                 <div class="asmView">
-                                    <div class="code-column"><span class="line-number">1268</span>
-<span class="line-number">1269</span>Logo:
-<span class="line-number">1270</span>db "P1X"    
+                                    <div class="code-column"><span class="line-number">1862</span>
+<span class="line-number">1863</span>Logo:
+<span class="line-number">1864</span>db "P1X"    
 </div>
                                     <div class="comment-column">
 
