@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retro Videos Player :: smol.p1x.in</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <style>
+        body {
+            font: 16px Lato, Arial sans-serif;
+            background-color: #121212;
+            color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        h1 img {padding-right: 16px;}
+        input[type=number] {
+            padding: 10px;
+            margin: 10px;
+            width: 128px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1E1E1E;
+            color: #FFFFFF;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #05ae21;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #66ff00;
+        }
+        button.skip {
+            background-color:#2B81A2;
+        }
+        button.skip:hover {
+            background-color: #00bfff;
+        }
+        select {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1E1E1E;
+            color: #FFFFFF;
+        }
+        #player {
+            margin-top: 20px;
+        }
+        #desc {
+            font-size: 14px;
+            color: #333333;
+            margin: 20px 0;
+            width:640px;
+        }
+        #videoNumber {
+            background-color: #f00;
+        }
+        footer {
+            color: #444;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+    <script>
+        var player;
+        var videoIds = [];
+        var currentVideoIndex = 0;
+        var nextPageToken = '';
+        var query = '';
+        var region = '';
+
+        // Load the IFrame Player API code asynchronously
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function loadClient() {
+            gapi.client.setApiKey('AIzaSyCcp7ARW4RvleAyyfAjcr_X6QFJCyasR8s');
+            return gapi.client.load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest')
+                .then(function() { console.log('GAPI client loaded for API'); },
+                      function(err) { console.error('Error loading GAPI client for API', err); });
+        }
+
+        function fetchRegions() {
+            return gapi.client.youtube.i18nRegions.list({
+                "part": "snippet"
+            })
+            .then(function(response) {
+                const regions = response.result.items;
+                const regionSelect = document.getElementById('region');
+                regions.forEach(region => {
+                    const option = document.createElement('option');
+                    option.value = region.snippet.gl;
+                    option.text = region.snippet.name;
+                    regionSelect.appendChild(option);
+                });
+            },
+            function(err) { console.error('Execute error', err); });
+        }
+
+        function updateRegion() {
+            region = document.getElementById('region').value;
+        }
+
+        function searchVideos() {
+            var number = document.getElementById('videoNumber').value;
+            if (number === '' || isNaN(number)) {
+                alert('Please enter a valid number (0-9999)');
+                return;
+            }
+            number = number.padStart(4, '0');
+            query = 'IMG_' + number;
+            videoIds = [];
+            currentVideoIndex = 0;
+            nextPageToken = '';
+            fetchVideos();
+        }
+
+        function fetchVideos() {
+            var apiKey = 'AIzaSyCcp7ARW4RvleAyyfAjcr_X6QFJCyasR8s';
+            var url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&videoEmbeddable=true&q=' + encodeURIComponent(query) + '&key=' + apiKey;
+
+            if (nextPageToken) {
+                url += '&pageToken=' + nextPageToken;
+            }
+
+            if (region) {
+                url += `&regionCode=${region}`;
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    videoIds = videoIds.concat(data.items.map(item => item.id.videoId));
+                    nextPageToken = data.nextPageToken || '';
+                    playVideo();
+                })
+                .catch(error => console.error(error));
+        }
+
+        function playVideo() {
+            document.getElementById('message').innerText = '';
+            if (currentVideoIndex < videoIds.length) {
+                player.loadVideoById(videoIds[currentVideoIndex]);
+            } else if (nextPageToken) {
+                fetchVideos();
+            } else {
+                document.getElementById('message').innerText = 'No more videos to play.';
+            }
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                currentVideoIndex++;
+                if (currentVideoIndex < videoIds.length) {
+                    player.loadVideoById(videoIds[currentVideoIndex]);
+                } else if (nextPageToken) {
+                    fetchVideos();
+                } else {
+                    document.getElementById('message').innerText = 'No more videos to play.';
+                }
+            }
+        }
+
+        function skipVideo() {
+            currentVideoIndex++;
+            if (currentVideoIndex < videoIds.length) {
+                player.loadVideoById(videoIds[currentVideoIndex]);
+                document.getElementById('message').innerText = '';
+            } else if (nextPageToken) {
+                fetchVideos();
+            } else {
+                document.getElementById('message').innerText = 'No more videos to play.';
+            }
+        }
+
+        function init() {
+            loadClient().then(fetchRegions);
+        }
+
+        gapi.load('client', init);
+    </script>
+</head>
+<body>
+    <h1><img src="tv.gif" alt="TV" width=48/> Retro Videos Player</h1>
+    <div>
+        <input type="number" id="videoNumber" min="0" max="9999" placeholder="Enter a number...">
+        <select id="region" onchange="updateRegion()">
+            <option value="">Select a region</option>
+        </select>
+        <button onclick="searchVideos()">▶️ Play Videos</button>
+        <button onclick="skipVideo()" class="skip">⏭️ Skip Video</button>
+    </div>
+    <div id="message"></div>
+    <div id="player"></div>
+    <div id="desc">
+        <p>Early iPhones used the naming format IMG_XXXX for photos and videos. When users uploaded videos to YouTube from the iPhotos app, this was the default title. Use this to find authentic, retro videos from random people.</p>
+    </div>
+    <footer><hr><small>&copy;2024 by <a href="https://krzysztofjankowski.com/">Krzysztof Krystian Jankowski</a> &amp; <a href="https://nomada.p1x.in/">Cyfrowy Nomada</a><br>Powered by 👁️🐝Ⓜ️</small></footer>
+</body>
+</html>
