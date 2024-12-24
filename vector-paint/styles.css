@@ -1,0 +1,155 @@
+:root {
+  --primary: #2196f3;
+  --background: #1a1a1a;
+  --surface: #2d2d2d;
+  --text: #ffffff;
+  --text-secondary: #b3b3b3;
+  --hover: #3d3d3d;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.canvas-container {
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+canvas {
+  cursor: crosshair;
+  background: radial-gradient(circle, #262626 0%, #0f0f0f 70%);
+  image-rendering: pixelated;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 510/400;
+  display: block;
+}
+
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.control-group {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+button {
+
+    background-color: var(--surface);
+    border: 1px solid var(--primary);  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+button:hover {
+  background-color: yellow;
+  color:black;
+  transform: translateY(-1px);
+}
+
+.pan-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#panUpButton { grid-column: 2; }
+#panLeftButton { grid-column: 1; grid-row: 2; }
+#panDownButton { grid-column: 2; grid-row: 2; }
+#panRightButton { grid-column: 3; grid-row: 2; }
+
+textarea {
+  width: 100%;
+  background-color: #0a350a;
+  color: yellow;
+  border: 1px solid #444;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  resize: vertical;
+  box-shadow: inset 4px 4px 8px black;
+  padding: 1rem;
+  box-sizing: border-box;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--surface);
+  border-radius: 6px;
+  border: 1px solid #444;
+  color: var(--text);
+}
+
+input[type="color"] {
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.data-size-box {
+  background-color: var(--surface);
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+footer {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .control-group {
+    max-width: none;
+  }
+}
