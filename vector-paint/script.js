@@ -86,9 +86,11 @@ document.getElementById('redoButton').addEventListener('click', () => {
       currentPath = null;
     }
   } else if (paths.length > 0) {
-    paths.pop();
-    startPoint = null;
-    currentPath = null;
+    const lastPath = paths[paths.length - 1];
+    lastPath.pop();
+    if (lastPath.length === 1) {
+      paths.pop();
+    }
   }
   drawPaths();
   updateDataOutput();
@@ -106,6 +108,29 @@ document.getElementById('panLeftButton').addEventListener('click', () => panCanv
 document.getElementById('panUpButton').addEventListener('click', () => panCanvas(0, -4));
 document.getElementById('panDownButton').addEventListener('click', () => panCanvas(0, 4));
 document.getElementById('panRightButton').addEventListener('click', () => panCanvas(4, 0));
+
+// Add this after other event listeners
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === 'z') {
+    e.preventDefault();
+    if (currentPath && currentPath.length > 1) {
+      currentPath.pop();
+      if (currentPath.length === 1) {
+        paths.pop();
+        startPoint = null;
+        currentPath = null;
+      }
+    } else if (paths.length > 0) {
+      const lastPath = paths[paths.length - 1];
+      lastPath.pop();
+      if (lastPath.length === 1) {
+        paths.pop();
+      }
+    }
+    drawPaths();
+    updateDataOutput();
+  }
+});
 
 function panCanvas(dx, dy) {
   for (const path of paths) {
