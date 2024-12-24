@@ -20,18 +20,23 @@
       
       <div class="control-group">
         <div class="title">Customization</div>
-        <input type="file" id="backgroundImageInput" accept="image/*">
-        <input type="color" id="fillColorInput" value="#ffffff">
+        <p>
+          Background image:
+          <input type="file" id="backgroundImageInput" accept="image/*">
+        </p>
+        <p>Lines color:
+          <input type="color" id="fillColorInput" value="#ffffff">
+        </p>
       </div>
 
       <div class="control-group">
         <div class="title">Drawing Controls</div>
-        <button id="redoButton">Undo</button>
+        <button id="redoButton">Undo (ctrl-z)</button>
         <button id="clearButton">Clear Canvas</button>
       </div>
 
       <div class="control-group">
-        <div class="title">Navigation</div>
+        <div class="title">Image Shift</div>
         <div class="pan-buttons">
           <button id="panUpButton">↑</button>
           <button id="panLeftButton">←</button>
@@ -40,7 +45,10 @@
         </div>
       </div>
     </div>
-    <footer><small>&copy;2024 by <a href="https://krzysztofjankowski.com/">Krzysztof Krystian Jankowski</a> &amp; <a href="https://nomada.p1x.in/">Cyfrowy Nomada</a><br>Powered by 👁️🐝Ⓜ️</small></footer>
+    <footer>
+      <h2>Vector Paint</h2>
+      <p>Version 1.0</p>
+      <small>&copy;2024 by <a href="https://krzysztofjankowski.com/">Krzysztof Krystian Jankowski</a> &amp; <a href="https://nomada.p1x.in/">Cyfrowy Nomada</a><br>Powered by 👁️🐝Ⓜ️</small></footer>
   </div>
   <script src="script.js"></script>
 </body>
