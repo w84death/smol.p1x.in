@@ -132,6 +132,40 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+document.getElementById('loadButton').addEventListener('click', () => {
+  const data = document.getElementById('dataInput').value;  // Changed from dataOutput to dataInput
+  const lines = data.split('\n');
+  paths.length = 0;
+  
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i].trim();
+    if (line.startsWith('db')) {
+      const numLines = parseInt(line.split(' ')[1]);
+      if (numLines === 0) break;
+      
+      i++;
+      const pointsData = lines[i].substring(3).split(',').map(x => parseInt(x.trim()));
+      const path = [];
+      
+      for (let j = 0; j < pointsData.length; j += 2) {
+        path.push({
+          x: pointsData[j],
+          y: pointsData[j + 1]
+        });
+      }
+      
+      paths.push(path);
+    }
+    i++;
+  }
+  
+  startPoint = null;
+  currentPath = null;
+  drawPaths();
+  updateDataOutput();  // Added this line to update the output textarea
+});
+
 function panCanvas(dx, dy) {
   for (const path of paths) {
     for (const point of path) {
