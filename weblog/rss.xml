@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+  <title>smol[weblog]</title>
+  <link>https://smol.p1x.in/weblog/</link>
+  <description>A place where I write text files. Started at December 2024.</description>
+  <lastBuildDate>Mon, 30 Dec 2024 22:29:44 +0100</lastBuildDate>
+<item>
+    <title>My smol blogging platform made in C</title>
+    <link>https://smol.p1x.in/weblog/posts/general/start-blog-project.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/general/start-blog-project.html</guid>
+    <pubDate>Sun, 29 Dec 2024 17:50:00 +0000</pubDate>
+    <description><![CDATA[I was not satisfied with any of the blogging platfom so I made my own with black jack and h00kers.
+It is a single C file that compiles to less than 12KB of Linux binary.
+
+You interact with it with files. Project has this structure:
+* /working_dir/
+* /generate/
+* /public_html/
+* /templates/
+
+/working_dir/ is where all the text files are organized in folders. Each folder is a tag.
+/generete/ is where the engine looks for a new files to cranch. It will move it to the /public_html/ folder and update the index file.
+/templates/ keeps template files for the layout of the blog.
+
+It is simple, lean and easy to use.
+
+How to compile:
+* gcc smolblog.c -o smolblog
+* upx smolblog
+
+Usage:
+* ./smolblog
+* copy text files into the /generate/ folder
+* serve contents of /public_html/
+
+
+This project was an experiment. A simple solution to my unconventional problem. It worked out better than I anticipated. 
+Thanks to C and lack of external dependencies it is portable.
+
+If you are interested in details, github link is in the footer.
+
+Have fun!]]></description>
+</item>
+<item>
+    <title>My IDE Setup</title>
+    <link>https://smol.p1x.in/weblog/posts/programming/myidesetup.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/programming/myidesetup.html</guid>
+    <pubDate>Sun, 30 Dec 2024 22:29:00 +0000</pubDate>
+    <description><![CDATA[I spend most of my codding time in VSCode on Linux (various distributions).
+It has all the extensions I need, it is fast, and available on any modern OS. This last part is important to me as I can continue my work on any systems I use, including Windows work machines.
+
+Extensions I use:
+* Code Spell Checker
+* GitHub Copilot
+* Hex Editor
+* Remote - SSH
+* x86 and x86_64 Assembly
+* C/C++
+* various "Cyberpunk 2077" Themes
+
+I got Source Control opened on left and Copilot on right. Terminal on bottom if needed.
+I'm using Copilot as interactive documentation and writing comments.
+]]></description>
+</item>
+<item>
+    <title>Test post</title>
+    <link>https://smol.p1x.in/weblog/posts/testing/another.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/testing/another.html</guid>
+    <pubDate>Sun, 29 Dec 2024 17:50:00 +0000</pubDate>
+    <description><![CDATA[This post is made using smolBlog platform.
+This post was updated!
+
+Huray!]]></description>
+</item>
+<item>
+    <title>Free form writing #1</title>
+    <link>https://smol.p1x.in/weblog/posts/freeform/free1.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/freeform/free1.html</guid>
+    <pubDate>Sun, 30 Dec 2024 22:29:00 +0000</pubDate>
+    <description><![CDATA[Just a moment of me and the text file. Im writing whatever I'm thinking at present moment.
+What make the text file special for me is the same as writing by hand on paper for writers.
+Text files are easy to process and share between different operating systems and architectures. ASCII is universal.
+
+I'm not writing a big article nor book chapter. I can brake any rule, skip proof reading, formatting. All I'm doing is writing. In a zen mode, no distractions. A closest experience you can have to the real typewriter.
+
+The key is a keyboard. A good one. That doesn't mean expensive, just not cheap. I got Microsoft Ergonomic, the one split in half and curved in. Superb keeb.]]></description>
+</item>
+
+</channel>
+</rss>

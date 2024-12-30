@@ -1,0 +1,15 @@
+My IDE Setup
+I spend most of my codding time in VSCode on Linux (various distributions).
+It has all the extensions I need, it is fast, and available on any modern OS. This last part is important to me as I can continue my work on any systems I use, including Windows work machines.
+
+Extensions I use:
+* Code Spell Checker
+* GitHub Copilot
+* Hex Editor
+* Remote - SSH
+* x86 and x86_64 Assembly
+* C/C++
+* various "Cyberpunk 2077" Themes
+
+I got Source Control opened on left and Copilot on right. Terminal on bottom if needed.
+I'm using Copilot as interactive documentation and writing comments.

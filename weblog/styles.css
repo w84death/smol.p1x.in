@@ -1,0 +1,75 @@
+:root {
+    --text-color: yellow;
+    --bg-color: #11101a;
+    --accent-color: lightblue;
+    --light-gray: whitesmoke;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, monospace;
+    --font-mono: "Courier", "MS Gothic", "VT323", monospace;
+}
+
+body { 
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: var(--font-mono);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 1.125rem;
+}
+
+.post { 
+    margin: 3rem 0;
+    text-shadow: 1px 1px 0px black
+}
+
+.posts {
+    margin: 2rem 0;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+a:hover {
+    border-bottom-color: var(--accent-color);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 2rem 0 1rem;
+    color: var(--light-gray);
+    text-transform: uppercase;
+}
+
+.date {
+    color: lightslategray;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+}
+
+footer {
+    margin-top: 4rem;
+    color: lightslategray;
+    font-size: 0.9rem;
+}
+
+p {
+    margin: 1.5rem 0;;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
