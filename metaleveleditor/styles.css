@@ -1,0 +1,288 @@
+
+body {
+    max-width: none;
+    background-image: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+#container {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Updated CSS for #top-section */
+#top-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    background-color: #191d28;
+    padding-bottom: 20px;
+    border-radius: 12px;
+}
+
+/* Containers for individual sections */
+#tileset-container,
+#metatile-editor-container,
+#metatile-list-container {
+    margin: 0 20px;
+    text-align: center;
+}
+
+/* Adjust headings */
+#tileset-container h2,
+#metatile-editor-container h2,
+#metatile-list-container h2 {
+    margin-bottom: 10px;
+}
+
+/* Style for tileset to create a 4x4 grid */
+#tileset {
+    display: grid;
+    grid-template-columns: repeat(4, 32px);
+    grid-template-rows: repeat(4, 32px);
+    grid-gap: 4px;
+    justify-content: center;
+}
+
+/* Style for meta-tile list to create a 4x4 grid */
+#metatile-list {
+    display: grid;
+    grid-template-columns: repeat(4, 64px);
+    grid-template-rows: repeat(4, 64px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+/* Adjust the metatile styles */
+.metatile {
+    width: 64px;
+    height: 64px;
+    margin: 0;
+    position: relative;
+    border: 1px solid #bdc3c7;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Adjust tile styles */
+.tile {
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    position: relative;
+    border: 1px solid #bdc3c7;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.tile img,
+.metatile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Adjust metatile editor styles */
+#metatile-editor {
+    margin-bottom: 20px;
+}
+
+#metatile-editor-container .mirror-buttons {
+    margin-top: 10px;
+}
+
+#metatile-editor-container #save-metatile {
+    margin-top: 10px;
+    background-color: #2ecc71;
+    font-size: 14px;
+}
+
+#metatile-editor-container #save-metatile:hover {
+    background-color: #27ae60;
+}
+
+/* Adjust mirror buttons */
+button{
+    margin: 5px;
+    padding: 6px 10px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+
+
+#switch-mode {
+    margin-top: 10px;
+    background-color: #e7451c;
+    font-size: 14px;
+    color: black;
+}
+
+#switch-mode:hover {
+    background-color: #bd3310;
+}
+
+/* Meta-tile grid styles */
+#metatile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 32px);
+    grid-template-rows: repeat(2, 32px);
+    gap: 0;
+    margin: 0 auto;
+    width: 64px;
+}
+
+#metatile-grid .tile-slot {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    border: 1px dashed #7f8c8d;
+    background-color: #bdc3c7;
+    border-radius: 4px;
+}
+
+#metatile-grid .tile-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Level editor styles */
+.level-cell {
+    width: 64px;
+    height: 64px;
+    margin: 0;
+    cursor: pointer;
+    background-color: #00aaaa;
+    position: relative;
+    border: 1px dashed #fffafa26;
+    box-sizing: border-box;
+}
+
+#level-grid {
+    display: grid;
+    grid-template-columns: repeat(16, 64px); /* 18 columns */
+    grid-template-rows: repeat(8, 64px);     /* 8 rows */
+    grid-gap: 0;
+    justify-content: center;
+}
+
+.tile img,
+.metatile img,
+#metatile-grid .tile-slot img,
+.level-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Add the image-rendering property */
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+#level-editor {
+    position: relative;
+    margin: 0 auto;
+    width: 1024px;
+    height: 512px;
+}
+
+/* Level editor mirror buttons */
+#level-editor .mirror-buttons {
+    margin-top: 10px;
+}
+
+#data-preview {
+    white-space: pre;
+    padding: 20px;
+    border: 1px dashed #bdc3c7;
+    display: inline-block;
+    text-align: left;
+    font-size:10px;
+}
+
+.mirror-icon {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: black;
+    padding: 2px;
+    font-size: 10px;
+    border-radius: 2px;
+}
+
+/* Selected elements */
+#tileset .selected,
+#metatile-grid .selected,
+#metatile-list .selected {
+    outline: 2px solid #e74c3c;
+}
+
+#save-load-section {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+
+/* Level Grid */
+#level-grid,
+#entity-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Entity Grid Overlay */
+#entity-grid {
+    display: grid;
+    grid-template-columns: repeat(32, 32px); /* 32 columns */
+    grid-template-rows: repeat(16, 32px);    /* 16 rows */
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: auto;
+}
+
+/* Entity Cells */
+.entity-cell {
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+/* Entity Selection */
+#entity-selection {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top:20px;
+    /* Additional styles as needed */
+}
+
+.entity {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.entity.selected {
+    outline: 2px solid blue;
+}

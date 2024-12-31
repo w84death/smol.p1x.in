@@ -26,7 +26,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -40,7 +41,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -54,11 +56,42 @@
         0,
         0,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
-        5,
+        4,
+        6,
+        6,
+        6
+      ],
+      "mirrors": [
+        0,
+        0,
+        16,
+        0
+      ],
+      "water": true
+    },
+    {
+      "tiles": [
+        4,
+        6,
+        6,
+        4
+      ],
+      "mirrors": [
+        0,
+        32,
+        0,
+        48
+      ],
+      "water": true
+    },
+    {
+      "tiles": [
+        6,
         5,
         5,
         5
@@ -66,9 +99,10 @@
       "mirrors": [
         0,
         0,
-        0,
-        0
-      ]
+        32,
+        16
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -78,25 +112,27 @@
         6
       ],
       "mirrors": [
-        8,
+        32,
         0,
         0,
-        0
-      ]
+        16
+      ],
+      "water": true
     },
     {
       "tiles": [
-        6,
-        6,
         7,
-        6
+        6,
+        6,
+        7
       ],
       "mirrors": [
         0,
         0,
-        0,
-        0
-      ]
+        16,
+        16
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -106,67 +142,42 @@
         7
       ],
       "mirrors": [
+        16,
         0,
         0,
-        8,
-        0
-      ]
+        32
+      ],
+      "water": true
     },
     {
       "tiles": [
-        4,
-        5,
-        5,
-        5
+        1,
+        1,
+        1,
+        1
+      ],
+      "mirrors": [
+        0,
+        16,
+        0,
+        16
+      ],
+      "water": true
+    },
+    {
+      "tiles": [
+        2,
+        2,
+        2,
+        2
       ],
       "mirrors": [
         0,
         0,
-        0,
-        0
-      ]
-    },
-    {
-      "tiles": [
-        4,
-        5,
-        5,
-        4
+        32,
+        32
       ],
-      "mirrors": [
-        0,
-        0,
-        0,
-        48
-      ]
-    },
-    {
-      "tiles": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "mirrors": [
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "tiles": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "mirrors": [
-        0,
-        0,
-        0,
-        0
-      ]
+      "water": true
     },
     {
       "tiles": [
@@ -180,7 +191,8 @@
         16,
         0,
         16
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -225,5 +237,879 @@
       ]
     }
   ],
-  "levelData": []
+  "levelData": [
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    }
+  ],
+  "entityData": [
+    null,
+    null,
+    {
+      "id": 7,
+      "position": 2
+    },
+    {
+      "id": 1,
+      "position": 3
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ]
 }
