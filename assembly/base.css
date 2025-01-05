@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'TeapotPro'; /* You can change 'TeapotPro' to any name you prefer */
+    src: 
+    url('TeapotPro.woff') format('woff'), /* Modern browsers */
+    url('TeapotPro.ttf') format('truetype'); /* Older browsers */
+    font-weight: normal; /* Specify if the font is normal, bold, etc. */
+    font-style: normal; /* Specify if the font is normal, italic, etc. */
+}
+body {font-family: 'TeapotPro', monospace; font-size:16px; line-height: 1.4; 
+max-width: 640px;padding:0 3% 0 2%;margin: 0 auto;
+background:black; color:white;}
+header,main,footer {display:block;}
+h1 {font-size:128px; font-weight:100; line-height:64px;}
+h2 {font-size:96px; font-weight:100; line-height:48px; margin:0;}
+img {max-width:640px;}
+a {color:blue;}
+p {margin:0;}
+pre {padding:2% 4%;}
+.gallery {display:flex;flex-wrap:wrap;}
+.gallery img {max-width: 160px; margin: 6px; border: 8px solid black;}
+header {background-color:white; color:black; padding:2em;}
+article {border: 2px solid yellow; padding: 2em; background-color: yellow; color:black;}
+article+article {margin-top: 1em;}
+article h2 {font-size:48px; color:black; font-weight:100;}
+nav {padding:2em; line-height:1em; border:1px dashed black;}
+nav ul {margin-top:0;}
+nav h2 {margin-bottom:16px;}
+sup {color:red; font-weight:bold; padding: 0px 4px;
+    font-weight: bold; border: 1px solid red; border-radius: 4px;}
+footer {background-color:white; color:black; margin:2em 0 0 0; padding:2em;}
+fieldset {border: 1px solid black; padding: 1em; display:inline-block;}
+fieldset ul {margin:0; padding:0 1em;}
+fieldset legend {font-weight:bold; font-size:32px;}
