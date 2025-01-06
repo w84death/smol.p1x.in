@@ -4,12 +4,12 @@
   <title>smol[weblog]</title>
   <link>https://smol.p1x.in/weblog/</link>
   <description>A place where I write text files. Started at December 2024.</description>
-  <lastBuildDate>Mon, 30 Dec 2024 22:29:44 +0100</lastBuildDate>
+  <lastBuildDate>Mon, 06 Jan 2025 22:22:50 +0100</lastBuildDate>
 <item>
     <title>My smol blogging platform made in C</title>
     <link>https://smol.p1x.in/weblog/posts/general/start-blog-project.html</link>
     <guid>https://smol.p1x.in/weblog/posts/general/start-blog-project.html</guid>
-    <pubDate>Sun, 29 Dec 2024 17:50:00 +0000</pubDate>
+    <pubDate>Sun, 29 Dec 2024 17:07:00 +0000</pubDate>
     <description><![CDATA[I was not satisfied with any of the blogging platfom so I made my own with black jack and h00kers.
 It is a single C file that compiles to less than 12KB of Linux binary.
 
@@ -43,48 +43,60 @@ If you are interested in details, github link is in the footer.
 Have fun!]]></description>
 </item>
 <item>
-    <title>My IDE Setup</title>
-    <link>https://smol.p1x.in/weblog/posts/programming/myidesetup.html</link>
-    <guid>https://smol.p1x.in/weblog/posts/programming/myidesetup.html</guid>
-    <pubDate>Sun, 30 Dec 2024 22:29:00 +0000</pubDate>
-    <description><![CDATA[I spend most of my codding time in VSCode on Linux (various distributions).
-It has all the extensions I need, it is fast, and available on any modern OS. This last part is important to me as I can continue my work on any systems I use, including Windows work machines.
-
-Extensions I use:
-* Code Spell Checker
-* GitHub Copilot
-* Hex Editor
-* Remote - SSH
-* x86 and x86_64 Assembly
-* C/C++
-* various "Cyberpunk 2077" Themes
-
-I got Source Control opened on left and Copilot on right. Terminal on bottom if needed.
-I'm using Copilot as interactive documentation and writing comments.
-]]></description>
+    <title>Free form writing #1</title>
+    <link>https://smol.p1x.in/weblog/posts/freeform/free1.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/freeform/free1.html</guid>
+    <pubDate>Sun, 29 Dec 2024 17:42:00 +0000</pubDate>
+    <description><![CDATA[Just a moment of me and the text file. Im writing whatever I'm thinking at present moment.
+What make the text file special for me is the same as writing by hand on paper for writers.
+ ]]></description>
 </item>
 <item>
     <title>Test post</title>
     <link>https://smol.p1x.in/weblog/posts/testing/another.html</link>
     <guid>https://smol.p1x.in/weblog/posts/testing/another.html</guid>
-    <pubDate>Sun, 29 Dec 2024 17:50:00 +0000</pubDate>
+    <pubDate>Sun, 29 Dec 2024 16:57:00 +0000</pubDate>
     <description><![CDATA[This post is made using smolBlog platform.
 This post was updated!
 
 Huray!]]></description>
 </item>
 <item>
-    <title>Free form writing #1</title>
-    <link>https://smol.p1x.in/weblog/posts/freeform/free1.html</link>
-    <guid>https://smol.p1x.in/weblog/posts/freeform/free1.html</guid>
-    <pubDate>Sun, 30 Dec 2024 22:29:00 +0000</pubDate>
-    <description><![CDATA[Just a moment of me and the text file. Im writing whatever I'm thinking at present moment.
-What make the text file special for me is the same as writing by hand on paper for writers.
-Text files are easy to process and share between different operating systems and architectures. ASCII is universal.
+    <title>Writing Assembly Code in 2024</title>
+    <link>https://smol.p1x.in/weblog/posts/programming/assembly1.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/programming/assembly1.html</guid>
+    <pubDate>Sun, 06 Jan 2025 22:22:00 +0000</pubDate>
+    <description><![CDATA[I wrote more assembly code in 2024 than any other language. I wrote a lot of tools in python and HTML5 but was mostly using AI to for writing. Actual hand written code was 99% asm for x86 CPUs.
 
-I'm not writing a big article nor book chapter. I can brake any rule, skip proof reading, formatting. All I'm doing is writing. In a zen mode, no distractions. A closest experience you can have to the real typewriter.
+Why in the hell I would use assembly in modern days?
+At first it was just a curiosity and a challenge. Once I started digging more into it I got hooked. 
 
-The key is a keyboard. A good one. That doesn't mean expensive, just not cheap. I got Microsoft Ergonomic, the one split in half and curved in. Superb keeb.]]></description>
+Inspired by the demo scene I always wanted to make a very small game, like 64KB in size. It seams like impossible task at the time. 
+
+TBC:
+
+- what flavor?
+- why x86?
+- why 16bit?]]></description>
+</item>
+<item>
+    <title>Back to DOS in 2025 - Part 1</title>
+    <link>https://smol.p1x.in/weblog/posts/retro/backtodos1.html</link>
+    <guid>https://smol.p1x.in/weblog/posts/retro/backtodos1.html</guid>
+    <pubDate>Sun, 06 Jan 2025 22:20:00 +0000</pubDate>
+    <description><![CDATA[There were a time when I was deep into MS-DOS/FreeDOS. Eventually I lost interest. Now I'm back. 2025 will be my year of the DOS.
+
+To me it is the perfect OS. It's the simplest and easiest to modify. It runs on *any* PC you can imagine. It boots in seconds. The only downside is that it is single-tasking system. Not ideal for programming, perfectly fine for gaming/writing. Your computer becomes a dedicated tool not a whole workshop.
+
+I have an Asus EEE PC 701. Perfect machine for this job. I was using it in the past with FreeDOS with grate success. It's time to take it from the drawer, dust out and bring life to it.
+
+The plan is:
+- Install FreeDOS
+- Setup for laptop (acpi)
+- Setup networking
+- Setup FTP server that is compatible with my retro stuff
+- Play with autoexec.bat for some nice splash screen
+]]></description>
 </item>
 
 </channel>

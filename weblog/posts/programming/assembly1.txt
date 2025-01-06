@@ -1,0 +1,13 @@
+Writing Assembly Code in 2024
+I wrote more assembly code in 2024 than any other language. I wrote a lot of tools in python and HTML5 but was mostly using AI to for writing. Actual hand written code was 99% asm for x86 CPUs.
+
+Why in the hell I would use assembly in modern days?
+At first it was just a curiosity and a challenge. Once I started digging more into it I got hooked. 
+
+Inspired by the demo scene I always wanted to make a very small game, like 64KB in size. It seams like impossible task at the time. 
+
+TBC:
+
+- what flavor?
+- why x86?
+- why 16bit?

@@ -1,0 +1,13 @@
+Back to DOS in 2025 - Part 1
+There were a time when I was deep into MS-DOS/FreeDOS. Eventually I lost interest. Now I'm back. 2025 will be my year of the DOS.
+
+To me it is the perfect OS. It's the simplest and easiest to modify. It runs on *any* PC you can imagine. It boots in seconds. The only downside is that it is single-tasking system. Not ideal for programming, perfectly fine for gaming/writing. Your computer becomes a dedicated tool not a whole workshop.
+
+I have an Asus EEE PC 701. Perfect machine for this job. I was using it in the past with FreeDOS with grate success. It's time to take it from the drawer, dust out and bring life to it.
+
+The plan is:
+- Install FreeDOS
+- Setup for laptop (acpi)
+- Setup networking
+- Setup FTP server that is compatible with my retro stuff
+- Play with autoexec.bat for some nice splash screen
