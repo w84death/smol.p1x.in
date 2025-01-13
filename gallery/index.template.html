@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{TITLE}</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --heading-color: #bb86fc;
+            --link-color: #03dac6;
+            --link-hover-color: #018786;
+            --button-color: #e0e0e0;
+            --button-hover-color: #bb86fc;
+            --index-item-bg: #2c2c2c;
+            --index-item-hover-bg: #3c3c3c;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f0f0f0;
+            --container-bg: #ffffff;
+            --text-color: #333333;
+            --heading-color: #2c3e50;
+            --link-color: #3498db;
+            --link-hover-color: #2980b9;
+            --button-color: #333333;
+            --button-hover-color: #3498db;
+            --index-item-bg: #ecf0f1;
+            --index-item-hover-bg: #d5dbdb;
+        }
+
+        [data-theme="pastel"] {
+            --bg-color: #fce1e4;
+            --container-bg: #fff0f5;
+            --text-color: #5d576b;
+            --heading-color: #e0b1cb;
+            --link-color: #9d8189;
+            --link-hover-color: #7d6167;
+            --button-color: #5d576b;
+            --button-hover-color: #e0b1cb;
+            --index-item-bg: #fbf0f0;
+            --index-item-hover-bg: #f7d6d0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--container-bg);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        h1 {
+            color: var(--heading-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .gallery-item {
+            flex: 0 0 auto;
+            max-width: 800px;
+            max-height: 600px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border: 10px solid var(--container-bg);
+            box-sizing: border-box;
+            cursor: pointer;
+            max-width: 780px;
+            max-height: 580px;
+        }
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+            pointer-events: none;
+        }
+        .index-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .index-list li {
+            flex: 1 0 200px;
+            max-width: calc(25% - 15px);
+            background-color: var(--index-item-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+        .index-list a {
+            display: block;
+            padding: 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            height: 100%;
+        }
+        .index-list a:hover {
+            background-color: var(--index-item-hover-bg);
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: var(--link-color);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: var(--link-hover-color);
+        }
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        .control-button {
+            background-color: transparent;
+            border: none;
+            color: var(--button-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        .control-button:hover {
+            color: var(--button-hover-color);
+        }
+        .gallery-item.pdf-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            background-color: var(--index-item-bg);
+        }
+
+        .gallery-item.pdf-item a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gallery-item.pdf-item img {
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .gallery-item.pdf-item span {
+            font-size: 0.9em;
+            word-break: break-word;
+        }
+
+        .index-list .pdf-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .index-list .pdf-link img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            pointer-events: none;  /* Prevent clicks on the image itself */
+        }
+
+        .index-list .pdf-link span {
+            font-size: 0.9em;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button id="toggleWidth" class="control-button" title="Toggle Width">↔️</button>
+        <button id="toggleFullscreen" class="control-button" title="Fullscreen">⤢</button>
+        <button id="toggleTheme" class="control-button" title="Toggle Theme">🎨</button>
+    </div>
+    <div class="container">
+        <h1>{TITLE}</h1>
+        {CONTENT}
+        {BACK_BUTTON}
+    </div>
+    <script>
+        const container = document.querySelector('.container');
+        const html = document.documentElement;
+        const themes = ['default', 'light', 'pastel'];
+    
+        function saveSettings(width, theme) {
+            localStorage.setItem('galleryWidth', width);
+            localStorage.setItem('galleryTheme', theme);
+        }
+    
+        function loadSettings() {
+            const savedWidth = localStorage.getItem('galleryWidth');
+            const savedTheme = localStorage.getItem('galleryTheme');
+    
+            if (savedWidth) {
+                container.style.maxWidth = savedWidth;
+            }
+            if (savedTheme) {
+                html.setAttribute('data-theme', savedTheme);
+            }
+        }
+    
+        loadSettings();
+    
+        document.getElementById('toggleWidth').addEventListener('click', () => {
+            const newWidth = container.style.maxWidth === 'none' ? '1200px' : 'none';
+            container.style.maxWidth = newWidth;
+            saveSettings(newWidth, html.getAttribute('data-theme'));
+        });
+    
+        document.getElementById('toggleFullscreen').addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                container.style.maxWidth = 'none';
+                saveSettings('none', html.getAttribute('data-theme'));
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    container.style.maxWidth = '1200px';
+                    saveSettings('1200px', html.getAttribute('data-theme'));
+                }
+            }
+        });
+    
+        document.getElementById('toggleTheme').addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            const newTheme = themes[nextIndex];
+            html.setAttribute('data-theme', newTheme);
+            saveSettings(container.style.maxWidth, newTheme);
+        });
+    
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('click', () => {
+                window.open(img.src, '_blank');
+            });
+        });
+    
+        // Ensure clicks on PDF thumbnails open the PDF
+        document.querySelectorAll('.pdf-item a, .pdf-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.open(link.href, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
