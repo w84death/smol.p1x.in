@@ -34,6 +34,8 @@ _BRUSH_ equ _BASE_ + 0x15           ; 1 byte
 _TRAIN_X_ equ _BASE_ + 0x16           ; 2 byte
 _TRAIN_Y_ equ _BASE_ + 0x18           ; 2 byte
 _TRAIN_DIR_MASK_ equ _BASE_ + 0x1A   ; 1 byte
+_TUNE_POS_ equ _BASE_ + 0x1B         ; 1 byte
+
 _TRAINS_ equ 0x2000                 ; Trains aka entities
 _MAP_ equ 0x3000                    ; Map data 64x64
 
@@ -44,6 +46,7 @@ STATE_MENU equ 2
 STATE_PREPARE equ 4
 STATE_GAME equ 8
 STATE_OVER equ 16
+STATE_MAP equ 32
 ; ...
 STATE_QUIT equ 255
 
@@ -58,19 +61,30 @@ KB_DEL equ 0x53
 KB_BACK equ 0x0E
 KB_Q equ 0x10
 KB_W equ 0x11
+KB_M equ 0x32
 
-TOOLS equ 0x4
+TOOLS equ 0x6
 TOOL_EMPTY equ 0x40
 TOOL_RAILROAD equ 0x0
-TOOL_INFRA equ 0x1
-TOOL_FOREST equ 0x2
-TOOL_MOUNTAINS equ 0x3
-TOOL_TRAIN equ 0x4
+TOOL_HOUSE equ 0x1
+TOOL_STATION equ 0x2
+TOOL_FOREST equ 0x3
+TOOL_FOREST2 equ 0x4
+TOOL_MOUNTAINS equ 0x5
+TOOL_TRAIN equ 0x6
+TOOL_POS equ 320*180+16
 
 MAP_WIDTH equ 64
 MAP_HEIGHT equ 64
-VIEWPORT_WIDTH equ 18
-VIEWPORT_HEIGHT equ 10
+VIEWPORT_POS equ 320*16+16
+
+SCALE equ 1 ; 1 - 2 zoom level
+VIEWPORT_WIDTH equ 18 / SCALE
+VIEWPORT_HEIGHT equ 10 / SCALE
+VIEWPORT_GRID_SCALE equ 4 + (SCALE - 1)
+VIEWPORT_GRID_SIZE equ 16 * SCALE
+VIEWPORT_VECTORS_SCALE equ 0 + (SCALE - 1)
+VIEWPORT_TEMP equ (2 - (SCALE - 1))
 
 COLOR_BACKGROUND equ 0xC7
 COLOR_GRID equ 0xC6
@@ -83,11 +97,24 @@ COLOR_GRADIENT_END equ 0x1010
 COLOR_METAL equ 0xA3
 COLOR_STEEL equ 0x67
 COLOR_RAILS equ 0xD3
-COLOR_GREEN equ 0x74
-COLOR_MOUNTAIN equ 0xAD
-COLOR_INFRA equ 0xA0
+COLOR_GREEN equ 0x76
+COLOR_EVERGREEN equ 0xC0
+COLOR_MOUNTAIN equ 0xAC
+COLOR_HOUSE equ 0xA0
+COLOR_STATION equ 0x41
 COLOR_TOOLS_SELECTOR equ 0x1e1e
-COLOR_TRAIN equ 0x1F
+COLOR_TRAIN equ 0x5C
+COLOR_MAP equ 0xC4C4
+
+NOTE_C4   equ 1193182/261
+NOTE_D4   equ 1193182/294
+NOTE_E4   equ 1193182/330
+NOTE_F4   equ 1193182/349
+NOTE_G4   equ 1193182/392
+NOTE_A4   equ 1193182/440
+NOTE_B4   equ 1193182/494
+NOTE_C5   equ 1193182/523
+NOTE_PAUSE equ 1
 
 ; =========================================== INITIALIZATION ===================
 
@@ -104,9 +131,14 @@ mov sp, 0xFFFF
 mov byte [_GAME_TICK_], 0x0
 mov word [_RNG_], 0x42
 mov byte [_VECTOR_SCALE_], 0x0
-mov word [_VIEWPORT_X_], 20
-mov word [_VIEWPORT_Y_], 27
+mov word [_VIEWPORT_X_], MAP_WIDTH/2-VIEWPORT_WIDTH/2
+mov word [_VIEWPORT_Y_], MAP_HEIGHT/2-VIEWPORT_HEIGHT/2
 mov byte [_TOOL_], 0x0
+mov word [_CUR_X_], VIEWPORT_WIDTH/2
+mov word [_CUR_Y_], VIEWPORT_HEIGHT/2
+mov word [_CUR_TEST_X_], VIEWPORT_WIDTH/2
+mov word [_CUR_TEST_Y_], VIEWPORT_HEIGHT/2
+mov byte [_TUNE_POS_], 0x0
 call init_map
 mov byte [_GAME_STATE_], STATE_INTRO
 call prepare_intro
@@ -129,6 +161,8 @@ check_keyboard:
    je .process_esc
    cmp ah, KB_ENTER
    je .process_enter
+   cmp ah, KB_M
+   je .process_m
 
    cmp byte [_GAME_STATE_], STATE_GAME
    jnz .done
@@ -154,21 +188,36 @@ check_keyboard:
    jmp .done
 
    .process_esc:
+      cmp byte [_GAME_STATE_], STATE_MAP
+      jz .go_game
       cmp byte [_GAME_STATE_], STATE_GAME
       jz .go_intro
       mov byte [_GAME_STATE_], STATE_QUIT
       jmp .done
    .process_enter:
+      mov dx, NOTE_C5
+      call play_note
       cmp byte [_GAME_STATE_], STATE_INTRO
       jz .go_game
       cmp byte [_GAME_STATE_], STATE_GAME
       jz .go_game_enter
+      jmp .done
+   .process_m:
+      mov dx, NOTE_C5
+      call play_note
+      cmp byte [_GAME_STATE_], STATE_MAP
+      jz .go_game  
+      mov byte [_GAME_STATE_], STATE_MAP
+      mov word [_GAME_TICK_], 0x0
+      call prepare_map
       jmp .done
    .process_space:
       cmp byte [_GAME_STATE_], STATE_GAME
       jz .go_game_space
       jmp .done
    .process_del:
+      mov dx, NOTE_A4
+      call play_note
       call set_pos_to_cursor
       call convert_xy_to_screen
       call clear_tile_on_screen
@@ -181,15 +230,17 @@ check_keyboard:
       call recalculate_neighbors_railroads
       pop ax
       mov byte [_TOOL_], al
-      
-      mov cl, COLOR_CURSOR_OK
-      call draw_cursor
+      call draw_cursor_ok
       jmp .done
    .process_q:
+      mov dx, NOTE_C5
+      call play_note
       dec byte [_TOOL_]
       call verify_change_tool
       jmp .done
    .process_w:
+      mov dx, NOTE_C5
+      call play_note
       inc byte [_TOOL_]
       call verify_change_tool
       jmp .done
@@ -204,9 +255,10 @@ check_keyboard:
       call prepare_game
       jmp .done
    .go_game_enter:
-      call train_ai
       jmp .done
    .go_game_space:
+      mov dx, NOTE_C4
+      call play_note
       call set_pos_to_cursor_w_offset
       call save_tile_to_map
       call set_pos_to_cursor
@@ -228,11 +280,9 @@ check_keyboard:
       call load_tile_from_map
       call recalculate_neighbors_railroads
       
-
       .skip_recalculate:
 
-      mov cl, COLOR_CURSOR_OK
-      call draw_cursor
+      call draw_cursor_ok
       jmp .done
    .pressed_up:
       dec word [_CUR_TEST_Y_]
@@ -247,6 +297,8 @@ check_keyboard:
       inc word [_CUR_TEST_X_]
       jmp .done_processed
    .done_processed:
+      mov dx, NOTE_F4
+      call play_note
       call move_cursor
       call draw_train
    .done:
@@ -262,21 +314,28 @@ je draw_intro
 cmp byte [_GAME_STATE_], STATE_GAME
 je draw_game
 
+cmp byte [_GAME_STATE_], STATE_MAP
+je draw_map
+
 jmp wait_for_tick
 
 draw_intro:
-   mov al, [_VECTOR_COLOR_]
-   cmp al, 0x1f
-   jge .done
-   inc al
-
-   mov byte [_VECTOR_COLOR_], al
-   call draw_vector
-   .done:
+   call play_tune
    jmp wait_for_tick
 
 draw_game:
    call train_ai
+   call draw_train
+   jmp wait_for_tick
+
+draw_map:
+   mov dx, 0x1010
+   call draw_train_on_map
+   call move_train
+   mov dx, 0x1f1f
+   call draw_train_on_map
+   call draw_cursor_on_map
+   jmp wait_for_tick
 
 ; =========================================== GAME TICK ========================
 
@@ -291,6 +350,17 @@ wait_for_tick:
 
 inc word [_GAME_TICK_]  ; Increment game tick
 
+sound:
+   ; mov dx, [_NOTE_TIMER_]
+   ; cmp dx, NOTE_A4/2
+   ; jl .note_ended
+   ; call play_raw_note
+   ; shr word [_NOTE_TIMER_], 1
+   ; jmp .done
+   ; .note_ended:
+   call stop_note
+   .done:
+
 ; =========================================== ESC OR LOOP ======================
 
 jmp main_loop
@@ -298,6 +368,14 @@ jmp main_loop
 ; =========================================== EXIT TO DOS ======================
 
 exit:
+   call stop_note
+
+   mov ax, 0x0003      ; Set video mode to 80x25 text mode
+   int 0x10            ; Call BIOS interrupt
+   mov si, QuitText
+   xor dx,dx
+   call draw_text
+   
    mov ax, 0x4c00      ; Exit to DOS
    int 0x21            ; Call DOS
    ret                 ; Return to DOS
@@ -322,46 +400,60 @@ exit:
 prepare_intro:
    xor di, di
    mov ax, COLOR_GRADIENT_START             ; Set starting color
-   mov dl, 0x10               ; 10 bars to draw
+   mov dl, 0x10              ; 10 bars to draw
    .draw_gradient:
       mov cx, 320*4          ; Each bar 10 pixels high
       rep stosw               ; Write to the VGA memory
-      cmp dl, 0x09
+      cmp dl, 0x04
       jg .draw_top
       jl .draw_bottom
       mov ax, COLOR_GRADIENT_END
       mov cx, 320*36
       rep stosw
+      
       .draw_bottom:
       inc ax
       jmp .cont
+
       .draw_top:
-      dec ax                  ; Increment color index for next bar
+      dec ax
+      cmp ax, 0x01010
+      jg .skip_zero
+         xor ax, ax
+      .skip_zero:
+
       .cont:
       xchg al, ah             ; Swap colors
       dec dl
       jnz .draw_gradient
 
+   mov byte [_VECTOR_SCALE_], 0x1
+   mov bp, 320*8+130
+   mov si, P1XVector
+   call draw_vector
+
    mov si, WelcomeText
-   mov dh, 0xb
-   mov dl, 0x1
+   mov dh, 0xC
+   mov dl, 0x2
    mov bl, COLOR_TEXT
    call draw_text
 
-   mov si, PressEnterText
-   mov dh, 0xe
-   mov dl, 0x5   
+   mov si, TitleText
+   mov dh, 0xE
+   mov dl, 0x8
+   inc bl
    call draw_text
 
-   mov byte [_VECTOR_SCALE_], 0x2
-   mov byte [_VECTOR_COLOR_], 0x10
-   mov bp, 320*20+110
-   mov si, P1XVector
-   call draw_vector
-ret
+   mov si, PressEnterText
+   mov dh, 0x14
+   mov dl, 0x6
+   inc bl
+   call draw_text
+
+ret   
 
 prepare_game:
-   mov byte [_VECTOR_SCALE_], 0
+   mov byte [_VECTOR_SCALE_], VIEWPORT_VECTORS_SCALE
    
    xor di, di
    mov al, COLOR_BACKGROUND
@@ -370,38 +462,150 @@ prepare_game:
    rep stosw
 
    call draw_grid
+
    mov byte [_TOOL_], 0
+   mov byte [_VECTOR_SCALE_], 0
    call draw_tools
+   mov byte [_VECTOR_SCALE_], VIEWPORT_VECTORS_SCALE
+   mov dl, 0
+   call update_tools_selector
 
    call load_map
 
-   mov word [_CUR_X_], 9
-   mov word [_CUR_Y_], 5
-   mov word [_CUR_TEST_X_], 9
-   mov word [_CUR_TEST_Y_], 5
-
-   mov cl, COLOR_CURSOR
-   call draw_cursor
+   call draw_cursor_ok
 
    call draw_train
 
    mov si, HeaderText
    mov dh, 0x0
-   mov dl, 0xb
+   mov dl, 0x0
    mov bl, COLOR_TEXT
    call draw_text
+ret
 
-   mov si, FooterText
-   mov dh, 0x17
-   mov dl, 0xe
-   mov bl, COLOR_TEXT
-   call draw_text
+prepare_map:
+   xor si, si
+   mov al, COLOR_BACKGROUND
+   mov ah, al
+   mov cx, 320*(200-16)
+   rep stosw
 
+   mov dl, 0x6              ; 10 bars to draw
+   .draw_gradient:
+      mov cx, 320*4          ; Each bar 10 pixels high
+      rep stosw               ; Write to the VGA memory
+      dec al
+      xchg al, ah             ; Swap colors
+      dec dl
+      jnz .draw_gradient
+
+   mov byte [_VECTOR_SCALE_], 3
+   mov bp, 320*40+8
+   mov si, ForestVector
+   call draw_vector
+
+   mov bp, 320*40+196
+   mov si, StationVector
+   call draw_vector
+
+
+   mov di, 320*30+90
+   mov ax, COLOR_MAP
+   mov cx, 140
+   .draw_line:
+      push cx
+      mov cx, 70
+      rep stosw
+      pop cx
+      add di, 320-140
+   loop .draw_line
+
+   mov si, _MAP_
+   mov di, 320*36+96
+   mov cx, MAP_HEIGHT
+   .draw_row:
+      push cx
+      mov cx, MAP_WIDTH
+      .draw_col:
+         mov al, [si]
+
+         test al, 0x80
+         jnz .set_railroads
+
+         and al, 0x7F
+
+         mov bx, COLOR_MAP
+         
+         cmp al, TOOL_FOREST
+         jz .set_green
+         cmp al, TOOL_FOREST2
+         jz .set_green
+         cmp al, TOOL_HOUSE
+         jz .set_infra
+         cmp al, TOOL_STATION
+         jz .set_infra
+         cmp al, TOOL_MOUNTAINS
+         jz .set_mountains
+         jmp .push_pixel
+
+         .set_green:
+         mov bl, COLOR_GREEN
+         jmp .push_pixel
+
+         .set_infra:
+         mov bl, COLOR_HOUSE
+         jmp .push_pixel
+
+         .set_mountains:
+         mov bl, COLOR_MOUNTAIN
+         jmp .push_pixel
+
+         .set_railroads:
+         mov bx, 0x10       
+
+         .push_pixel:
+         mov ax, bx
+         mov ah, al
+         mov [es:di], ax
+         mov [es:di+320], ax
+         inc di
+         inc di
+         inc si
+      loop .draw_col
+      pop cx
+      add di, 320+320-MAP_WIDTH*2      
+   loop .draw_row
+ret
+
+draw_cursor_on_map:
+   mov ax, [_CUR_Y_]
+   add ax, [_VIEWPORT_Y_]
+   mov bx, [_CUR_X_]
+   add bx, [_VIEWPORT_X_]
+   mov dx, 0x0404
+   call draw_pixel_on_map
+ret
+
+draw_train_on_map:
+   mov ax, [_TRAIN_Y_]
+   mov bx, [_TRAIN_X_]
+   call draw_pixel_on_map
+ret
+
+draw_pixel_on_map:
+   mov di, 320*36+96
+   imul ax, 320*2
+   shl bx, 1
+   add ax, bx
+   add di, ax
+   mov ax, dx
+   mov [es:di], ax
+   mov [es:di+320], ax
 ret
 
 draw_grid:
    pusha
-   mov di, 320*8+8
+   mov di, VIEWPORT_POS
    push di    
    mov al, COLOR_GRID
    mov ah, al
@@ -409,30 +613,30 @@ draw_grid:
       mov cx, VIEWPORT_HEIGHT+1
       .h_line_loop:
          push cx
-         mov cx, VIEWPORT_WIDTH*16/2
+         mov cx, VIEWPORT_WIDTH*VIEWPORT_GRID_SIZE/2
          rep stosw
          pop cx
-         add di, 320*16-VIEWPORT_WIDTH*16
+         add di, 320*VIEWPORT_GRID_SIZE-VIEWPORT_WIDTH*VIEWPORT_GRID_SIZE
       loop .h_line_loop
    .draw_vertical_lines:
       pop di
       mov cx, VIEWPORT_WIDTH+1
       .v_line_loop:
          push cx
-         mov cx, VIEWPORT_HEIGHT*16
+         mov cx, VIEWPORT_HEIGHT*VIEWPORT_GRID_SIZE
          .draw_v:
             stosb
             inc di
             add di, 318
          loop .draw_v
          pop cx
-         add di, 320*45-48
+         add di, 320*45-(VIEWPORT_GRID_SIZE*3)
       loop .v_line_loop
    popa
 ret
 
 draw_tools:
-   mov bp, 320*177+16
+   mov bp, TOOL_POS
    mov byte [_BRUSH_], 0
    mov cx, TOOLS
    .tools_loop:
@@ -442,7 +646,6 @@ draw_tools:
       add bp, 24
       pop cx
    loop .tools_loop
-   call update_tools_selector
 ret
 
 
@@ -490,7 +693,7 @@ convert_cur_pos_to_screen:
    mov bx, [_CUR_X_]
    shl bx, 4
    add ax, bx
-   add ax, 320*8+8
+   add ax, VIEWPORT_POS
    mov bp, ax
 ret
 
@@ -509,48 +712,27 @@ ret
 clear_tile_on_screen:
    pusha
    mov di, bp
-   add di, 321
+   add di, 320+1
    mov ax, COLOR_BACKGROUND
    mov ah, al
-   mov cx, 15
+
+   mov cx, VIEWPORT_GRID_SIZE-1
    .v_line_loop:
       push cx
-      mov cx, 15
+      mov cx, VIEWPORT_GRID_SIZE-1
       rep stosb
       pop cx
-      add di, 320-15
+      add di, 320-VIEWPORT_GRID_SIZE+1
    loop .v_line_loop
    popa
 ret
 
 stamp_tile:
    pusha
+
    xor bx, bx
    mov byte bl, [_BRUSH_]
 
-   mov byte [_VECTOR_COLOR_], COLOR_RAILS
-
-   cmp bl, TOOLS-3
-   jl .skip2
-      call get_random
-      and ax, 0x3
-      mov byte [_VECTOR_COLOR_], COLOR_INFRA
-      add byte [_VECTOR_COLOR_], al
-   .skip2:
-
-   cmp bl, TOOLS-2
-   jl .skip3
-      call get_random
-      and ax, 0x7
-      mov byte [_VECTOR_COLOR_], COLOR_GREEN
-      add byte [_VECTOR_COLOR_], al
-   .skip3:
-
-   cmp bl, TOOLS-1
-   jl .skip4
-      mov byte [_VECTOR_COLOR_], COLOR_MOUNTAIN
-   .skip4:
-   
    shl bx, 1
    mov si, ToolsList   
    add si, bx
@@ -559,7 +741,6 @@ stamp_tile:
    
    call draw_vector
 
-   .done:
    popa
 ret
 
@@ -705,10 +886,15 @@ init_map:
       and ax, 0xf
       cmp ax, 0x7
       jl .set_empty
-      cmp ax, 0x7
+      cmp ax, 0x9
+      jl .set_evergreen
+      cmp ax, 0x9
       jz .set_mountains
       .set_forest:
          mov ax, TOOL_FOREST
+         jmp .done
+      .set_evergreen:
+         mov ax, TOOL_FOREST2
          jmp .done
       .set_mountains:
          mov ax, TOOL_MOUNTAINS
@@ -720,7 +906,6 @@ init_map:
       inc di
    loop .init_loop
 
-   ; insert railroads and train
    mov di, _MAP_
    add di, MAP_WIDTH*31+31
    mov byte [di], TOOL_RAILROAD+128
@@ -734,7 +919,7 @@ load_map:
    mov al, [_TOOL_]
    push ax
    mov si, _MAP_
-   mov bp, 320*8+8
+   mov bp, VIEWPORT_POS
 
    mov ax, [_VIEWPORT_Y_]
    imul ax, MAP_WIDTH
@@ -755,12 +940,12 @@ load_map:
          mov byte [_BRUSH_], al
          call stamp_tile
          .done:
-         add bp, 16
+         add bp, VIEWPORT_GRID_SIZE
          inc si
       loop .h_line_loop
       add si, MAP_WIDTH-VIEWPORT_WIDTH
       pop cx
-      add bp, 320*15+32
+      add bp, 320*(VIEWPORT_GRID_SIZE-1)+VIEWPORT_GRID_SIZE*VIEWPORT_TEMP
    loop .v_loop
 
    pop ax
@@ -780,9 +965,7 @@ load_tile_from_map:
 ret
 
 move_cursor:
-   mov cl, COLOR_GRID
-   call draw_cursor
-   mov cl, COLOR_CURSOR
+   call erase_cursor
    mov ax, [_CUR_TEST_X_]
    cmp ax, 0
    jl .left_end
@@ -800,60 +983,61 @@ move_cursor:
    
    .top_end:
       cmp word [_VIEWPORT_Y_], 0
-      je .err
+      je .done
       dec word [_VIEWPORT_Y_]
-      jmp .done_end
+      jmp .pan_map
    .bottom_end:
       cmp word [_VIEWPORT_Y_], MAP_HEIGHT-VIEWPORT_HEIGHT-1
-      je .err
+      je .done
       inc word [_VIEWPORT_Y_]
-      jmp .done_end
+      jmp .pan_map
    .left_end:
       cmp word [_VIEWPORT_X_], 0
-      je .err
+      je .done
       dec word [_VIEWPORT_X_]
-      jmp .done_end
+      jmp .pan_map
    .right_end:
       cmp word [_VIEWPORT_X_], MAP_WIDTH-VIEWPORT_WIDTH-1
-      je .err
+      je .done
       inc word [_VIEWPORT_X_]
-      jmp .done_end
-   .err:
-      mov cl, COLOR_CURSOR_ERR
-      mov ax, [_CUR_X_]
-      mov [_CUR_TEST_X_], ax
-      mov ax, [_CUR_Y_]
-      mov [_CUR_TEST_Y_], ax
-      jmp .done
-   .done_end:
+      jmp .pan_map
+   .pan_map:
       mov ax, [_CUR_X_]
       mov [_CUR_TEST_X_], ax
       mov ax, [_CUR_Y_]
       mov [_CUR_TEST_Y_], ax
       call load_map 
-      mov cl, COLOR_CURSOR  
    .done:
-   call draw_cursor
+   call draw_cursor_ok
 ret
 
 draw_cursor:
    mov ax, [_CUR_Y_]
    mov bx, [_CUR_X_]
-   mov byte [_VECTOR_COLOR_], cl
-   mov si, CursorVector
    call convert_xy_to_screen
    call draw_vector
+ret
+
+draw_cursor_ok:
+   mov si, CursorVector
+   call draw_cursor
+ret
+
+erase_cursor:
+   mov si, CursorEraseVector
+   call draw_cursor
 ret
  
 convert_xy_to_screen:
    push ax
    push bx
-   shl ax, 4
+   imul ax, VIEWPORT_GRID_SIZE
    imul ax, 320
-   shl bx, 4
+   imul bx, VIEWPORT_GRID_SIZE
    add ax, bx
-   add ax, 320*8+8
+   add ax, VIEWPORT_POS
    mov bp, ax   
+
    pop bx
    pop ax
 ret
@@ -873,13 +1057,13 @@ verify_change_tool:
 ret
 
 update_tools_selector:
-   mov di, 320*195+16
+   mov di, TOOL_POS+320*17
    mov cx, 180
    mov ax, COLOR_BACKGROUND
    mov ah, al
    rep stosw
 
-   mov di, 320*195+16
+   mov di, TOOL_POS+320*17
    xor bx, bx
    mov bl, dl
    imul bx, 24
@@ -890,35 +1074,34 @@ update_tools_selector:
 ret
 
 train_ai:
+   mov ax, [_TRAIN_Y_]
+   sub ax, [_VIEWPORT_Y_]
+   mov bx, [_TRAIN_X_]
+   sub bx, [_VIEWPORT_X_]
+   
+   cmp bx, 0
+   jl .outside_viewport
+   cmp bx, VIEWPORT_WIDTH
+   jge .outside_viewport
+   cmp ax, 0
+   jl .outside_viewport
+   cmp ax, VIEWPORT_HEIGHT
+   jge .outside_viewport
 
- mov ax, [_TRAIN_Y_]
-      sub ax, [_VIEWPORT_Y_]
-      mov bx, [_TRAIN_X_]
-      sub bx, [_VIEWPORT_X_]
-      
-      cmp bx, 0
-      jl .outside_viewport
-      cmp bx, VIEWPORT_WIDTH
-      jge .outside_viewport
-      cmp ax, 0
-      jl .outside_viewport
-      cmp ax, VIEWPORT_HEIGHT
-      jge .outside_viewport
 
+   call convert_xy_to_screen
+   call clear_tile_on_screen
+   
+   mov si, _MAP_
+   mov ax, [_TRAIN_Y_]
+   mov bx, [_TRAIN_X_]
+   imul ax, MAP_WIDTH
+   add ax, bx
+   add si, ax
+   call load_tile_from_map
 
-      call convert_xy_to_screen
-      call clear_tile_on_screen
-      
-      mov si, _MAP_
-      mov ax, [_TRAIN_Y_]
-      mov bx, [_TRAIN_X_]
-      imul ax, MAP_WIDTH
-      add ax, bx
-      add si, ax
-      call load_tile_from_map
-
-      .outside_viewport:
-      call move_train
+   .outside_viewport:
+   call move_train
 ret
 
 draw_train:
@@ -938,7 +1121,6 @@ draw_train:
 
    call convert_xy_to_screen
 
-   mov byte [_VECTOR_COLOR_], COLOR_TRAIN
    mov si, TrainVector
    call draw_vector
 
@@ -997,9 +1179,6 @@ move_train:
    mov byte [_TRAIN_DIR_MASK_], bl
 
    .done:
-   call draw_train
-
-   
 ret
 
 ; =========================================== DRAW VECTOR ======================
@@ -1008,6 +1187,10 @@ ret
 
 draw_vector:   
    pusha 
+   .read_color:
+   mov cl, [si]
+   mov [_VECTOR_COLOR_], cl
+   inc si
    .read_group:
       xor cx, cx
       mov cl, [si]
@@ -1066,6 +1249,7 @@ debug:
    ; add al, 0x30
    ; int 0x10
 ret
+
 ; =========================================== DRAWING LINE ====================
 ; X0 - AX, Y0 - DL
 ; X1 - BX, Y1 - DH
@@ -1116,17 +1300,58 @@ draw_line:
  .ct:    dw  0
 
 
+play_tune:
+   xor ax, ax
+   mov al, [_TUNE_POS_]
+   mov si, IntroTune
+   add si, ax
+   mov dx, [si]
+   
+   cmp dx, 0
+   jz .restart_tune
+   cmp dx, NOTE_PAUSE
+   jz .pause_note
+
+   call play_note
+   .pause_note:
+   add byte [_TUNE_POS_], 2
+ret
+   .restart_tune:
+   mov byte [_TUNE_POS_], 0
+ret
+
+play_note:
+   mov al, 0xB6          ; Control word: channel 2, low/high byte, mode 3
+   out 0x43, al
+   out 0x42, al          ; Low byte of frequency
+   mov al, dh            ; High byte of frequency
+   out 0x42, al
+   in   al, 0x61         ; Read current speaker port
+   or   al, 3            ; Set bits 0 and 1 to enable channel 2 output
+   out  0x61, al
+ret
+
+stop_note:
+   in   al, 0x61
+   and  al, 0xFC         ; Clear bits 0 and 1
+   out  0x61, al
+ret
+
+
 ; =========================================== DATA =============================
-HeaderText:
-db '~ GAME 12 ~ by P1X', 0x0
+HeaderText:                                 ;
+db '-------- KKJ <<< GAME 12 >>> P1X -------', 0x0
 WelcomeText:
-db 'KKJ PRESENTS 12-TH ASSEMBLY PRODUCTION', 0x0
+db 'KRZYSZTOF KRYSTIAN JANKOWSKI PRESENTS', 0x0
+TitleText:
+db '12-TH ASSEMBLY PRODUCTION', 0x0
 PressEnterText:
 db 'Press ENTER to start the game', 0x0
-FooterText:
-db 'Q/W,SPACE,DEL,ARROWS,ESC', 0x0
+QuitText:
+db 'Good bye!',0x0D, 0x0A,'Visit http://smol.p1x.in/assembly/ for more games :)', 0x0A, 0x0
 
 P1XVector:
+db 0x1f
 db 4
 db 2, 35, 2, 2, 10, 2, 10, 20, 2, 20
 db 1
@@ -1140,16 +1365,24 @@ db 24, 35, 24, 19, 18, 11, 18, 2
 db 0
 
 CursorVector:
+db COLOR_CURSOR
+db 4
+db 0, 0, 16, 0, 16, 16, 0, 16, 0, 0
+db 0
+
+CursorEraseVector:
+db COLOR_GRID
 db 4
 db 0, 0, 16, 0, 16, 16, 0, 16, 0, 0
 db 0
 
 ToolsList:
-dw RailroadTracksHRailVector, Infra1Vector, ForestVector, MountainVector
+dw RailroadTracksHRailVector, HouseVector, StationVector, ForestVector, EvergreenVector, MountainVector
 RailroadsList:
 dw RailroadTracksHRailVector,RailroadTracksHRailVector,RailroadTracksVRailVector,RailroadTracksTurn3Vector,RailroadTracksHRailVector,RailroadTracksHRailVector,RailroadTracksTurn6Vector,RailroadTracksVRailVector,RailroadTracksVRailVector,RailroadTracksTurn9Vector,RailroadTracksVRailVector,RailroadTracksVRailVector,RailroadTracksTurn12Vector
 
 RailroadTracksHRailVector:
+db COLOR_RAILS
 db 1
 db 1, 6, 16, 6
 db 1
@@ -1157,6 +1390,7 @@ db 1, 10, 16, 10
 db 0
 
 RailroadTracksVRailVector:
+db COLOR_RAILS
 db 1
 db 6, 1, 6, 16
 db 1
@@ -1164,46 +1398,61 @@ db 10, 1, 10, 16
 db 0
 
 RailroadTracksTurn3Vector:
+db COLOR_RAILS
 db 1
-db 1, 5, 10, 16
+db 1, 6, 10, 16
 db 1
-db 1, 9, 6, 16
+db 1, 10, 6, 16
 db 0
 
 RailroadTracksTurn6Vector:
+db COLOR_RAILS
 db 1
-db 6, 16, 16, 5
+db 6, 15, 15, 5
 db 1
-db 10, 16, 16, 9
+db 10, 15, 15, 9
 db 0
 
 RailroadTracksTurn9Vector:
+db COLOR_RAILS
 db 1
-db 1, 6, 7, 1
+db 1, 5, 6, 1
 db 1
-db 1, 10, 11, 1
+db 1, 9, 10, 1
 db 0
 
 RailroadTracksTurn12Vector:
+db COLOR_RAILS
 db 1
-db 6, 1, 16, 9
+db 6, 1, 16, 10
 db 1
-db 10, 1, 16, 5
+db 10, 1, 16, 6
 db 0
 
-Infra1Vector:
+HouseVector:
+db COLOR_HOUSE
 db 4
-db 3, 3, 13, 3, 13, 13, 3, 13, 3, 3
-db 1
-db 3, 3, 13, 13
-db 1
-db 13, 3, 3, 13
+db 2, 14, 2, 8, 14, 8, 14, 14, 1, 14
+db 3
+db 6, 14, 6, 10, 8, 10, 8, 14
+db 3
+db 2, 8, 4, 4, 12, 4, 14, 8
+db 3
+db 8, 4, 8, 2, 10, 2, 10, 4
 db 0
 
-Infra2Vector:
+StationVector:
+db COLOR_STATION
+db 6
+db 3, 15, 1, 9, 5, 7, 11, 7, 15, 9, 13, 15, 3, 15
+db 4
+db 5, 15, 5, 7, 8, 1, 11, 7, 11, 15
+db 4
+db 7, 15, 7, 11, 8, 9, 9, 11, 9, 15
 db 0
 
 MountainVector:
+db COLOR_MOUNTAIN
 db 2
 db 1, 11, 7, 3, 11, 11
 db 2
@@ -1211,11 +1460,67 @@ db 9, 8, 12, 4, 15, 10
 db 0
 
 ForestVector:
-db 8
-db 7, 15, 7, 12, 12, 9, 12, 6, 9, 4, 5, 4, 3, 7, 5, 10, 7, 11
+db COLOR_GREEN
+db 3
+db 7, 11, 7, 14, 8, 14, 8, 10
+db 3
+db 8, 10, 3, 12, 1, 9, 3, 7
+db 5
+db 4, 8, 1, 4, 4, 1, 8, 1, 9, 6, 4, 8
+db 4
+db 8, 3, 12, 3, 14, 9, 8, 10, 6, 7
+db 0
+
+EvergreenVector:
+db COLOR_EVERGREEN
+db 18
+db 6,  15, 5, 13,1,15,4,11,2,12,5, 8, 3, 8,  6,   5,  4, 5,  7,  1, 9, 5,  7,  5,   10,  8,  8,  8, 11, 11, 8, 11, 12, 15, 13, 13, 6, 15
 db 0
 
 TrainVector:
+db COLOR_TRAIN
 db 4
 db 4, 4, 12, 4, 12, 12, 4, 12, 4, 4
 db 0
+
+IntroTune:
+dw NOTE_C4
+dw NOTE_E4
+dw NOTE_G4
+dw NOTE_C5
+dw NOTE_G4
+dw NOTE_E4
+dw NOTE_C4
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_E4
+dw NOTE_C4
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_G4
+dw NOTE_C5
+dw NOTE_PAUSE
+dw NOTE_E4
+dw NOTE_PAUSE
+dw NOTE_D4
+dw NOTE_F4
+dw NOTE_A4
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_E4
+dw NOTE_C4
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw NOTE_PAUSE
+dw 0x0
+
+; =========================================== THE END ==========================
+; Thanks for reading the source code!
+; Visit http://smol.p1x.in for more.
+
+Logo:
+db "P1X"    ; Use HEX viewer to see P1X at the end of binary
+
