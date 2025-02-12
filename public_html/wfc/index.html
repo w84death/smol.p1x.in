@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WFC Terminal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Permanent+Marker&display=swap">
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="terminal-title">Wave Function Collapse v1.0</span>
+            <div class="terminal-buttons">
+                <span class="btn"></span>
+                <span class="btn"></span>
+                <span class="btn"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="seed-section terminal-box">
+                <div class="terminal-label">
+                    > SEED_IMAGE [8x8]
+                    <div class="terminal-comment">// Draw pattern to define rules for adjacent pixels</div>
+                </div>
+                <canvas id="seedCanvas" width="96" height="96"></canvas>
+                <div class="controls">
+                    <div class="color-palette terminal-group">
+                        <button class="color-btn" style="background: #000000"></button>
+                        <button class="color-btn" style="background: #493c2b"></button>
+                        <button class="color-btn" style="background: #be2633"></button>
+                        <button class="color-btn" style="background: #e06f8b"></button>
+                        <button class="color-btn" style="background: #a46422"></button>
+                        <button class="color-btn" style="background: #eb8931"></button>
+                        <button class="color-btn" style="background: #f7e26b"></button>
+                        <button class="color-btn" style="background: #ffffff"></button>
+                        <button class="color-btn" style="background: #9d9d9d"></button>
+                        <button class="color-btn" style="background: #2f484e"></button>
+                        <button class="color-btn" style="background: #1b2632"></button>
+                        <button class="color-btn" style="background: #44891a"></button>
+                        <button class="color-btn" style="background: #a3ce27"></button>
+                        <button class="color-btn" style="background: #005784"></button>
+                        <button class="color-btn" style="background: #31a2f2"></button>
+                        <button class="color-btn" style="background: #b2dcef"></button>
+                        <button class="color-btn" style="background: #342a97"></button>
+                        <button class="color-btn" style="background: #656d71"></button>
+                        <button class="color-btn" style="background: #cccccc"></button>
+                        <button class="color-btn" style="background: #732930"></button>
+                        <button class="color-btn" style="background: #cb43a7"></button>
+                        <button class="color-btn" style="background: #524f40"></button>
+                        <button class="color-btn" style="background: #ad9d33"></button>
+                        <button class="color-btn" style="background: #ec4700"></button>
+                        <button class="color-btn" style="background: #fab40b"></button>
+                        <button class="color-btn" style="background: #115e33"></button>
+                        <button class="color-btn" style="background: #14807e"></button>
+                        <button class="color-btn" style="background: #15c2a5"></button>
+                        <button class="color-btn" style="background: #225af6"></button>
+                        <button class="color-btn" style="background: #9964f9"></button>
+                        <button class="color-btn" style="background: #f78ed6"></button>
+                        <button class="color-btn" style="background: #f4b990"></button>
+                    </div>
+                    <div class="terminal-group control-buttons">
+                        <button id="clearSeed" class="terminal-btn">CLEAR</button>
+                        <select id="sizeSelector" class="terminal-select">
+                            <option value="16">16x16</option>
+                            <option value="32">32x32</option>
+                            <option value="64" selected>64x64</option>
+                            <option value="128">128x128</option>
+                            <option value="256">256x256</option>
+                        </select>
+                        <button id="generate" class="terminal-btn">EXECUTE</button>
+                        <button id="stop" class="terminal-btn" disabled>STOP</button>
+                    </div>
+                </div>
+            </div>
+            <div class="output-section terminal-box">
+                <div class="terminal-label">
+                    > OUTPUT_MATRIX [FAST 16x16 -> 256x256 SLOW]
+                    <div class="terminal-comment">// Generated image following seed rules</div>
+                </div>
+                <canvas id="outputCanvas" width="512" height="512"></canvas>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

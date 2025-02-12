@@ -1,0 +1,273 @@
+:root {
+    --terminal-bg: #0a0a0a;
+    --terminal-green: #00ff00;
+    --terminal-cyan: #00ffff;
+    --terminal-border: #1a1a1a;
+    --terminal-glow: 0 0 10px rgba(0, 255, 0, 0.5);
+    --vapor-bg: #120458;
+    --vapor-primary: #ffffff;
+    --vapor-secondary: #00f9ff;
+    --vapor-accent: #ff2a6d;
+    --vapor-window: rgba(255, 255, 255, 0.1);
+    --vapor-shadow: 0 0 20px rgba(246, 21, 255, 0.3);
+    --vapor-border: 2px solid rgba(255, 255, 255, 0.2);
+    --vapor-depth: 4px;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: var(--vapor-bg);
+    background: linear-gradient(45deg, #120458 0%, #000000 100%);
+    color: var(--vapor-secondary);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+}
+
+.terminal {
+    background: var(--vapor-window);
+    border: var(--vapor-border);
+    border-radius: 8px;
+    box-shadow: var(--vapor-shadow);
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+    transform: perspective(1000px) rotateX(1deg);
+    animation: terminal-glow 2s ease-in-out infinite;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--vapor-primary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px var(--vapor-accent);
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--terminal-green);
+    opacity: 0.5;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.terminal-title {
+    font-size: 1.4em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: neon-glow 2s ease-in-out infinite;
+    color: var(--vapor-primary);
+}
+
+.container {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    perspective: 1000px;
+}
+
+.terminal-box {
+    background: var(--vapor-window);
+    border: var(--vapor-border);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 
+        var(--vapor-depth) var(--vapor-depth) 0 var(--vapor-primary),
+        calc(var(--vapor-depth) * -1) calc(var(--vapor-depth) * -1) 0 var(--vapor-secondary);
+    transition: all 0.3s ease;
+}
+
+.terminal-box:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 
+        calc(var(--vapor-depth) + 2px) calc(var(--vapor-depth) + 2px) 0 var(--vapor-primary),
+        calc((var(--vapor-depth) + 2px) * -1) calc((var(--vapor-depth) + 2px) * -1) 0 var(--vapor-secondary);
+}
+
+.terminal-label {
+    color: var(--vapor-primary);
+    text-shadow: 2px 2px var(--vapor-accent);
+}
+
+.seed-section, .output-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+canvas {
+    border: var(--vapor-border);
+    image-rendering: pixelated;
+    margin-bottom: 15px;
+    box-shadow: var(--vapor-shadow);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.terminal-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.color-picker {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(16, 24px);
+    gap: 4px;
+    padding: 8px;
+    background: var(--vapor-window);
+    border: var(--vapor-border);
+    border-radius: 4px;
+    box-shadow: var(--vapor-shadow);
+}
+
+.control-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.color-btn {
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.color-btn:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 10px var(--vapor-primary);
+    z-index: 1;
+}
+
+.color-btn.selected {
+    border: 2px solid var(--vapor-secondary);
+    box-shadow: 0 0 15px var(--vapor-primary);
+}
+
+.terminal-btn {
+    background: transparent;
+    border: 2px solid var(--vapor-primary);
+    color: var(--vapor-primary);
+    padding: 8px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 2px 2px var(--vapor-accent);
+    box-shadow: 3px 3px 0 var(--vapor-accent);
+}
+
+.terminal-btn:hover {
+    background: var(--vapor-primary);
+    color: var(--vapor-bg);
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--vapor-accent);
+}
+
+.terminal-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.terminal-btn:disabled:hover {
+    background: transparent;
+    color: var(--terminal-green);
+    box-shadow: none;
+}
+
+input[type="color"] {
+    background: transparent;
+    border: 1px solid var(--terminal-border);
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
+
+@keyframes terminal-glow {
+    0% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); }
+    100% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+}
+
+@keyframes neon-glow {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+.terminal-select {
+    background: var(--vapor-window);
+    border: 2px solid var(--vapor-primary);
+    color: var(--vapor-primary);
+    padding: 8px 16px;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 3px 3px 0 var(--vapor-accent);
+}
+
+.terminal-select:hover {
+    box-shadow: 5px 5px 0 var(--vapor-accent);
+    transform: translate(-2px, -2px);
+}
+
+.terminal-select option {
+    background: var(--vapor-bg);
+    color: var(--vapor-primary);
+}
+
+.terminal-select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.terminal-select:disabled:hover {
+    box-shadow: none;
+}
+
+.terminal-comment {
+    color: var(--vapor-secondary);
+    opacity: 0.7;
+    font-size: 0.8em;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.terminal-group.control-buttons {
+    background: var(--vapor-window);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: var(--vapor-shadow);
+}

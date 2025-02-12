@@ -26,7 +26,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -40,7 +41,8 @@
         0,
         0,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -54,11 +56,42 @@
         0,
         0,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
-        5,
+        4,
+        6,
+        6,
+        6
+      ],
+      "mirrors": [
+        0,
+        0,
+        16,
+        0
+      ],
+      "water": true
+    },
+    {
+      "tiles": [
+        4,
+        6,
+        6,
+        4
+      ],
+      "mirrors": [
+        0,
+        32,
+        0,
+        48
+      ],
+      "water": true
+    },
+    {
+      "tiles": [
+        6,
         5,
         5,
         5
@@ -66,9 +99,10 @@
       "mirrors": [
         0,
         0,
-        0,
-        0
-      ]
+        32,
+        16
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -78,25 +112,27 @@
         6
       ],
       "mirrors": [
-        8,
+        32,
         0,
         0,
-        0
-      ]
+        16
+      ],
+      "water": true
     },
     {
       "tiles": [
-        6,
-        6,
         7,
-        6
+        6,
+        6,
+        7
       ],
       "mirrors": [
         0,
         0,
-        0,
-        0
-      ]
+        16,
+        16
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -106,67 +142,42 @@
         7
       ],
       "mirrors": [
+        16,
         0,
         0,
-        8,
-        0
-      ]
+        32
+      ],
+      "water": true
     },
     {
       "tiles": [
-        4,
-        5,
-        5,
-        5
+        1,
+        1,
+        1,
+        1
+      ],
+      "mirrors": [
+        0,
+        16,
+        0,
+        16
+      ],
+      "water": true
+    },
+    {
+      "tiles": [
+        2,
+        2,
+        2,
+        2
       ],
       "mirrors": [
         0,
         0,
-        0,
-        0
-      ]
-    },
-    {
-      "tiles": [
-        4,
-        5,
-        5,
-        4
+        32,
+        32
       ],
-      "mirrors": [
-        0,
-        0,
-        0,
-        48
-      ]
-    },
-    {
-      "tiles": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "mirrors": [
-        0,
-        0,
-        0,
-        0
-      ]
-    },
-    {
-      "tiles": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "mirrors": [
-        0,
-        0,
-        0,
-        0
-      ]
+      "water": true
     },
     {
       "tiles": [
@@ -180,21 +191,23 @@
         16,
         0,
         16
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
-        null,
-        null,
-        null,
-        null
+        4,
+        6,
+        4,
+        6
       ],
       "mirrors": [
         0,
-        0,
-        0,
+        16,
+        32,
         0
-      ]
+      ],
+      "water": true
     },
     {
       "tiles": [
@@ -226,318 +239,117 @@
     }
   ],
   "levelData": [
-    null,
     {
-      "metatileId": 3,
+      "metatileId": 0,
       "mirror": 0
-    },
-    {
-      "metatileId": 1,
-      "mirror": 0
-    },
-    {
-      "metatileId": 1,
-      "mirror": 16
-    },
-    {
-      "metatileId": 1,
-      "mirror": 0
-    },
-    {
-      "metatileId": 1,
-      "mirror": 16
-    },
-    {
-      "metatileId": 1,
-      "mirror": 16
     },
     {
       "metatileId": 3,
-      "mirror": 16
+      "mirror": 64
+    },
+    {
+      "metatileId": 1,
+      "mirror": 64
+    },
+    {
+      "metatileId": 3,
+      "mirror": 80
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
     },
     null,
-    {
-      "metatileId": 3,
-      "mirror": 0
-    },
-    {
-      "metatileId": 1,
-      "mirror": 0
-    },
-    {
-      "metatileId": 1,
-      "mirror": 0
-    },
-    {
-      "metatileId": 3,
-      "mirror": 16
-    },
+    null,
+    null,
+    null,
+    null,
     null,
     {
-      "metatileId": 3,
+      "metatileId": 0,
       "mirror": 0
     },
     {
-      "metatileId": 3,
-      "mirror": 16
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
     },
     null,
+    null,
     {
-      "metatileId": 2,
-      "mirror": 32
-    },
-    {
-      "metatileId": 5,
-      "mirror": 0
-    },
-    {
-      "metatileId": 5,
-      "mirror": 0
-    },
-    {
-      "metatileId": 6,
-      "mirror": 0
-    },
-    {
-      "metatileId": 6,
-      "mirror": 0
-    },
-    {
-      "metatileId": 6,
+      "metatileId": 0,
       "mirror": 0
     },
     {
       "metatileId": 2,
-      "mirror": 16
-    },
-    null,
-    {
-      "metatileId": 2,
-      "mirror": 0
+      "mirror": 64
     },
     {
-      "metatileId": 6,
-      "mirror": 16
-    },
-    {
-      "metatileId": 8,
-      "mirror": 48
+      "metatileId": 4,
+      "mirror": 112
     },
     {
       "metatileId": 3,
-      "mirror": 48
+      "mirror": 112
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
     },
     null,
-    {
-      "metatileId": 2,
-      "mirror": 0
-    },
-    {
-      "metatileId": 2,
-      "mirror": 16
-    },
+    null,
+    null,
+    null,
     null,
     {
-      "metatileId": 2,
+      "metatileId": 0,
       "mirror": 0
     },
     {
-      "metatileId": 5,
+      "metatileId": 0,
       "mirror": 0
     },
     {
-      "metatileId": 6,
+      "metatileId": 0,
       "mirror": 0
     },
-    {
-      "metatileId": 7,
-      "mirror": 0
-    },
-    {
-      "metatileId": 7,
-      "mirror": 16
-    },
-    {
-      "metatileId": 6,
-      "mirror": 0
-    },
-    {
-      "metatileId": 2,
-      "mirror": 16
-    },
-    {
-      "metatileId": 12,
-      "mirror": 0
-    },
-    {
-      "metatileId": 2,
-      "mirror": 0
-    },
-    {
-      "metatileId": 6,
-      "mirror": 0
-    },
-    {
-      "metatileId": 2,
-      "mirror": 16
-    },
+    null,
     null,
     null,
     {
       "metatileId": 2,
-      "mirror": 0
+      "mirror": 64
     },
     {
-      "metatileId": 2,
-      "mirror": 16
-    },
-    null,
-    {
-      "metatileId": 3,
-      "mirror": 32
-    },
-    {
-      "metatileId": 8,
-      "mirror": 32
-    },
-    {
-      "metatileId": 5,
-      "mirror": 0
-    },
-    {
-      "metatileId": 7,
-      "mirror": 0
-    },
-    {
-      "metatileId": 6,
-      "mirror": 0
-    },
-    {
-      "metatileId": 8,
-      "mirror": 48
-    },
-    {
-      "metatileId": 3,
-      "mirror": 48
-    },
-    null,
-    {
-      "metatileId": 2,
-      "mirror": 0
-    },
-    {
-      "metatileId": 5,
-      "mirror": 0
-    },
-    {
-      "metatileId": 2,
-      "mirror": 16
-    },
-    {
-      "metatileId": 12,
-      "mirror": 0
-    },
-    {
-      "metatileId": 3,
-      "mirror": 0
-    },
-    {
-      "metatileId": 8,
-      "mirror": 0
-    },
-    {
-      "metatileId": 2,
-      "mirror": 16
-    },
-    null,
-    null,
-    {
-      "metatileId": 3,
-      "mirror": 32
+      "metatileId": 4,
+      "mirror": 80
     },
     {
       "metatileId": 1,
-      "mirror": 32
-    },
-    {
-      "metatileId": 1,
-      "mirror": 48
-    },
-    {
-      "metatileId": 1,
-      "mirror": 32
+      "mirror": 64
     },
     {
       "metatileId": 3,
-      "mirror": 48
-    },
-    null,
-    null,
-    {
-      "metatileId": 3,
-      "mirror": 32
+      "mirror": 80
     },
     {
-      "metatileId": 1,
-      "mirror": 32
-    },
-    {
-      "metatileId": 3,
-      "mirror": 48
-    },
-    null,
-    {
-      "metatileId": 3,
-      "mirror": 32
-    },
-    {
-      "metatileId": 1,
-      "mirror": 32
-    },
-    {
-      "metatileId": 3,
-      "mirror": 48
-    },
-    null,
-    null,
-    null,
-    null,
-    {
-      "metatileId": 12,
-      "mirror": 0
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    {
-      "metatileId": 12,
-      "mirror": 0
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    {
-      "metatileId": 3,
+      "metatileId": 0,
       "mirror": 0
     },
     {
-      "metatileId": 1,
-      "mirror": 16
-    },
-    {
-      "metatileId": 1,
+      "metatileId": 0,
       "mirror": 0
     },
     {
-      "metatileId": 3,
-      "mirror": 16
+      "metatileId": 0,
+      "mirror": 0
     },
     {
       "metatileId": 0,
@@ -545,45 +357,106 @@
     },
     {
       "metatileId": 3,
+      "mirror": 64
+    },
+    {
+      "metatileId": 1,
+      "mirror": 64
+    },
+    {
+      "metatileId": 3,
+      "mirror": 80
+    },
+    {
+      "metatileId": 0,
       "mirror": 0
     },
     {
-      "metatileId": 1,
-      "mirror": 16
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 96
     },
     {
       "metatileId": 1,
-      "mirror": 16
+      "mirror": 96
     },
     {
-      "metatileId": 1,
+      "metatileId": 4,
+      "mirror": 96
+    },
+    {
+      "metatileId": 13,
+      "mirror": 80
+    },
+    {
+      "metatileId": 11,
+      "mirror": 64
+    },
+    {
+      "metatileId": 12,
+      "mirror": 64
+    },
+    {
+      "metatileId": 11,
+      "mirror": 64
+    },
+    {
+      "metatileId": 11,
+      "mirror": 64
+    },
+    {
+      "metatileId": 13,
+      "mirror": 64
+    },
+    {
+      "metatileId": 6,
+      "mirror": 64
+    },
+    {
+      "metatileId": 2,
+      "mirror": 80
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
       "mirror": 0
     },
     {
       "metatileId": 3,
-      "mirror": 16
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    {
-      "metatileId": 3,
-      "mirror": 32
-    },
-    {
-      "metatileId": 1,
-      "mirror": 32
-    },
-    {
-      "metatileId": 1,
-      "mirror": 48
+      "mirror": 96
     },
     {
       "metatileId": 3,
-      "mirror": 48
+      "mirror": 112
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
     },
     {
       "metatileId": 0,
@@ -591,32 +464,722 @@
     },
     {
       "metatileId": 3,
-      "mirror": 32
+      "mirror": 96
     },
     {
       "metatileId": 1,
-      "mirror": 32
-    },
-    {
-      "metatileId": 1,
-      "mirror": 32
-    },
-    {
-      "metatileId": 1,
-      "mirror": 48
+      "mirror": 96
     },
     {
       "metatileId": 3,
-      "mirror": 48
+      "mirror": 112
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
     },
     {
       "metatileId": 0,
       "mirror": 0
     },
     null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 64
+    },
+    {
+      "metatileId": 3,
+      "mirror": 80
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 64
+    },
+    {
+      "metatileId": 3,
+      "mirror": 80
+    },
+    null,
+    null,
+    null,
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 64
+    },
+    {
+      "metatileId": 4,
+      "mirror": 64
+    },
+    {
+      "metatileId": 4,
+      "mirror": 80
+    },
+    {
+      "metatileId": 3,
+      "mirror": 80
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 64
+    },
+    {
+      "metatileId": 3,
+      "mirror": 80
+    },
+    {
+      "metatileId": 3,
+      "mirror": 64
+    },
+    {
+      "metatileId": 4,
+      "mirror": 64
+    },
+    {
+      "metatileId": 2,
+      "mirror": 80
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "metatileId": 3,
+      "mirror": 96
+    },
+    {
+      "metatileId": 1,
+      "mirror": 96
+    },
+    {
+      "metatileId": 1,
+      "mirror": 96
+    },
+    {
+      "metatileId": 3,
+      "mirror": 112
+    },
+    {
+      "metatileId": 0,
+      "mirror": 0
+    },
+    {
+      "metatileId": 3,
+      "mirror": 96
+    },
+    {
+      "metatileId": 3,
+      "mirror": 112
+    },
+    {
+      "metatileId": 3,
+      "mirror": 96
+    },
+    {
+      "metatileId": 1,
+      "mirror": 96
+    },
+    {
+      "metatileId": 3,
+      "mirror": 112
+    },
     {
       "metatileId": 0,
       "mirror": 0
     }
+  ],
+  "entityData": [
+    null,
+    null,
+    {
+      "id": 7,
+      "position": 2
+    },
+    {
+      "id": 1,
+      "position": 3
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "id": 6,
+      "position": 204
+    },
+    {
+      "id": 6,
+      "position": 205
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "id": 8,
+      "position": 212
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "id": 4,
+      "position": 233
+    },
+    null,
+    null,
+    null,
+    {
+      "id": 6,
+      "position": 237
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    {
+      "id": 4,
+      "position": 264
+    },
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
   ]
 }

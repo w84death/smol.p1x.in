@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monika Małgorzata Trenerowska</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+        }
+
+        .nav-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 1rem;
+            
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+
+            max-width:640px;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #333;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transition: all 0.3s ease;
+        }
+
+        /* Optional: Add shine effect */
+        .shine {
+            position: absolute;
+            top: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, 
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.5) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            animation: shine 1s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Add this to your a:hover */
+        .nav-links a:hover .shine {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .content-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+
+        footer {
+            background-color: #111;
+            color: #fff;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+
+        .heart {
+            width: 100px;
+            height: 90px;
+            position: relative;
+            margin: 0 auto;
+            background-color: pink;
+            animation: pulse 1s infinite ease-in-out;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 90px;
+            background-color: pink;
+            border-radius: 50%;
+            top: -45px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 50px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="badge-2025">2025</div>
+
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="#">Home<span class="shine"></span></a></li>
+            <li><a href="#">About<span class="shine"></a></li>
+            <li><a href="/medytacje/">Medytacje<span class="shine"></a></li>
+            <li><a href="77">77<span class="shine"></a></li>
+            <li><a href="#">Contact<span class="shine"></a></li>
+        </ul>
+    </div>j
+
+    <div class="container">
+        <header>
+            <div class="heart"></div>
+            <h1>Monika Małgorzata<br>Trenerowska</h1>
+            <p>Modern Fashion Designer & Creative Director</p>
+        </header>
+
+        <section id="about" class="content-section">
+            <h2>About Monika</h2>
+            <p>Monika Trenerowska is a renowned fashion designer known for her innovative approach to contemporary design. With a career spanning over two decades, she has established herself as a leader in the fashion industry.</p>
+        </section>
+
+        <section id="collection" class="content-section">
+            <h2>The 2025 Collection</h2>
+            <div class="gallery">
+                <div class="gallery-item" style="background-image: url('https://example.com/look1.jpg')"></div>
+                <div class="gallery-item" style="background-image: url('https://example.com/look2.jpg')"></div>
+                <div class="gallery-item" style="background-image: url('https://example.com/look3.jpg')"></div>
+            </div>
+        </section>
+
+        <section id="shop" class="content-section">
+            <h2>Shop the Collection</h2>
+            <p>Explore and purchase pieces from Monika's latest collection.</p>
+            <a href="#" class="button">View Collection</a>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: info@monika.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+                <p>Address: 123 Fashion St, New York, NY 10001</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Best Sellers</a></li>
+                    <li><a href="#">Accessories</a></li>
+                    <li><a href="#">Sale</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
