@@ -1,9 +1,9 @@
 class WFC {
-    constructor(seedImage, size = 64) {
+    constructor(seedImage, width = 32, height = 32) {
         this.seedImage = seedImage;
         this.rules = this.generateRules();
-        this.outputImage = this.initializeOutputImage(size, size);
-        this.entropy = this.initializeEntropy(size, size);
+        this.outputImage = this.initializeOutputImage(width, height);
+        this.entropy = this.initializeEntropy(width, height);
     }
 
     generateRules() {
