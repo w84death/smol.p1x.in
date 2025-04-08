@@ -392,6 +392,85 @@ footer p {
     font-size: 0.8rem;
 }
 
+/* Use Cases Section */
+.use-cases {
+    background-color: var(--bg-color);
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.use-cases h2 {
+    text-align: left;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-highlight);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.use-cases h2::before {
+    content: "# ";
+    color: var(--text-color);
+}
+
+.use-case-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+}
+
+.use-case-list li {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.use-case-list li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--text-color);
+    opacity: 0.5;
+}
+
+.use-case-list li:hover {
+    transform: translateX(5px);
+    border-color: var(--text-color);
+}
+
+.use-case-list li:hover::before {
+    background: var(--text-highlight);
+    box-shadow: 0 0 10px var(--text-highlight);
+}
+
+.use-case-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    min-width: 32px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* Projects Section */
+.projects {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
     header .container {
@@ -421,6 +500,10 @@ footer p {
     }
     
     .about p {
+        text-align: center;
+    }
+
+    .use-cases h2 {
         text-align: center;
     }
 }
