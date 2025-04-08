@@ -1,0 +1,444 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #0c0c0c;
+    --bg-alt: #111;
+    --text-color: #0f0;
+    --text-dim: #0a0;
+    --text-bright: #0f8;
+    --text-highlight: #0ff;
+    --border-color: #1a1a1a;
+    --accent: #0c0;
+    --header-bg: rgba(10, 10, 10, 0.95);
+}
+
+body {
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    border-top: 2px solid var(--accent);
+}
+
+::selection {
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Terminal cursor effect */
+.cursor::after {
+    content: "_";
+    animation: cursor 1s infinite step-end;
+    opacity: 1;
+}
+
+@keyframes cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Header styles */
+header {
+    background-color: var(--header-bg);
+    color: var(--text-bright);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(5px);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-highlight);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header h1::before {
+    content: "> ";
+    color: var(--text-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+}
+
+nav ul li a:hover {
+    color: var(--text-highlight);
+}
+
+nav ul li a::before {
+    content: "[";
+    margin-right: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+nav ul li a::after {
+    content: "]";
+    margin-left: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+nav ul li a:hover::before,
+nav ul li a:hover::after {
+    opacity: 1;
+}
+
+/* Hero section */
+.hero {
+    background-color: var(--bg-alt);
+    color: var(--text-bright);
+    padding: 3rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--text-dim);
+}
+
+/* Content sections */
+.projects, .resources, .about {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.projects h2, .resources h2, .about h2 {
+    text-align: left;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-highlight);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.projects h2::before, .resources h2::before, .about h2::before {
+    content: "# ";
+    color: var(--text-color);
+}
+
+/* Project cards */
+.project-card {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    transition: all 0.3s;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--text-color);
+    opacity: 0.5;
+}
+
+.project-card:hover {
+    transform: translateX(5px);
+    border-color: var(--text-color);
+}
+
+.project-card:hover::before {
+    background: var(--text-highlight);
+    box-shadow: 0 0 10px var(--text-highlight);
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-bright);
+    font-weight: 600;
+}
+
+.project-content h3::before {
+    content: ">> ";
+    color: var(--text-color);
+}
+
+.project-content p {
+    margin-bottom: 1rem;
+    color: var(--text-dim);
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.project-tags span {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    font-family: 'Fira Code', monospace;
+}
+
+.project-tags span::before {
+    content: "#";
+    margin-right: 3px;
+    opacity: 0.7;
+}
+
+/* Resources section */
+.resources {
+    background-color: var(--bg-color);
+}
+
+.resource-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.resource-item {
+    background-color: var(--bg-alt);
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.resource-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--text-color), transparent);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.resource-item:hover {
+    border-color: var(--text-color);
+}
+
+.resource-item:hover::after {
+    transform: scaleX(1);
+}
+
+.resource-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-bright);
+    font-weight: 600;
+}
+
+.resource-item h3::before {
+    content: "~$ ";
+    color: var(--text-color);
+}
+
+.resource-item p {
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+}
+
+.resource-link {
+    display: inline-block;
+    color: var(--text-highlight);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.resource-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-highlight);
+    transition: width 0.3s;
+}
+
+.resource-link:hover::after {
+    width: 100%;
+}
+
+/* About section */
+.about {
+    background-color: var(--bg-color);
+}
+
+.about p {
+    max-width: 800px;
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    color: var(--text-dim);
+}
+
+/* Matrix rain effect */
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.03;
+    pointer-events: none;
+}
+
+/* Footer */
+footer {
+    background-color: var(--bg-alt);
+    color: var(--text-dim);
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+/* Terminal line effect */
+.terminal-line::before {
+    content: "> ";
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Code block styling */
+.code-block {
+    background-color: var(--bg-alt);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    position: relative;
+    overflow-x: auto;
+}
+
+.code-block::before {
+    content: "code:";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.1rem 0.5rem;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    font-size: 0.8rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    nav ul {
+        margin-top: 1rem;
+        justify-content: center;
+    }
+    
+    nav ul li {
+        margin: 0 0.75rem;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .projects h2, .resources h2, .about h2 {
+        text-align: center;
+    }
+    
+    .project-card, .resource-item {
+        margin-bottom: 1.5rem;
+    }
+    
+    .about p {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 2rem 0;
+    }
+    
+    .hero h2 {
+        font-size: 1.75rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .projects h2, .resources h2, .about h2 {
+        font-size: 1.5rem;
+    }
+}

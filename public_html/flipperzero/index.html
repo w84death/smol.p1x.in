@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipper_Zero::Projects</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix-rain" class="matrix-bg"></canvas>
+
+    <header>
+        <div class="container">
+            <h1 class="cursor">Flipper_Zero::Projects</h1>
+            <nav>
+                <ul>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="container">
+            <h2>My Flipper Zero <span class="cursor">Journey</span></h2>
+            <p class="terminal-line">A collection of hardware hacks, software mods, and security explorations with the Flipper Zero multi-tool device.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>ESP32 Module for Marauder</h3>
+                    <p>Custom ESP32 module developed to work with Flipper Zero for running the Marauder firmware. This hardware extension enhances the Flipper's WiFi capabilities, allowing for advanced network analysis and security testing.</p>
+                    <div class="project-image">
+                        <img src="esp32_marauder_module.jpg" alt="ESP32 Marauder Module for Flipper Zero">
+                    </div>
+                    <div class="project-tags">
+                        <span>Hardware</span>
+                        <span>WiFi</span>
+                        <span>ESP32</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Moon Phases Application</h3>
+                    <p>A Flipper Application Package (FAP) that displays current and upcoming moon phases directly on your Flipper Zero. Useful for photography planning, outdoor activities, or simply keeping track of lunar cycles.</p>
+                    <div class="project-image">
+                        <img src="moon-phases.png" alt="Moon Phases Application">
+                    </div>
+                    <a href="https://github.com/w84death/moon-phases" target="_blank" class="resource-link">View on GitHub</a>
+                    <div class="project-tags">
+                        <span>Application</span>
+                        <span>Tool</span>
+                        <span>Astronomy</span>
+                        <span>FAP</span>
+                    </div>
+                </div>                
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Network Defender Game</h3>
+                    <p>A recently developed game for Flipper Zero that simulates network defense scenarios. Players must protect their virtual networks against various types of attacks, learning cybersecurity concepts while having fun.</p>
+                    <div class="project-image">
+                        <img src="network-defender.png" alt="Network Defender Game">
+                    </div>
+                    <a href="https://github.com/w84death/network-defender" target="_blank" class="resource-link">View on GitHub</a>
+                    <div class="project-tags">
+                        <span>Game</span>
+                        <span>Entertainment</span>
+                        <span>FAP</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Wardriving Map Tool</h3>
+                    <p>I made a very nice tool for easy mapping your wardriving findings ;)</p>
+                    <div class="project-image">
+                        <img src="map-p1x.png" alt="Wardriving Map Tool">
+                    </div>
+                    <a href="https://map.p1x.in/" target="_blank" class="resource-link">Open Map Tool</a>
+                    <div class="project-tags">
+                        <span>Wardriving</span>
+                        <span>Mapping</span>
+                        <span>WiFi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>WIFI NEAR ME Visualizer</h3>
+                    <p>Flipper Zero -> Marauder -> Scan (devices) -> List (devices) -> download latest .log -> WIFI_NEAR_ME visualizer ;)</p>
+                    <div class="project-image">
+                        <img src="wifi-near-me.png" alt="WiFi Near Me Visualizer">
+                    </div>
+                    <a href="https://wifi.p1x.in/" target="_blank" class="resource-link">Open WiFi Visualizer</a>
+                    <div class="project-tags">
+                        <span>WiFi</span>
+                        <span>Marauder</span>
+                        <span>Visualization</span>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </section>
+
+    <section id="resources" class="resources">
+        <div class="container">
+            <h2>Useful Resources</h2>
+            
+            <div class="resource-list">
+                <div class="resource-item">
+                    <h3>Marauder Scripting Reference</h3>
+                    <p>My comprehensive reference guide for ESP32 Marauder scripting with the Flipper Zero.</p>
+                    <a href="marauder_scripting_ref.html" class="resource-link">open ESP32 Marauder Script Reference</a>
+                </div>
+
+                <div class="resource-item">
+                    <h3>Official Documentation</h3>
+                    <p>The official Flipper Zero documentation covering both user guides and development resources.</p>
+                    <a href="https://docs.flipper.net/" target="_blank" class="resource-link">open docs.flipper.net</a>
+                </div>
+
+                <div class="resource-item">
+                    <h3>Awesome Flipper Zero</h3>
+                    <p>A curated list of awesome resources, applications, and firmware modifications.</p>
+                    <a href="https://github.com/djsime1/awesome-flipperzero" target="_blank" class="resource-link">open awesome-flipperzero</a>
+                </div>
+
+                <div class="resource-item">
+                    <h3>Flipper Zero Forum</h3>
+                    <p>Community forum for discussions, troubleshooting, and project sharing.</p>
+                    <a href="https://forum.flipperzero.one/" target="_blank" class="resource-link">open forum.flipperzero.one</a>
+                </div>
+
+                <div class="resource-item">
+                    <h3>ESP32 Marauder Wiki</h3>
+                    <p>Documentation for the ESP32 Marauder firmware that works with Flipper Zero.</p>
+                    <a href="https://github.com/justcallmekoko/ESP32Marauder/wiki" target="_blank" class="resource-link">open ESP32Marauder</a>
+                </div>
+
+                <div class="resource-item">
+                    <h3>Flipper Zero GitHub</h3>
+                    <p>Official GitHub repositories for firmware, applications, and development tools.</p>
+                    <a href="https://github.com/flipperdevices" target="_blank" class="resource-link">open flipperdevices</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About</h2>
+            <p class="terminal-line">I'm a Flipper Zero enthusiast with a focus on extending the device's capabilities through hardware modifications, custom applications, and game development.</p>
+            <p class="terminal-line">My journey with this device began when I was looking for a versatile multi-tool for hardware exploration and security research.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p class="terminal-line">©2025 selfhosted by <a href="https://krzysztofjankowski.com/">Krzysztof Krystian Jankowski</a> &amp; <a href="https://nomada.p1x.in/">Cyfrowy Nomada</a></p>
+            <p class="terminal-line">Last updated: April 8, 2025</p>
+            <p>// This site documents my personal Flipper Zero projects and is not affiliated with Flipper Devices Inc.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

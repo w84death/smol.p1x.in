@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marauder_Script::Reference</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+    <style>
+        /* Additional styles specific to the reference page */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-family: 'Fira Code', monospace;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bg-alt);
+            color: var(--text-highlight);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(17, 17, 17, 0.4);
+        }
+
+        tr:hover {
+            background-color: var(--bg-alt);
+        }
+
+        code {
+            background-color: var(--bg-color);
+            padding: 2px 5px;
+            border-radius: 2px;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-bright);
+            border: 1px solid var(--border-color);
+        }
+
+        pre {
+            background-color: var(--bg-color);
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .syntax-example {
+            background-color: var(--bg-alt);
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--text-highlight);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .reference-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .notes {
+            background-color: var(--bg-alt);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-top: 2rem;
+        }
+
+        .notes h3::before {
+            content: "# ";
+            color: var(--text-color);
+        }
+
+        .notes ul li {
+            margin-bottom: 0.5rem;
+            color: var(--text-dim);
+        }
+
+        .back-link {
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .back-link a {
+            color: var(--text-highlight);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link a::before {
+            content: "<<";
+            margin-right: 8px;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-rain" class="matrix-bg"></canvas>
+
+    <header>
+        <div class="container">
+            <h1 class="cursor">Marauder_Script::Reference</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#meta">Meta</a></li>
+                    <li><a href="#commands">Commands</a></li>
+                    <li><a href="#cli">CLI</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="container">
+            <h2>ESP32 Marauder <span class="cursor">Script Reference</span></h2>
+            <p class="terminal-line">A comprehensive guide to scripting the ESP32 Marauder firmware for automated WiFi security testing with Flipper Zero.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="back-link">
+            <a href="index.html">Return to main page</a>
+        </div>
+    
+        <section id="meta" class="reference-section">
+            <h2>Meta Parameters</h2>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Values</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>description</code></td>
+                    <td>String</td>
+                    <td>Script purpose explanation</td>
+                </tr>
+                <tr>
+                    <td><code>repeat</code></td>
+                    <td>Integer (default: 1)</td>
+                    <td>Total script repetitions</td>
+                </tr>
+                <tr>
+                    <td><code>enableLed</code></td>
+                    <td>true | false</td>
+                    <td>LED feedback toggle</td>
+                </tr>
+                <tr>
+                    <td><code>savePcap</code></td>
+                    <td>true | false</td>
+                    <td>Auto-save packet captures</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="commands" class="reference-section">
+            <h2>Stage Commands</h2>
+            <table>
+                <tr>
+                    <th>Command</th>
+                    <th>Syntax</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>scan</code></td>
+                    <td>
+                        <pre>{
+  "type": "ap" | "station",
+  "timeout": seconds,
+  "channel": 1-11
+}</pre>
+                    </td>
+                    <td>WiFi device scanning</td>
+                </tr>
+                <tr>
+                    <td><code>select</code></td>
+                    <td>
+                        <pre>{
+  "type": "ap" | "station" | "ssid",
+  "filter": "all | contains -f '{SSID}'...",
+  "indexes": [0,1,2...]
+}</pre>
+                    </td>
+                    <td>Target selection/filtering</td>
+                </tr>
+                <tr>
+                    <td><code>deauth</code></td>
+                    <td><pre>{
+  "timeout": seconds
+}</pre></td>
+                    <td>Deauthentication attack</td>
+                </tr>
+                <tr>
+                    <td><code>sniff*</code></td>
+                    <td>
+                        <pre>{
+  "timeout": seconds,
+  "forceDeauth": true|false,
+  "channel": 1-11
+}</pre>
+                    </td>
+                    <td>Packet capture commands</td>
+                </tr>
+                <tr>
+                    <td><code>beaconList</code></td>
+                    <td>
+                        <pre>{
+  "ssids": ["SSID1", "SSID2"],
+  "generate": number,
+  "timeout": seconds
+}</pre>
+                    </td>
+                    <td>Beacon frame spam</td>
+                </tr>
+                <tr>
+                    <td><code>exec</code></td>
+                    <td><pre>{
+  "command": "CLI command"
+}</pre></td>
+                    <td>Raw command execution</td>
+                </tr>
+                <tr>
+                    <td><code>delay</code></td>
+                    <td><pre>{
+  "timeout": seconds
+}</pre></td>
+                    <td>Stage pause</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="cli" class="reference-section">
+            <h2>Example CLI Commands</h2>
+            <table>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>listap -a</code></td>
+                    <td>List all access points</td>
+                </tr>
+                <tr>
+                    <td><code>attack -t deauth</code></td>
+                    <td>Start deauth attack</td>
+                </tr>
+                <tr>
+                    <td><code>clearlist -a</code></td>
+                    <td>Clear target lists</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="reference-section">
+            <div class="code-block">
+                <pre>// Example Marauder script
+{
+  "meta": {
+    "description": "Basic AP scan and deauth script",
+    "repeat": 1,
+    "enableLed": true,
+    "savePcap": true
+  },
+  "stages": [
+    {
+      "scan": {
+        "type": "ap",
+        "timeout": 10,
+        "channel": 1
+      }
+    },
+    {
+      "select": {
+        "type": "ap",
+        "filter": "all",
+        "indexes": [0]
+      }
+    },
+    {
+      "deauth": {
+        "timeout": 30
+      }
+    }
+  ]
+}</pre>
+            </div>
+        </section>
+
+        <div class="notes">
+            <h3>Usage Notes</h3>
+            <ul>
+                <li>Use <code>{SSID}</code> or <code>{MAC}</code> placeholders in filters</li>
+                <li>Stages execute sequentially</li>
+                <li>Outputs saved to <code>apps_data/marauder/</code></li>
+                <li>Run scripts via Flipper's ESP32 Marauder app</li>
+                <li>Marauder scripting requires ESP32-S2/S3 with >= v0.10.5 firmware</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="terminal-line">Last updated: April 6, 2025</p>
+            <p>// This reference is for educational purposes only. Always use responsibly and legally.</p>
+        </div>
+    </footer>
+</body>
+</html>
