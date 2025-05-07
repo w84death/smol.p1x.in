@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel x86 Instruction Set Reference (Up to 80486 DX4)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            color: #0071c5;
+            font-size: 24px;
+            border-bottom: 2px solid #0071c5;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #0071c5;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 8px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        li {
+            padding: 5px 0;
+            border-left: 3px solid #0071c5;
+            padding-left: 15px;
+            margin-left: 5px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .note {
+            background-color: #e6f7ff;
+            border-left: 5px solid #0071c5;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        .toggle {
+            cursor: pointer;
+            color: #0071c5;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        .toggle:hover {
+            text-decoration: underline;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Intel® x86 Instruction Set Reference<br>Volume 1: Legacy Architecture (Up to 80486 DX4)</h1>
+        <p><strong>Document Number:</strong> X86-LEG-486-001<br><strong>Revision Date:</strong> May 2025</p>
+        <div class="note">
+            This document provides a reference for the x86 instruction set supported by Intel processors from the 8086 through the 80486 DX4. It is intended for software developers targeting legacy systems.
+        </div>
+
+        <div class="section">
+            <h2>1.0 8086/8088 Instructions (1978–1979)</h2>
+            <p>The foundational instruction set for the x86 architecture, comprising core operations for data transfer, arithmetic, logic, and control flow.</p>
+            <div class="toggle" onclick="toggleContent('section1')">Expand Categories ▼</div>
+            <div id="section1" class="content">
+                <strong>Data Transfer</strong>
+                <ul>
+                    <li><strong>MOV</strong>: Copy data between registers/memory</li>
+                    <li><strong>PUSH/POP</strong>: Manage stack operations</li>
+                    <li><strong>XCHG</strong>: Swap register/memory contents</li>
+                    <li><strong>XLAT</strong>: Table-based byte translation</li>
+                </ul>
+                <strong>Arithmetic/Logic</strong>
+                <ul>
+                    <li><strong>ADD/SUB</strong>: Integer addition/subtraction</li>
+                    <li><strong>MUL/DIV</strong>: Unsigned multiplication/division</li>
+                    <li><strong>AND/OR/XOR</strong>: Bitwise operations</li>
+                    <li><strong>INC/DEC</strong>: Increment/decrement</li>
+                </ul>
+                <strong>Control Flow</strong>
+                <ul>
+                    <li><strong>JMP</strong>: Unconditional jump</li>
+                    <li><strong>Jcc</strong>: Conditional jumps (JE, JNE, etc.)</li>
+                    <li><strong>CALL/RET</strong>: Subroutine management</li>
+                    <li><strong>LOOP</strong>: Iteration control</li>
+                </ul>
+                <strong>String Operations</strong>
+                <ul>
+                    <li><strong>MOVSB/MOVSW</strong>: Block memory transfers</li>
+                    <li><strong>CMPSB/CMPSW</strong>: String comparisons</li>
+                    <li><strong>SCASB/SCASW</strong>: String scanning</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2.0 80186/80188 Additions (1982)</h2>
+            <p>Enhanced instructions for stack management and I/O operations, primarily for embedded applications.</p>
+            <div class="toggle" onclick="toggleContent('section2')">Expand Categories ▼</div>
+            <div id="section2" class="content">
+                <strong>System-Level Features</strong>
+                <ul>
+                    <li><strong>ENTER/LEAVE</strong>: Streamlined stack frame setup/teardown</li>
+                    <li><strong>BOUND</strong>: Array index bounds checking</li>
+                    <li><strong>PUSHA/POPA</strong>: Save/restore all general registers</li>
+                </ul>
+                <strong>I/O Enhancements</strong>
+                <ul>
+                    <li><strong>INSB/INSW</strong>: Block input from ports</li>
+                    <li><strong>OUTSB/OUTSW</strong>: Block output to ports</li>
+                </ul>
+                <strong>Immediate Operations</strong>
+                <ul>
+                    <li><strong>IMUL immediate</strong>: Signed multiplication with constants</li>
+                    <li><strong>Shift/Rotate immediate</strong>: Multi-bit shifts in single instruction</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3.0 80286 Extensions (1982)</h2>
+            <p>Introduced protected mode instructions for multitasking and memory protection.</p>
+            <div class="toggle" onclick="toggleContent('section3')">Expand Categories ▼</div>
+            <div id="section3" class="content">
+                <strong>Protected Mode Management</strong>
+                <ul>
+                    <li><strong>LGDT/LIDT</strong>: Load global/interrupt descriptor tables</li>
+                    <li><strong>LMSW</strong>: Set machine status word</li>
+                    <li><strong>CLTS</strong>: Clear task-switched flag</li>
+                </ul>
+                <strong>Privilege Control</strong>
+                <ul>
+                    <li><strong>ARPL</strong>: Adjust segment selector privilege level</li>
+                    <li><strong>VERR/VERW</strong>: Validate segment read/write access</li>
+                </ul>
+                <strong>Descriptor Access</strong>
+                <ul>
+                    <li><strong>LAR</strong>: Load access rights byte</li>
+                    <li><strong>LSL</strong>: Load segment limit</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4.0 80386 Innovations (1985)</h2>
+            <p>Expanded the ISA with 32-bit operations and advanced system control features.</p>
+            <div class="toggle" onclick="toggleContent('section4')">Expand Categories ▼</div>
+            <div id="section4" class="content">
+                <strong>32-Bit Operations</strong>
+                <ul>
+                    <li><strong>MOVSD</strong>: 32-bit string moves</li>
+                    <li><strong>PUSHAD/POPAD</strong>: 32-bit register stack management</li>
+                    <li><strong>IRETD</strong>: 32-bit interrupt returns</li>
+                </ul>
+                <strong>Bit Manipulation</strong>
+                <ul>
+                    <li><strong>BT/BTS/BTR/BTC</strong>: Bit test/modify operations</li>
+                    <li><strong>BSF/BSR</strong>: Bit scan forward/reverse</li>
+                </ul>
+                <strong>Addressing Modes</strong>
+                <ul>
+                    <li><strong>MOVZX/MOVSX</strong>: Zero/sign extension moves</li>
+                    <li><strong>LEA</strong>: Effective address calculation</li>
+                </ul>
+                <strong>System Control</strong>
+                <ul>
+                    <li><strong>MOV to/from CR/DR</strong>: Access control/debug registers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5.0 80486 Enhancements (1989–1994)</h2>
+            <p>Optimized instructions for atomic operations and cache management.</p>
+            <div class="toggle" onclick="toggleContent('section5')">Expand Categories ▼</div>
+            <div id="section5" class="content">
+                <strong>Atomic Operations</strong>
+                <ul>
+                    <li><strong>CMPXCHG</strong>: Compare-and-swap primitive</li>
+                    <li><strong>XADD</strong>: Exchange-and-add</li>
+                </ul>
+                <strong>Data Manipulation</strong>
+                <ul>
+                    <li><strong>BSWAP</strong>: Endianness conversion</li>
+                </ul>
+                <strong>Cache Control</strong>
+                <ul>
+                    <li><strong>INVD</strong>: Invalidate cache</li>
+                    <li><strong>WBINVD</strong>: Write-back and invalidate</li>
+                    <li><strong>INVLPG</strong>: TLB entry invalidation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6.0 Compatibility Notes</h2>
+            <div class="note">
+                Late 80486 models implemented <strong>CPUID</strong> through microcode updates, enabling software detection of processor capabilities via EFLAGS bit 21 manipulation. This instruction is officially a Pentium feature but is noted here for completeness.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Intel Corporation. All rights reserved. This document is for informational purposes only.</p>
+    </footer>
+
+    <script>
+        function toggleContent(sectionId) {
+            const content = document.getElementById(sectionId);
+            const toggle = content.previousElementSibling;
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                toggle.textContent = 'Expand Categories ▼';
+            } else {
+                content.classList.add('active');
+                toggle.textContent = 'Collapse Categories ▲';
+            }
+        }
+    </script>
+</body>
+</html>
