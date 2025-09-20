@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <title>WebGL Gaussian Splat Viewer</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap");
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                overflow: hidden;
+                margin: 0;
+                height: 100vh;
+                width: 100vw;
+                font-family: "Exo 2", sans-serif;
+                background: linear-gradient(
+                    135deg,
+                    #0a0a0a 0%,
+                    #1a1a2e 50%,
+                    #0f3460 100%
+                );
+                color: #e0e0e0;
+            }
+
+            /* Welcome Screen Styles */
+            #welcome-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+                background: linear-gradient(
+                    135deg,
+                    rgba(10, 10, 10, 0.95) 0%,
+                    rgba(26, 26, 46, 0.95) 50%,
+                    rgba(15, 52, 96, 0.95) 100%
+                );
+                backdrop-filter: blur(10px);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition:
+                    opacity 0.5s ease,
+                    visibility 0.5s ease;
+            }
+
+            #welcome-screen.hidden {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .welcome-container {
+                max-width: 1200px;
+                width: 90%;
+                text-align: center;
+            }
+
+            .welcome-title {
+                font-family: "Orbitron", monospace;
+                font-size: 3.5rem;
+                font-weight: 900;
+                background: linear-gradient(45deg, #00ffff, #00a8ff, #0066ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 1rem;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                animation: glow 2s ease-in-out infinite alternate;
+            }
+
+            @keyframes glow {
+                from {
+                    text-shadow:
+                        0 0 10px #00ffff40,
+                        0 0 20px #00a8ff40,
+                        0 0 30px #0066ff40;
+                }
+                to {
+                    text-shadow:
+                        0 0 20px #00ffff60,
+                        0 0 30px #00a8ff60,
+                        0 0 40px #0066ff60;
+                }
+            }
+
+            .welcome-subtitle {
+                font-size: 1.2rem;
+                color: #a0a0a0;
+                margin-bottom: 3rem;
+                font-weight: 300;
+            }
+
+            .screenshots-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin-bottom: 3rem;
+            }
+
+            .screenshot-card {
+                position: relative;
+                border-radius: 15px;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition:
+                    transform 0.3s ease,
+                    box-shadow 0.3s ease,
+                    border-color 0.3s ease;
+                cursor: pointer;
+            }
+
+            .screenshot-card:hover {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+                border-color: rgba(0, 255, 255, 0.5);
+            }
+
+            .screenshot-card.selected {
+                border: 2px solid #00ffff;
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+                transform: scale(1.05);
+            }
+
+            .screenshot-card img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                display: block;
+            }
+
+            .screenshot-label {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 10px;
+                background: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.9),
+                    transparent
+                );
+                color: #00ffff;
+                font-weight: 600;
+                text-align: center;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .screenshot-card:hover .screenshot-label,
+            .screenshot-card.selected .screenshot-label {
+                opacity: 1;
+            }
+
+            .screenshot-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    transparent 50%
+                );
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .screenshot-card:hover .screenshot-overlay {
+                opacity: 1;
+            }
+
+            .welcome-controls {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .select-container {
+                position: relative;
+                width: 400px;
+                max-width: 100%;
+            }
+
+            .futuristic-select {
+                width: 100%;
+                padding: 15px 20px;
+                background: rgba(10, 10, 10, 0.8);
+                border: 2px solid rgba(0, 255, 255, 0.3);
+                border-radius: 10px;
+                color: #e0e0e0;
+                font-size: 1.1rem;
+                font-family: "Exo 2", sans-serif;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                appearance: none;
+                padding-right: 50px;
+            }
+
+            .futuristic-select option {
+                background: #0a0a0a;
+                color: #e0e0e0;
+                padding: 10px;
+                border: none;
+            }
+
+            .futuristic-select option:hover,
+            .futuristic-select option:focus {
+                background: #1a1a2e;
+                color: #00ffff;
+            }
+
+            .futuristic-select:hover {
+                background: rgba(20, 20, 20, 0.9);
+                border-color: rgba(0, 255, 255, 0.6);
+                box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            }
+
+            .futuristic-select:focus {
+                outline: none;
+                border-color: #00ffff;
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+                background: rgba(15, 15, 30, 0.9);
+            }
+
+            .select-arrow {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                color: #00ffff;
+            }
+
+            .load-button {
+                padding: 15px 40px;
+                background: linear-gradient(45deg, #00ffff, #00a8ff);
+                border: none;
+                border-radius: 50px;
+                color: #000;
+                font-size: 1.1rem;
+                font-weight: 600;
+                font-family: "Orbitron", monospace;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .load-button:before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent
+                );
+                transition: left 0.5s ease;
+            }
+
+            .load-button:hover:before {
+                left: 100%;
+            }
+
+            .load-button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 30px rgba(0, 255, 255, 0.5);
+            }
+
+            /* Main UI Styles */
+            #info {
+                z-index: 100;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background: rgba(10, 10, 10, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(0, 255, 255, 0.3);
+                border-radius: 15px;
+                padding: 20px;
+                min-width: 250px;
+            }
+
+            #info h3 {
+                font-family: "Orbitron", monospace;
+                font-size: 1.2rem;
+                color: #00ffff;
+                margin-bottom: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            #info p {
+                color: #a0a0a0;
+                font-size: 0.9rem;
+                margin: 5px 0;
+            }
+
+            #info a {
+                color: #00a8ff;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+            #info a:hover {
+                color: #00ffff;
+            }
+
+            #file-selector {
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            #file-selector label {
+                display: block;
+                color: #00ffff;
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+                font-weight: 600;
+            }
+
+            #splat-select {
+                width: 100%;
+                padding: 8px 12px;
+                background: rgba(10, 10, 10, 0.8);
+                border: 1px solid rgba(0, 255, 255, 0.3);
+                border-radius: 8px;
+                color: #e0e0e0;
+                font-family: "Exo 2", sans-serif;
+                transition: all 0.3s ease;
+                appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300ffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                padding-right: 35px;
+            }
+
+            #splat-select option {
+                background: #0a0a0a;
+                color: #e0e0e0;
+                padding: 8px;
+                border: none;
+            }
+
+            #splat-select option:hover,
+            #splat-select option:focus {
+                background: #1a1a2e;
+                color: #00ffff;
+            }
+
+            #splat-select:hover {
+                background: rgba(20, 20, 20, 0.9);
+                border-color: rgba(0, 255, 255, 0.5);
+            }
+
+            #splat-select:focus {
+                outline: none;
+                border-color: #00ffff;
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+                background: rgba(15, 15, 30, 0.9);
+            }
+
+            #progress {
+                position: absolute;
+                top: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #00ffff, #00a8ff, #0066ff);
+                z-index: 99;
+                transition: width 0.1s ease-in-out;
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            }
+
+            #quality {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                z-index: 999;
+                background: rgba(10, 10, 10, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(0, 255, 255, 0.3);
+                border-radius: 10px;
+                padding: 10px 15px;
+                font-family: "Orbitron", monospace;
+                color: #00ffff;
+                font-size: 0.9rem;
+            }
+
+            #caminfo {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                z-index: 999;
+                background: rgba(10, 10, 10, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(0, 255, 255, 0.3);
+                border-radius: 10px;
+                padding: 10px 15px;
+                font-family: "Orbitron", monospace;
+                color: #00ffff;
+                font-size: 0.9rem;
+            }
+
+            #canvas {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+
+            #message {
+                position: absolute;
+                display: flex;
+                top: 0;
+                right: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 2;
+                height: 100%;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 1.2rem;
+                color: #ff4444;
+                pointer-events: none;
+                text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+            }
+
+            /* Loading Animation */
+            .cube-wrapper {
+                transform-style: preserve-3d;
+            }
+
+            .cube {
+                transform-style: preserve-3d;
+                transform: rotateX(45deg) rotateZ(45deg);
+                animation: rotation 2s infinite;
+            }
+
+            .cube-faces {
+                transform-style: preserve-3d;
+                height: 60px;
+                width: 60px;
+                position: relative;
+                transform-origin: 0 0;
+                transform: translateX(0) translateY(0) translateZ(-30px);
+            }
+
+            .cube-face {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(45deg, #00ffff, #00a8ff);
+                border: solid 1px rgba(255, 255, 255, 0.3);
+                opacity: 0.8;
+            }
+
+            .cube-face.top {
+                transform: translateZ(60px);
+            }
+
+            .cube-face.front {
+                transform-origin: 0 50%;
+                transform: rotateY(-90deg);
+            }
+
+            .cube-face.back {
+                transform-origin: 0 50%;
+                transform: rotateY(-90deg) translateZ(-60px);
+            }
+
+            .cube-face.right {
+                transform-origin: 50% 0;
+                transform: rotateX(-90deg) translateY(-60px);
+            }
+
+            .cube-face.left {
+                transform-origin: 50% 0;
+                transform: rotateX(-90deg) translateY(-60px) translateZ(60px);
+            }
+
+            @keyframes rotation {
+                0% {
+                    transform: rotateX(45deg) rotateY(0) rotateZ(45deg);
+                    animation-timing-function: cubic-bezier(
+                        0.17,
+                        0.84,
+                        0.44,
+                        1
+                    );
+                }
+                50% {
+                    transform: rotateX(45deg) rotateY(0) rotateZ(225deg);
+                    animation-timing-function: cubic-bezier(
+                        0.76,
+                        0.05,
+                        0.86,
+                        0.06
+                    );
+                }
+                100% {
+                    transform: rotateX(45deg) rotateY(0) rotateZ(405deg);
+                    animation-timing-function: cubic-bezier(
+                        0.17,
+                        0.84,
+                        0.44,
+                        1
+                    );
+                }
+            }
+
+            .scene,
+            #spinner {
+                position: absolute;
+                display: flex;
+                top: 0;
+                right: 0;
+                left: 0;
+                bottom: 0;
+                z-index: 2;
+                height: 100%;
+                width: 100%;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Hide elements for Hugging Face */
+            body.nohf .nohf {
+                display: none;
+            }
+
+            body.nohf #progress,
+            body.nohf .cube-face {
+                background: linear-gradient(45deg, #ff9d0d, #ff6b0d);
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            if (location.host.includes("hf.space"))
+                document.body.classList.add("nohf");
+        </script>
+
+        <!-- Welcome Screen -->
+        <div id="welcome-screen">
+            <div class="welcome-container">
+                <h1 class="welcome-title">Gaussian Splat Viewer</h1>
+                <p class="welcome-subtitle">
+                    Experience 3D Gaussian Splatting in WebGL
+                </p>
+
+                <div class="screenshots-grid">
+                    <div
+                        class="screenshot-card"
+                        data-file="splat/hylux_clean.splat"
+                    >
+                        <img src="screenshot_1.jpg" alt="Hylux Vehicle" />
+                        <div class="screenshot-overlay"></div>
+                        <div class="screenshot-label">Hylux Vehicle</div>
+                    </div>
+                    <div
+                        class="screenshot-card"
+                        data-file="splat/street-light_clean.splat"
+                    >
+                        <img src="screenshot_2.jpg" alt="Street Light" />
+                        <div class="screenshot-overlay"></div>
+                        <div class="screenshot-label">Street Light</div>
+                    </div>
+                    <div
+                        class="screenshot-card"
+                        data-file="splat/impostor_clean.splat"
+                    >
+                        <img src="screenshot_3.jpg" alt="Impostor" />
+                        <div class="screenshot-overlay"></div>
+                        <div class="screenshot-label">Impostor</div>
+                    </div>
+                    <div
+                        class="screenshot-card"
+                        data-file="splat/sandbox_clean.splat"
+                    >
+                        <img src="screenshot_4.jpg" alt="Sandbox" />
+                        <div class="screenshot-overlay"></div>
+                        <div class="screenshot-label">Sandbox</div>
+                    </div>
+                </div>
+
+                <div class="welcome-controls">
+                    <div class="select-container">
+                        <select
+                            id="welcome-splat-select"
+                            class="futuristic-select"
+                        >
+                            <!-- Options populated dynamically by JavaScript -->
+                        </select>
+                        <span class="select-arrow">▼</span>
+                    </div>
+                    <button id="load-splat-button" class="load-button">
+                        Load Splat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Application -->
+        <div id="info">
+            <h3 class="nohf">3D Gaussian Splat</h3>
+            <p class="nohf">
+                <small>
+                    By
+                    <a href="https://twitter.com/antimatter15">Kevin Kwok</a> |
+                    <a href="https://github.com/antimatter15/splat">Github</a> |
+                    modded by
+                    <a href="https://krzysztofjankowski.com/"
+                        >Krzysztof Krystian Jankowski</a
+                    >
+                </small>
+            </p>
+            <div id="file-selector">
+                <label for="splat-select">Current File:</label>
+                <select id="splat-select">
+                    <!-- Options populated dynamically by JavaScript -->
+                </select>
+            </div>
+        </div>
+
+        <div id="progress"></div>
+        <div id="message"></div>
+
+        <div class="scene" id="spinner">
+            <div class="cube-wrapper">
+                <div class="cube">
+                    <div class="cube-faces">
+                        <div class="cube-face bottom"></div>
+                        <div class="cube-face top"></div>
+                        <div class="cube-face left"></div>
+                        <div class="cube-face right"></div>
+                        <div class="cube-face back"></div>
+                        <div class="cube-face front"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <canvas id="canvas"></canvas>
+
+        <div id="quality">
+            <span id="fps"></span>
+        </div>
+        <div id="caminfo">
+            <span id="camid"></span>
+        </div>
+
+        <script src="main.js"></script>
+    </body>
+</html>
