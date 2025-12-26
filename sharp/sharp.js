@@ -643,6 +643,51 @@ async function main() {
     });
 
     canvas.addEventListener(
+        "touchstart",
+        (e) => {
+            e.preventDefault();
+            camState.dragging = true;
+            camState.lastX = e.touches[0].clientX;
+            camState.lastY = e.touches[0].clientY;
+        },
+        { passive: false },
+    );
+
+    canvas.addEventListener(
+        "touchend",
+        (e) => {
+            e.preventDefault();
+            camState.dragging = false;
+        },
+        { passive: false },
+    );
+
+    canvas.addEventListener(
+        "touchmove",
+        (e) => {
+            e.preventDefault();
+            if (!camState.dragging) return;
+            const touch = e.touches[0];
+            const dx = touch.clientX - camState.lastX;
+            const dy = touch.clientY - camState.lastY;
+            camState.lastX = touch.clientX;
+            camState.lastY = touch.clientY;
+
+            camState.theta += dx * 0.005;
+            camState.theta = Math.max(
+                Math.PI - Math.PI / 6,
+                Math.min(Math.PI + Math.PI / 6, camState.theta),
+            );
+            camState.phi -= dy * 0.005;
+            camState.phi = Math.max(
+                -Math.PI / 6,
+                Math.min(Math.PI / 6, camState.phi),
+            );
+        },
+        { passive: false },
+    );
+
+    canvas.addEventListener(
         "wheel",
         (e) => {
             e.preventDefault();
