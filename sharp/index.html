@@ -140,10 +140,6 @@
                 position: absolute;
                 top: 20px;
                 left: 20px;
-                background: rgba(10, 10, 10, 0.7);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(0, 255, 255, 0.3);
-                border-radius: 15px;
                 padding: 5px;
                 min-width: 250px;
             }
@@ -376,9 +372,62 @@
             body.nohf .cube-face {
                 background: linear-gradient(45deg, #ff9d0d, #ff6b0d);
             }
+
+            /* Welcome Screen Styles */
+            #welcome-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10000;
+                background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: opacity 0.5s;
+            }
+
+            #welcome-screen.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .welcome-title {
+                font-family: "Orbitron", sans-serif;
+                font-size: 4rem;
+                color: #00ffff;
+                margin-bottom: 3rem;
+                text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+                text-align: center;
+                text-transform: uppercase;
+                letter-spacing: 5px;
+            }
+
+            .center-controls {
+                width: 400px;
+                max-width: 90%;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
         </style>
     </head>
     <body>
+        <div id="welcome-screen">
+            <h1 class="welcome-title">ML-SHARP VIEWER</h1>
+            <div class="center-controls">
+                <select
+                    id="welcome-splat-select"
+                    class="futuristic-select"
+                ></select>
+                <button id="load-splat-button" class="load-button">
+                    Load Scene
+                </button>
+            </div>
+        </div>
+
         <div id="info">
             <div id="file-selector">
                 <select id="splat-select">
