@@ -1,27 +1,17 @@
 const splatFiles = [
-    "splat/ml-sharp_ruins.splat",
-    "splat/ml-sharp_ruins2.splat",
-    "splat/ml-sharp_ruins3.splat",
-    "splat/ml-sharp_ruins4.splat",
-    "splat/ml-sharp_japan.splat",
-    "splat/ml-sharp_street.splat",
-    "splat/ml-sharp_stream.splat",
-    "splat/ml-sharp_bridge.splat",
-    "splat/ml-sharp_arch.splat",
-    "splat/ml-sharp_nfs.splat",
-    "splat/ml-sharp_wartostrada.splat",
-    "splat/ml-sharp_kwiatki.splat",
-    "splat/ml-sharp_tree.splat",
-    "splat/ml-sharp_swieczki.splat",
-    "splat/photo1.splat",
-    "splat/photo2.splat",
-    "splat/photo3.splat",
-    "splat/photo4.splat",
-    "splat/photo5.splat",
-    "splat/photo6.splat",
-    "splat/photo7.splat",
-    "splat/photo8.splat",
-    "splat/photo9.splat",
+    "sharp/ml-sharp_japan.splat",
+    "sharp/ml-sharp_bridge.splat",
+    "sharp/ml-sharp_arch.splat",
+    "sharp/ml-sharp_nfs.splat",
+    "sharp/ml-sharp_wartostrada.splat",
+    "sharp/ml-sharp_kwiatki.splat",
+    "sharp/ml-sharp_tree.splat",
+    "sharp/photo4.splat",
+    "sharp/photo5.splat",
+    "sharp/photo6.splat",
+    "sharp/photo7.splat",
+    "sharp/photo8.splat",
+    "sharp/photo9.splat",
 ];
 
 window.splatFiles = splatFiles;
@@ -612,7 +602,7 @@ async function main() {
         distance: 1.0,
         theta: Math.PI,
         phi: 0.0,
-        target: [0, 0, 2.0],
+        target: [0, 0, 1.5],
         lastX: 0,
         lastY: 0,
         dragging: false,
@@ -657,7 +647,10 @@ async function main() {
         (e) => {
             e.preventDefault();
             camState.distance *= Math.pow(1.001, e.deltaY * 0.1);
-            camState.distance = Math.max(0.5, camState.distance);
+
+            camState.distance = Math.max(0.8, camState.distance);
+            camState.distance = Math.min(7, camState.distance);
+
             updateProjections();
         },
         { passive: false },
@@ -841,9 +834,17 @@ function initFileSelector() {
     const select = document.getElementById("splat-select");
     const welcomeSelect = document.getElementById("welcome-splat-select");
 
-    function populateSelect(selectElement) {
+    function populateSelect(selectElement, placeholder) {
         if (selectElement) {
             selectElement.innerHTML = "";
+            if (placeholder) {
+                const option = document.createElement("option");
+                option.value = "";
+                option.textContent = placeholder;
+                option.disabled = true;
+                option.selected = true;
+                selectElement.appendChild(option);
+            }
             splatFiles.forEach((filename, index) => {
                 const option = document.createElement("option");
                 option.value = index;
@@ -856,7 +857,7 @@ function initFileSelector() {
     }
 
     populateSelect(select);
-    populateSelect(welcomeSelect);
+    populateSelect(welcomeSelect, "select image");
 
     if (select) {
         const params = new URLSearchParams(window.location.search);
@@ -901,6 +902,7 @@ function initFileSelector() {
         if (loadButton && welcomeSelect) {
             loadButton.addEventListener("click", function () {
                 const selectedIndex = welcomeSelect.value;
+                if (selectedIndex === "") return;
                 const url = new URL(window.location);
                 url.searchParams.set("file", selectedIndex);
                 window.location = url.toString();
