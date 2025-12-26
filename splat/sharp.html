@@ -144,38 +144,11 @@
                 backdrop-filter: blur(10px);
                 border: 1px solid rgba(0, 255, 255, 0.3);
                 border-radius: 15px;
-                padding: 20px;
+                padding: 5px;
                 min-width: 250px;
             }
 
-            #info h3 {
-                font-family: "Orbitron", monospace;
-                font-size: 1.2rem;
-                color: #00ffff;
-                margin-bottom: 10px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            #info p {
-                color: #a0a0a0;
-                font-size: 0.9rem;
-                margin: 5px 0;
-            }
-
-            #info a {
-                color: #00a8ff;
-                text-decoration: none;
-                transition: color 0.3s ease;
-            }
-
-            #info a:hover {
-                color: #00ffff;
-            }
-
             #file-selector {
-                margin-top: 15px;
-                padding-top: 15px;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
 
@@ -406,22 +379,8 @@
         </style>
     </head>
     <body>
-        <!-- Main Application -->
         <div id="info">
-            <h3 class="nohf">3D Gaussian Splat</h3>
-            <p class="nohf">
-                <small>
-                    By
-                    <a href="https://twitter.com/antimatter15">Kevin Kwok</a> |
-                    <a href="https://github.com/antimatter15/splat">Github</a> |
-                    modded by
-                    <a href="https://krzysztofjankowski.com/"
-                        >Krzysztof Krystian Jankowski</a
-                    >
-                </small>
-            </p>
             <div id="file-selector">
-                <label for="splat-select">Current File:</label>
                 <select id="splat-select">
                     <!-- Options populated dynamically by JavaScript -->
                 </select>
@@ -450,9 +409,6 @@
 
         <div id="quality">
             <span id="fps"></span>
-        </div>
-        <div id="caminfo">
-            <span id="camid"></span>
         </div>
 
         <script src="sharp.js"></script>
