@@ -874,30 +874,19 @@ function initFileSelector() {
 
     const welcomeScreen = document.getElementById("welcome-screen");
     const loadButton = document.getElementById("load-splat-button");
-    const screenshotCards = document.querySelectorAll(".screenshot-card");
 
     const params = new URLSearchParams(window.location.search);
     const shouldShowWelcome = !params.has("file");
 
     if (shouldShowWelcome) {
+        const fpsElement = document.getElementById("quality");
+        const spinner = document.getElementById("spinner");
+        if (fpsElement) fpsElement.style.display = "none";
+        if (spinner) spinner.style.display = "none";
+
         if (welcomeScreen) {
             welcomeScreen.classList.remove("hidden");
         }
-
-        screenshotCards.forEach((card) => {
-            card.addEventListener("click", function () {
-                screenshotCards.forEach((c) => c.classList.remove("selected"));
-                card.classList.add("selected");
-
-                if (welcomeSelect) {
-                    const fileName = card.getAttribute("data-file");
-                    const fileIndex = splatFiles.indexOf(fileName);
-                    if (fileIndex !== -1) {
-                        welcomeSelect.value = fileIndex;
-                    }
-                }
-            });
-        });
 
         if (loadButton && welcomeSelect) {
             loadButton.addEventListener("click", function () {
@@ -907,28 +896,6 @@ function initFileSelector() {
                 url.searchParams.set("file", selectedIndex);
                 window.location = url.toString();
             });
-        }
-
-        if (welcomeSelect) {
-            welcomeSelect.addEventListener("change", function () {
-                const selectedFile = splatFiles[this.value];
-                screenshotCards.forEach((card) => {
-                    if (card.getAttribute("data-file") === selectedFile) {
-                        card.classList.add("selected");
-                    } else {
-                        card.classList.remove("selected");
-                    }
-                });
-            });
-
-            const initialFile = splatFiles[welcomeSelect.value];
-            if (initialFile) {
-                screenshotCards.forEach((card) => {
-                    if (card.getAttribute("data-file") === initialFile) {
-                        card.classList.add("selected");
-                    }
-                });
-            }
         }
     } else {
         if (welcomeScreen) {
