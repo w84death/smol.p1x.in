@@ -654,12 +654,17 @@
                     width="128px"
                 />
                 <img
-                    src="game12/screenshot-3.png"
-                    alt="Briefing screen"
+                    src="game12/screenshot-4.png"
+                    alt="game screen"
                     width="128px"
                 />
                 <img
-                    src="game12/screenshot-4.png"
+                    src="game12/screenshot-5.png"
+                    alt="game screen"
+                    width="128px"
+                />
+                <img
+                    src="game12/screenshot-6.png"
                     alt="game screen"
                     width="128px"
                 />
@@ -672,43 +677,62 @@
             <h3>Features</h3>
             <ul>
                 <li>
-                    VGA 320x200, 16 colors, 4 colors per tiles, 3 + transparency
-                    for sprites
+                    VGA 320x200 in 256-color mode, using a 16-color DawnBringer
+                    palette
                 </li>
-                <li>Arne 16 color palette</li>
                 <li>2D tile-based top-down view</li>
-                <li>Procedural map generation</li>
-                <li>Big, 128x128 tiles, map</li>
-                <li>16x16 sprites/tiles in 4 colors</li>
-                <li>No framebuffer, redrawing only parts that changed</li>
-                <li>RLE image compression for pre-rendered backgrounds</li>
-                <li>Game state machine</li>
-                <li>Windows and Menu system</li>
-                <li>Sound effects (PC Speaker)</li>
-                <li>Rails system with pods transporting goods</li>
-                <li>Main base expansion + buildings</li>
-                <li>3 type of resources to extract, transport, and refine</li>
+                <li>Full keyboard and mouse support</li>
                 <li>
-                    Development tools:
-                    <ul>
-                        ZIG
-                        <li>
-                            <a href="https://github.com/w84death/p1xel-tool"
-                                >P1Xel Tool</a
-                            >
-                            for managing tileset, palettes, sprites
-                        </li>
-                    </ul>
-                    <ul>
-                        C
-                        <li>png2asm - compress tileset to assembly db</li>
-                        <li>
-                            rleimg2asm - compress 320x200 images to assembly RLE
-                            db
-                        </li>
-                        <li>fnt2asm - compress font tileset to assemlby db</li>
-                    </ul>
+                    16x16 sprites/tiles with 2-bit palette compression (4 colors
+                    + transparency)
                 </li>
+                <li>Procedural map generation with weighted adjacency rules</li>
+                <li>128x128 tile map with viewport scrolling</li>
+                <li>Double-buffered framebuffer with partial terrain redraw</li>
+                <li>RLE image compression for pre-rendered backgrounds</li>
+                <li>Sound effects via PC Speaker (IRQ-driven PIT playback)</li>
+                <li>
+                    Rail system with automatic track orientation and switch
+                    logic
+                </li>
+                <li>
+                    Pod (cart) entity system for moving goods on rails with
+                    collision handling
+                </li>
+                <li>Base expansion and building placement</li>
+                <li>
+                    8 building types: silos, collector, extractor, refinery,
+                    lab, radar, pod factory, power
+                </li>
+                <li>
+                    3 resource types (white, blue, green): extraction,
+                    transport, refinement
+                </li>
+                <li>
+                    Extractor setup with targeting and resource type selection
+                </li>
+                <li>Fog of war with radar visibility expansion</li>
+                <li>Radar minimap (satellite view)</li>
+                <li>UPX-compressed COM output for DOS</li>
+                <li>Bootable FAT12 floppy image (bare-metal + DOS)</li>
+                <li>
+                    Development tools (vibe coded C): png2asm, rleimg2asm,
+                    fnt2asm
+                </li>
+                <li>
+                    All game graphics were made with my own tool:
+                    <a href="https://github.com/w84death/p1xel-tool"
+                        >P1Xel Tool</a
+                    >
+                </li>
+                <ul>
+                    <li>
+                        P1Xel Tool source code:
+                        <a href="https://github.com/w84death/p1xel-tool"
+                            >github.com/w84death/p1xel-tool</a
+                        >
+                    </li>
+                </ul>
             </ul>
             <fieldset>
                 <legend>Download</legend>
