@@ -19,36 +19,75 @@
             </p>
             <nav>
                 <h2>MENU</h2>
-                <b>0x00 X86 Assembly Language</b>
-                <ul>
-                    <li><a href="#introduction">INTRODUCTION</a></li>
-                    <li><a href="#how-to">HOW TO RUN</a></li>
-                    <li><a href="#resources">RESOURCES</a></li>
-                </ul>
-                <b>0x01 BOOTSECTOR GAMES</b>
-                <ul>
-                    <li>[512B] <a href="#land-me">LAND ME</a></li>
-                    <li>[512B] <a href="#fly-escape">FLY ESCAPE</a></li>
-                    <li>
-                        [512B] <a href="#bit-of-treasure">BIT OF A TREASURE</a>
-                    </li>
-                </ul>
-                <b>0x03 BOOTABLE & MS-DOS GAMES</b>
-                <ul>
-                    <li>[512B] <a href="#moth-hunter">MOTH HUNTER</a></li>
-                    <li>
-                        [5KB] <a href="#forgotten-isles">FORGOTTEN ISLES</a>
-                    </li>
-                    <li>
-                        [16KB] <a href="#cortex-labs">CORTEX LABS</a
-                        ><sup>NEW</sup>
-                    </li>
-                </ul>
-
-                <b>0x04 FLOPPY OPERATING SYSTEM</b>
-                <ul>
-                    <li>[8K] <a href="#smolix">SMOLiX OPERATING SYSTEM</a></li>
-                </ul>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>0x00 X86 Assembly Language</b>
+                                <ul>
+                                    <li>
+                                        <a href="#introduction">INTRODUCTION</a>
+                                    </li>
+                                    <li><a href="#how-to">HOW TO RUN</a></li>
+                                    <li><a href="#resources">RESOURCES</a></li>
+                                </ul>
+                            </td>
+                            <td>
+                                <b>0x01 BOOTSECTOR GAMES</b>
+                                <ul>
+                                    <li>
+                                        [512B] <a href="#land-me">LAND ME</a>
+                                    </li>
+                                    <li>
+                                        [512B]
+                                        <a href="#fly-escape">FLY ESCAPE</a>
+                                    </li>
+                                    <li>
+                                        [512B]
+                                        <a href="#bit-of-treasure"
+                                            >BIT OF A TREASURE</a
+                                        >
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>
+                                <b>0x02 BOOTABLE & MS-DOS GAMES</b>
+                                <ul>
+                                    <li>
+                                        [512B]
+                                        <a href="#moth-hunter">MOTH HUNTER</a>
+                                    </li>
+                                    <li>
+                                        [5KB]
+                                        <a href="#forgotten-isles"
+                                            >FORGOTTEN ISLES</a
+                                        >
+                                    </li>
+                                    <li>
+                                        [16KB]
+                                        <a href="#cortex-labs">CORTEX LABS</a
+                                        ><sup>NEW</sup>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>0x03 FLOPPY OPERATING SYSTEM</b>
+                                <ul>
+                                    <li>
+                                        [8K]
+                                        <a href="#smolix"
+                                            >SMOLiX OPERATING SYSTEM</a
+                                        >
+                                    </li>
+                                </ul>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
             </nav>
         </header>
 
@@ -96,44 +135,67 @@
             <h3>Boot from a floppy</h3>
             <p>It's simple.</p>
 
-            <h4>Native</h4>
-            <ul>
-                <li>
-                    Burn the image to a clean floppy using
-                    <a href="https://freeextractor.sourceforge.net/diskwrite/"
-                        >DiskWrite</a
-                    >
-                    or dd command. Restart computer with the floppy inserted.
-                    Boot from it.
-                </li>
-                <li>
-                    Grab gameXX.com file and run it on MS-DOS or Windows 9x.
-                </li>
-            </ul>
-            <h4>Emulation</h4>
-            <ul>
-                <li>
-                    Use the browser and click on jsdos instance link or download
-                    floppy image and run on
-                    <a href="https://copy.sh/v86/">copy.sh</a>.
-                </li>
-                <li>Use qemu or 86box for offline emulation.</li>
-
-                <li>
-                    Using online emulation is also possible. You can use
-                    <a href="https://copy.sh/v86/">copy.sh</a> (floppy image) or
-                    <a href="https://www.bootsector.games/">BootSector.Games</a>
-                    (source code) to run the games.
-                </li>
-            </ul>
-
-            <h4>Run in DOS</h4>
-            <ul>
-                <li>
-                    Download the COM file and run it in DOSBox/dosemu or on a
-                    real machine with FreeDOS or MS-DOS.
-                </li>
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th><h4>Native</h4></th>
+                        <th><h4>Emulation</h4></th>
+                        <th><h4>Run in DOS</h4></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li>
+                                    Burn the image to a clean floppy using
+                                    <a
+                                        href="https://freeextractor.sourceforge.net/diskwrite/"
+                                        >DiskWrite</a
+                                    >
+                                    or dd command. Restart computer with the
+                                    floppy inserted. Boot from it.
+                                </li>
+                                <li>
+                                    Grab gameXX.com file and run it on MS-DOS or
+                                    Windows 9x.
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    Use the browser and click on jsdos instance
+                                    link or download floppy image and run on
+                                    <a href="https://copy.sh/v86/">copy.sh</a>.
+                                </li>
+                                <li>
+                                    Use qemu or 86box for offline emulation.
+                                </li>
+                                <li>
+                                    Using online emulation is also possible. You
+                                    can use
+                                    <a href="https://copy.sh/v86/">copy.sh</a>
+                                    (floppy image) or
+                                    <a href="https://www.bootsector.games/"
+                                        >BootSector.Games</a
+                                    >
+                                    (source code) to run the games.
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    Download the COM file and run it in
+                                    DOSBox/dosemu or on a real machine with
+                                    FreeDOS or MS-DOS.
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </article>
         <article id="resources">
             <h2>ON-LINE RESOURCES</h2>
@@ -141,46 +203,81 @@
                 All the useful things I found for the x86 Assembly and boot
                 sector programming.
             </p>
-            <h3>Software</h3>
-            <ul>
-                <li>
-                    <a href="https://fresh.flatassembler.net">Fresh</a> - a
-                    visual assembly language IDE with built-in FASM assembler.
-                </li>
-                <li><a href="https://copy.sh/v86/">copy.sh</a></li>
-                <li>
-                    <a href="https://www.bootsector.games/">BootSector.Games</a>
-                </li>
-            </ul>
-            <h3>Knowledge</h3>
-            <ul>
-                <li>
-                    <a href="instructions.html"
-                        >Intel x86 Instruction Set Reference (Up to 80486
-                        DX4)</a
-                    >
-                </li>
-                <li><a href="registers.html">80x86 16bit Registers List</a></li>
-                <li>
-                    <a href="https://www.youtube.com/watch?v=TPbroUDHG0s"
-                        >"Game Development in Eight Bits" by Kevin Zurawel</a
-                    >
-                </li>
-                <li>
-                    <a href="https://www.youtube.com/watch?v=qatzd0niz9A"
-                        >Cycle-Accurate 8088 Emulation by Daniel Balsom</a
-                    >
-                </li>
-            </ul>
-            <h3>Real Pixel Art</h3>
-            <ul>
-                <li>
-                    <a href="https://youtu.be/aMcJ1Jvtef0"
-                        >8 Bit & '8 Bitish' Graphics-Outside the Box</a
-                    >
-                </li>
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th><h3>Software</h3></th>
+                        <th><h3>Knowledge</h3></th>
+                        <th><h3>Real Pixel Art</h3></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://fresh.flatassembler.net"
+                                        >Fresh</a
+                                    >
+                                    - a visual assembly language IDE with
+                                    built-in FASM assembler.
+                                </li>
+                                <li>
+                                    <a href="https://copy.sh/v86/">copy.sh</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.bootsector.games/"
+                                        >BootSector.Games</a
+                                    >
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="instructions.html"
+                                        >Intel x86 Instruction Set Reference (Up
+                                        to 80486 DX4)</a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="registers.html"
+                                        >80x86 16bit Registers List</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=TPbroUDHG0s"
+                                        >"Game Development in Eight Bits" by
+                                        Kevin Zurawel</a
+                                    >
+                                </li>
+                                <li>
+                                    <a
+                                        href="https://www.youtube.com/watch?v=qatzd0niz9A"
+                                        >Cycle-Accurate 8088 Emulation by Daniel
+                                        Balsom</a
+                                    >
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="https://youtu.be/aMcJ1Jvtef0"
+                                        >8 Bit & '8 Bitish' Graphics-Outside the
+                                        Box</a
+                                    >
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </article>
+
+        <br />
+        <hr />
 
         <article id="land-me">
             <h2>LAND ME</h2>
@@ -230,6 +327,9 @@
                 </ul>
             </fieldset>
         </article>
+
+        <br />
+        <hr />
 
         <article id="fly-escape">
             <h2>FLY ESCAPE</h2>
@@ -338,6 +438,9 @@
             </fieldset>
         </article>
 
+        <br />
+        <hr />
+
         <article id="bit-of-treasure">
             <h2>BIT OF A TREASURE</h2>
             <p>
@@ -441,6 +544,9 @@
             </fieldset>
         </article>
 
+        <br />
+        <hr />
+
         <article>
             <h2>MOTH HUNTER</h2>
             <p>IMPORTANT: Mouse support is required!</p>
@@ -495,6 +601,9 @@
                 </ul>
             </fieldset>
         </article>
+
+        <br />
+        <hr />
 
         <article id="forgotten-isles">
             <h2>(MYSTERIES OF THE) FORGOTTEN ISLES<sup>CANCELED</sup></h2>
@@ -623,6 +732,9 @@
                 </ul>
             </fieldset>
         </article>
+
+        <br />
+        <hr />
 
         <article id="cortex-labs">
             <h2>CORTEX LABS <sup>NEW</sup></h2>
@@ -777,6 +889,9 @@
             </fieldset>
         </article>
 
+        <br />
+        <hr />
+
         <article id="smolix">
             <h2>SMOLiX OPERATING SYSTEM</h2>
             <p><b>Real Mode, Raw Power.</b></p>
@@ -829,7 +944,7 @@
             </p>
             <br />
             <small
-                >&copy;2025 by Krzysztof Krystian Jankowski &amp; Cyfrowy
+                >&copy;2026 by Krzysztof Krystian Jankowski &amp; Cyfrowy
                 Nomada</small
             >
         </footer>
